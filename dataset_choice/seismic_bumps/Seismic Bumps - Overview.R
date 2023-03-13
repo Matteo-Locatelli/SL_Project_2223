@@ -1,0 +1,22 @@
+
+# Seismic Bums- Dataset Overview
+
+rm(list = ls()) # clear all environment variable
+graphics.off()  # close all plot
+
+# set working directory
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223/dataset_choice/seismic_bumps")
+
+library ( farff )
+
+SeismicBumps <- readARFF("./seismic-bumps.arff", show.info = FALSE)
+
+head(SeismicBumps)
+
+# Plots of various classes
+plot(SeismicBumps$class)
+plot(c(1:dim(SeismicBumps)[1]), SeismicBumps$class)
+plot(SeismicBumps$class, c(1:dim(SeismicBumps)[1]))
+
+PositiveOccurrences <- SeismicBumps[SeismicBumps$class == 1,]
+dim(PositiveOccurrences)
