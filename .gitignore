@@ -1,2 +1,3 @@
 
-dataset_choice/nba_players/.RData
+*.RData
+*.Rhistory
