@@ -1,0 +1,12 @@
+Ranking:
+https://www.kaggle.com/datasets/piyushagni5/white-wine-quality
+https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009
+https://archive.ics.uci.edu/ml/datasets/seismic-bumps
+https://data.world/exercises/logistic-regression-exercise-1
+https://code.datasciencedojo.com/datasciencedojo/datasets/tree/master/Census%20Income
+
+Maybe:
+https://www.kaggle.com/datasets/mrmorj/dataset-of-songs-in-spotify?resource=download
+https://data.world/uci/appliances-energy-prediction
+https://archive.ics.uci.edu/ml/datasets/Condition+Based+Maintenance+of+Naval+Propulsion+Plants
+https://data.world/nrippner/cancer-linear-regression-model-tutorial
