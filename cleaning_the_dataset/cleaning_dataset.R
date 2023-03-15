@@ -6,11 +6,12 @@
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
+
 # set working directory
 # setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223/dataset_choice/nba_players")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223/cleaning_the_dataset")
 
-NbaPlayers <- read.csv("./nba_logreg.csv")
+NbaPlayers <- read.csv("../nba_logreg.csv")
 
 dim(NbaPlayers)
 
@@ -22,6 +23,7 @@ rows <- nrow(NbaPlayers)
 cols <- ncol(NbaPlayers)
 
 summary(NbaPlayers)
+
 
 # Plots of various classes: check the data-set balance
 hist(NbaPlayers$TARGET_5Yrs,2)
