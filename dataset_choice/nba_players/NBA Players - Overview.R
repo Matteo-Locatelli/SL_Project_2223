@@ -9,6 +9,8 @@ setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistic
 
 NbaPlayers <- read.csv("./nba_logreg.csv")
 
+dim(NbaPlayers)
+
 head(NbaPlayers)
 
 # Plots of various classes
