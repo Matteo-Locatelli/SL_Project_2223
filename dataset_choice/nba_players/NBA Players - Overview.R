@@ -1,5 +1,5 @@
 
-# NBA Players- Dataset Overview
+# NBA Players- Data-set Overview
 
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
