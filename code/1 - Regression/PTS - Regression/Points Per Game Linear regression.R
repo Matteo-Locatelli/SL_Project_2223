@@ -1,25 +1,27 @@
-# Lab: Linear Regression
 
-install.packages("MASS")
-install.packages("ISLR2")
-
-### RUN CODE - LINEbyLINE CTRL + ENTER
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
-
 
 ### Add Libraries
 library(MASS)
 library(ISLR2)
-set.seed(1) # seed for random number generaotr
+set.seed(1) # seed for random number generator
+
+# set working directory
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+
+NbaPlayers <- read.csv("./nba_logreg_clean.csv")
+
+dim(NbaPlayers)
+names(NbaPlayers)
+head(NbaPlayers)
+
+x <- subset(NbaPlayers, select = -c(pts))
+y <- NbaPlayers$pts
+
 
 ## Simple Linear Regression
-
-### View Data set: to check it is the right one
-View(Boston)
-head(Boston) # Shows only the first rows, used to check if it's the right one
-?Boston # Opens a help section for the dataset
-dim(Boston)
 
 ### Fit Linear Model: mdev = b0 + b1*lstat + e
 lm_fit <- lm(medv ~ lstat, data = Boston)
