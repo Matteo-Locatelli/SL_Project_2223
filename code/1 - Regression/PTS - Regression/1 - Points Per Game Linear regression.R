@@ -1,15 +1,16 @@
 
+# Linear Regression
+# Target: Point Scored Per Game
+
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
 ### Add Libraries
-library(MASS)
-library(ISLR2)
 set.seed(1) # seed for random number generator
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -21,17 +22,13 @@ x <- subset(NbaPlayers, select = -c(pts))
 y <- NbaPlayers$pts
 
 
-## Simple Linear Regression
+### Simple Linear Regression
 
-### Fit Linear Model: mdev = b0 + b1*lstat + e
+#Fit Linear Model: pts = b0 + b1*min + e
 lm_fit <- lm(pts ~ min, data = NbaPlayers)
 
 # View fitted results
-lm_fit # As expected if the minutes per game increase the points per game increase
-summary(lm_fit)
-lm_fit$coefficients
-# names(lm.fit)
-# coef(lm.fit)
+summary(lm_fit) # As expected if the minutes per game increase the points per game increase
 
 # Compute confident interval (CI) on coefficient
 confint(lm_fit, level = 0.98)
@@ -70,27 +67,23 @@ plot(hatvalues(lm_fit), col="blue",
      main = "leverage") # 1/n < leverage < 1 
 
 
-## Multiple Linear Regression
+### Multiple Linear Regression
 
-# y =b0 + b1*lstat + b2*age + e
-lm_fit <- lm(medv ~ lstat + age, data = Boston) # For some reason higher age -> higher price.
+# pts =b0 + b1*min + b2*min^2 + e
+lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
 summary(lm_fit) # R-squared is almost the same, means age is not helpful
 
 # y = b*X + e (perform a regression using all of the predictors)
-lm_fit <- lm(medv ~ ., data = Boston)
+lm_fit <- lm(pts ~ ., data = NbaPlayers)
 s <- summary(lm_fit) 
 R2 = s$adj.r.squared
 RSE = s$sigma
 
-# update regression, remove age predictor (large p-value)
-lm_fit <- update(lm_fit, ~ . - age) # remove age and fit again the model
-
 ## Interaction Terms & Non-linear Transformations of the Predictors
-summary(lm(medv ~ lstat + age + lstat:age, data = Boston))
-summary(lm(medv ~ lstat + I(lstat^2), data = Boston))
+summary(lm(pts ~ . + min:gp, data = NbaPlayers))
 
 # plot residual
-lm_fit <- lm(medv ~ lstat + I(lstat^2) + log(rm), data = Boston); 
+lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
 par(mfrow = c(1,2))
 
 # plot 1
@@ -104,27 +97,12 @@ hist(lm_fit$residuals,40,
      xlab = "Residual",
      main = "Distribuzione empirica dei residui") 
 
-
-## Qualitative Predictors
-head(Carseats)
-View(Carseats)
-
-# Given a qualitative variable such as Shelveloc , R generates dummy variables
-# automatically in this way: 
-contrasts(Carseats$ShelveLoc) # In this case it could create more varaibles (n-1) to map the quali. var. in quant.
-
-# Regression
-lm_fit <- lm(Sales ~ . + Income:Advertising + Price:Age, 
-             data = Carseats)
-summary(lm_fit)
-
 ### Validation method 
 
 View(Auto)
 dim(Auto)
 
 # Validation Method
-?sample
 set.seed(2)
 train <- sample (392 , 196, replace = FALSE)
 

@@ -2,13 +2,12 @@
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
-library ( ISLR2 )
 library ( boot )
 set.seed (1)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -21,9 +20,6 @@ y <- NbaPlayers$pts
 
 
 ## Resampling method
-## Bootstrap: The bootstrap is a widely applicable and extremely powerful statistical tool
-# bootstrap that can be used to quantify the uncertainty associated with a given estimator
-# or statistical learning method diﬃcult to obtain
 
 ## Example 1: Estimate the variance of estimator
 # alpha = (var_y - cov_xy)/(var_x + var_y - 2cov_xy)
