@@ -30,7 +30,11 @@ numInconsistents <- dim(NbaPlayersNoDup)[1] - dim(NbaPlayersConsistent)[1]
 # remove name column
 NbaPlayersNoName <- NbaPlayersConsistent[, -1]
 
+# remove na values
+NbaPlayersNoNa <- na.omit(NbaPlayersNoName)
+numNa <- dim(NbaPlayersNoName)[1] - dim(NbaPlayersNoNa)[1]
+
 # clean columns names
-NbaPlayersClean <- clean_names(NbaPlayersNoName)
+NbaPlayersClean <- clean_names(NbaPlayersNoNa)
 
 write.csv(NbaPlayersClean, "./nba_logreg_clean.csv", row.names=FALSE)
