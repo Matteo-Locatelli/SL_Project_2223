@@ -23,29 +23,28 @@ y <- NbaPlayers$min
 
 ## Simple Linear Regression
 
-### Fit Linear Model: mdev = b0 + b1*lstat + e
-lm_fit <- lm(medv ~ lstat, data = Boston)
+### Fit Linear Model: min = b0 + b1*pts + e
+lm_fit <- lm(min ~ pts, data = NbaPlayers)
 
 # View fitted results
-lm_fit # As expected if we increase the population in the lower status we have smaller price.
+lm_fit # As expected if the points per game increase the minutes per game increase
 summary(lm_fit)
 lm_fit$coefficients
 # names(lm.fit)
 # coef(lm.fit)
 
 # Compute confident interval (CI) on coefficient
-?confint
 confint(lm_fit, level = 0.98)
 
 # Get prediction with CI over new observation 
-predict(lm_fit, data.frame(lstat = (c(5, 10, 15))),
+predict(lm_fit, data.frame(pts = (c(10, 20, 30, 40))),
         interval = "confidence")
 
 # Plot linear regression results
-plot(Boston$lstat, Boston$medv,pch = "+", ylab = "medv - median value of owner-occupied homes in $1000s", 
-       xlab = "lstat - ower status of the population (percent).", 
+plot(NbaPlayers$pts, NbaPlayers$min, pch = "+", ylab = "min - minutes played per game", 
+       xlab = "pts - points scored per game", 
        main = "Linear regression")
-legend("topright",legend=c("Sampling point"),pch = "+")
+legend("topright", legend=c("Sampling point"),pch = "+")
 
 # Add predicted value 
 abline(lm_fit, lwd = 3, col = "red")
