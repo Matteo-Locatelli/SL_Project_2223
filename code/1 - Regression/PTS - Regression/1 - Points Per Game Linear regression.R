@@ -71,7 +71,13 @@ plot(hatvalues(lm_fit), col="blue",
 
 # pts =b0 + b1*min + b2*min^2 + e
 lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
-summary(lm_fit) # R-squared is almost the same, means age is not helpful
+summary(lm_fit)
+
+lm_fit <- lm(pts ~ min + I(min^2) + fgm, data = NbaPlayers)
+summary(lm_fit)
+
+lm_fit <- lm(pts ~ I(min^2) + fgm, data = NbaPlayers)
+summary(lm_fit)
 
 # y = b*X + e (perform a regression using all of the predictors)
 lm_fit <- lm(pts ~ ., data = NbaPlayers)
@@ -99,31 +105,33 @@ hist(lm_fit$residuals,40,
 
 ### Validation method 
 
-View(Auto)
-dim(Auto)
-
 # Validation Method
 set.seed(2)
-train <- sample (392 , 196, replace = FALSE)
+train <- sample (dim(NbaPlayers)[1] , floor(dim(NbaPlayers)[1]*0.5), replace = FALSE)
 
-lm_fit <- lm(mpg ~ horsepower , data = Auto , subset = train ) #we can provide a subset given by the indexes in 'train'
-err = (Auto$mpg - predict(lm_fit, Auto ))^2 # R understands that we want the difference with that output
+lm_fit <- lm(pts ~ min , data = NbaPlayers , subset = train ) #we can provide a subset given by the indexes in 'train'
+err = (NbaPlayers$pts - predict(lm_fit, NbaPlayers ))^2 # R understands that we want the difference with that output
 
 trai_err = mean(err[train])
 test_err = mean(err[-train])  # - tells to give all the indexes        
 
 # quadratic fit
-lm_fit_quad <- lm ( mpg ~ poly ( horsepower , 2) , data = Auto ,
+lm_fit_quad <- lm ( pts ~ poly ( min , 2) , data = NbaPlayers ,
                     subset = train )
-test_quad = mean(( Auto$mpg - predict (lm_fit_quad,Auto)) [-train ]^2)
+test_quad = mean(( NbaPlayers$pts - predict (lm_fit_quad,NbaPlayers)) [-train ]^2)
 
 # cubic fit
-lm_fit_cubic <- lm( mpg ~ poly ( horsepower, 3) , data = Auto ,
+lm_fit_cubic <- lm( pts ~ poly ( min , 3) , data = NbaPlayers ,
                     subset = train )
-test_cubic = mean(( Auto$mpg - predict (lm_fit_cubic,Auto)) [-train ]^2)
+test_cubic = mean(( NbaPlayers$pts - predict (lm_fit_cubic,NbaPlayers)) [-train ]^2)
+
+# four fit
+lm_fit_four <- lm( pts ~ poly ( min , 4) , data = NbaPlayers ,
+                    subset = train )
+test_four = mean(( NbaPlayers$pts - predict (lm_fit_four,NbaPlayers)) [-train ]^2)
 
 par(mfrow = c(1, 1))
-plot(1:3,c(test_err,test_quad,test_cubic), type = "b", col="blue",
+plot(1:4,c(test_err,test_quad,test_cubic,test_four), type = "b", col="blue",
      ylab = "Test MSE",
      xlab = "Flexibility",
      main = "Validation Test MSE")
@@ -139,8 +147,8 @@ library(boot)
 set.seed(1)
 loo_cv <- rep (0 , 10)
 for(i in 1:10){
-  glm_fit <- glm( mpg ~ poly ( horsepower , i ) , data = Auto )
-  loo_cv[ i ] <- cv.glm(Auto , glm_fit ,K = dim(Auto)[1])$delta[1]
+  glm_fit <- glm( pts ~ poly ( min , i ) , data = NbaPlayers )
+  loo_cv[ i ] <- cv.glm(NbaPlayers , glm_fit ,K = dim(NbaPlayers)[1])$delta[1]
 } 
 
 plot(1:10,loo_cv,type = "b",col = "blue",
@@ -152,8 +160,8 @@ plot(1:10,loo_cv,type = "b",col = "blue",
 set.seed(1)
 kfold <- rep (0 , 10)
 for(i in 1:10) {
-  glm_fit <- glm(mpg ~ poly ( horsepower , i ) , data = Auto )
-  kfold[ i ] <- cv.glm( Auto , glm_fit , K = 10)$delta[1]
+  glm_fit <- glm(pts ~ poly ( min , i ) , data = NbaPlayers )
+  kfold[ i ] <- cv.glm( NbaPlayers , glm_fit , K = 10)$delta[1]
 }
 
 lines(1:10,kfold,type = "b",col = "red", lty = 2)
