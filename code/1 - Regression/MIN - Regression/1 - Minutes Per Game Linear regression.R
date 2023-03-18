@@ -20,8 +20,7 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
-x <- subset(NbaPlayers, select = -c(min, target_5yrs))
-y <- NbaPlayers$min
+NbaPlayers <- subset(NbaPlayers, select=-c(target_5yrs))
 
 
 ## Simple Linear Regression

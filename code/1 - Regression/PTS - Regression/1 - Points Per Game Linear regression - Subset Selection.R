@@ -25,6 +25,8 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
+NbaPlayers <- subset(NbaPlayers, select=-c(target_5yrs))
+
 
 ### Subset Selection
 
