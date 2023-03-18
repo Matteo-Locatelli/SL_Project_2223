@@ -19,6 +19,7 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
+
 ### Subset Selection
 
 ## Forward stepwise
@@ -50,6 +51,7 @@ hist(f_lm_fit$residuals,40,
 
 
 ## Backward stepwise
+
 b_lm_fit_null <- lm(pts ~ 1, data=NbaPlayers)
 
 #define model glmnet all predictors
@@ -75,6 +77,7 @@ hist(f_lm_fit$residuals,40,
      xlab = "Residual",
      main = "Distribuzione empirica dei residui") 
 
+
 ## Models comparison
 
 # defining training control as Leave One Out Cross Validation
@@ -89,6 +92,3 @@ b_lm_fit_cv <- train(pts ~ min + fgm + fga + fg + x3p_made + x3pa + x3p +
                        ftm + fta + ft + reb, data = NbaPlayers,
                      method = "lm",
                      trControl = train_control)
-
-
-

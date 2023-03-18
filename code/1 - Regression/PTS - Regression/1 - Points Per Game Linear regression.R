@@ -18,7 +18,7 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
-x <- subset(NbaPlayers, select = -c(pts))
+x <- subset(NbaPlayers, select = -c(pts, target_5yrs))
 y <- NbaPlayers$pts
 
 

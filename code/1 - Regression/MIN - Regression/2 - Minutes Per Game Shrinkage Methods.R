@@ -1,6 +1,6 @@
 
 # Shrinkage Methods
-# Target: Point Scored Per Game
+# Target: Minutes Played Per Game
 
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
@@ -18,8 +18,8 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
-x <- subset(NbaPlayers, select = -c(pts, target_5yrs))
-y <- NbaPlayers$pts
+x <- subset(NbaPlayers, select = -c(min, target_5yrs))
+y <- NbaPlayers$min
 
 
 ## Resampling method
