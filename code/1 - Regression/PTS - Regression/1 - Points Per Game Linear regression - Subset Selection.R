@@ -16,8 +16,8 @@ library(dplyr)
 set.seed(1) # seed for random number generator
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -115,5 +115,6 @@ b_step_reg <- ols_step_backward_p(b_lm_fit_all)
 plot(b_step_reg)
 
 # Stepwise Regression
-step_reg <- ols_step_both_p(f_lm_fit)
+both_lm_fit_all <- lm(pts ~ ., data=NbaPlayers)
+step_reg <- ols_step_both_p(both_lm_fit_all)
 plot(step_reg)

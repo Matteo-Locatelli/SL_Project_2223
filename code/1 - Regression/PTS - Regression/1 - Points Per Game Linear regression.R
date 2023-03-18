@@ -66,6 +66,63 @@ plot(hatvalues(lm_fit), col="blue",
      main = "leverage") # 1/n < leverage < 1 
 
 
+### Check if there is a better regressor then min
+
+y <- array(unlist(NbaPlayers[3]))
+all_regressors <- colnames(NbaPlayers[-3])
+
+r_squared_array <- rep(1:length(all_regressors))
+mse <- rep(1:length(all_regressors))
+for(i in 1:length(all_regressors)){
+  if(i != 3){
+    x <- array(unlist(NbaPlayers[i]))
+    lm_fit <- lm(y ~ x)
+    r_squared_array[ i ] <- summary(lm_fit)$r.squared
+    mse[ i ] <- summary(lm_fit)$sigma
+  }
+} 
+
+plot(factor(all_regressors), r_squared_array)
+plot(factor(all_regressors), mse)
+
+#Fit Linear Model: pts = b0 + b1*fga + e
+lm_fit <- lm(pts ~ fga, data = NbaPlayers)
+
+# View fitted results
+summary(lm_fit) # As expected if the minutes per game increase the points per game increase
+
+# Compute confident interval (CI) on coefficient
+confint(lm_fit, level = 0.98)
+
+# Plot linear regression results
+plot(NbaPlayers$fga, NbaPlayers$pts, pch = "+", ylab = "pts - Points Scored Per Game", 
+     xlab = "fga - Field Goal Attempt", 
+     main = "Linear regression")
+legend("topright",legend=c("Sampling point"),pch = "+")
+
+# Add predicted value 
+abline(lm_fit, lwd = 3, col = "red")
+
+#  Create Subplot region  
+par(mfrow = c(2, 2))
+plot(lm_fit)
+
+# plot residual
+lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
+par(mfrow = c(1,2))
+
+# plot 1
+plot(lm_fit$residuals, pch = "o", col = "blue" ,
+     ylab = "Residual", main = paste0("Residual plot - mean:",round(mean(lm_fit$residuals),digits = 4),
+                                      "- var:", round(var(lm_fit$residuals),digits = 2)))
+abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 2)
+
+# plot 2 
+hist(lm_fit$residuals,40,
+     xlab = "Residual",
+     main = "Distribuzione empirica dei residui") 
+
+
 ### Multiple Linear Regression
 
 # pts =b0 + b1*min + b2*min^2 + e
