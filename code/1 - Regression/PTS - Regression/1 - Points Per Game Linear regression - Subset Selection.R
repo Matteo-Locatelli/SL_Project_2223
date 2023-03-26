@@ -25,9 +25,6 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
-NbaPlayers <- subset(NbaPlayers, select=-c(target_5yrs))
-
-
 ### Subset Selection
 
 ## Forward stepwise
@@ -118,3 +115,39 @@ plot(b_step_reg)
 both_lm_fit_all <- lm(pts ~ ., data=NbaPlayers)
 step_reg <- ols_step_both_p(both_lm_fit_all)
 plot(step_reg)
+
+
+#### Subset selection with variables omitting
+
+
+### Compute the R_squared for each variable
+
+y <- array(unlist(NbaPlayers[3]))
+all_regressors <- colnames(NbaPlayers[-3])
+
+r_squared_array <- rep(1:length(all_regressors))
+mse <- rep(1:length(all_regressors))
+j <- 1
+for(i in 1:dim(NbaPlayers)[2]){
+  if(i != 3){
+    x <- array(unlist(NbaPlayers[i]))
+    lm_fit <- lm(y ~ x)
+    r_squared_array[ j ] <- summary(lm_fit)$r.squared
+    mse[ j ] <- summary(lm_fit)$sigma
+    j <- j + 1
+  }
+}
+
+thresholds = c(0.9,0.8)
+step_forward_models <- vector(mode = "list", length = 2)
+step_backward_models <- vector(mode = "list", length = 2)
+for(i in 1:2){
+  colSelection <- c(all_regressors[r_squared_array <= thresholds[i]], "pts")
+  SubNbaPlayers <- NbaPlayers[colSelection]
+  f_lm_all <- lm(pts ~ ., data=SubNbaPlayers)
+  step_forward_models[[i]] <- ols_step_forward_p(f_lm_all)
+  b_lm_all <- lm(pts ~ ., data=SubNbaPlayers)
+  step_backward_models[[i]] <- ols_step_backward_p(b_lm_all)
+}
+
+

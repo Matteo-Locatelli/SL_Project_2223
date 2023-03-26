@@ -18,8 +18,6 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
-NbaPlayers <- subset(NbaPlayers, select=-c(target_5yrs))
-
 
 ### Simple Linear Regression
 
@@ -52,20 +50,6 @@ plot(lm_fit)
 # plot(predict(lm.fit), residuals(lm.fit))
 # plot(predict(lm.fit), rstudent(lm.fit))
 
-# If the residual plot indicates that there are non-linear associations in the
-# data, then a simple approach is to use non-linear transformations of the
-# predictors; one possible solution is to transform the response;
-
-# Leverage misure
-
-# Put plotting arrangement back to its original state
-par(mfrow = c(1, 1))
-plot(hatvalues(lm_fit), col="blue", 
-     ylab = "leverage",
-     xlab = "Observation",
-     main = "leverage") # 1/n < leverage < 1 
-
-
 ### Check if there is a better regressor then min
 
 y <- array(unlist(NbaPlayers[3]))
@@ -73,14 +57,16 @@ all_regressors <- colnames(NbaPlayers[-3])
 
 r_squared_array <- rep(1:length(all_regressors))
 mse <- rep(1:length(all_regressors))
-for(i in 1:length(all_regressors)){
+j <- 1
+for(i in 1:dim(NbaPlayers)[2]){
   if(i != 3){
     x <- array(unlist(NbaPlayers[i]))
     lm_fit <- lm(y ~ x)
-    r_squared_array[ i ] <- summary(lm_fit)$r.squared
-    mse[ i ] <- summary(lm_fit)$sigma
+    r_squared_array[ j ] <- summary(lm_fit)$r.squared
+    mse[ j ] <- summary(lm_fit)$sigma
+    j <- j + 1
   }
-} 
+}
 
 plot(factor(all_regressors), r_squared_array)
 plot(factor(all_regressors), mse)
@@ -89,7 +75,7 @@ plot(factor(all_regressors), mse)
 lm_fit <- lm(pts ~ fga, data = NbaPlayers)
 
 # View fitted results
-summary(lm_fit) # As expected if the minutes per game increase the points per game increase
+summary(lm_fit)
 
 # Compute confident interval (CI) on coefficient
 confint(lm_fit, level = 0.98)
@@ -106,43 +92,6 @@ abline(lm_fit, lwd = 3, col = "red")
 #  Create Subplot region  
 par(mfrow = c(2, 2))
 plot(lm_fit)
-
-# plot residual
-lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
-par(mfrow = c(1,2))
-
-# plot 1
-plot(lm_fit$residuals, pch = "o", col = "blue" ,
-     ylab = "Residual", main = paste0("Residual plot - mean:",round(mean(lm_fit$residuals),digits = 4),
-                                      "- var:", round(var(lm_fit$residuals),digits = 2)))
-abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 2)
-
-# plot 2 
-hist(lm_fit$residuals,40,
-     xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
-
-
-### Multiple Linear Regression
-
-# pts =b0 + b1*min + b2*min^2 + e
-lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
-summary(lm_fit)
-
-lm_fit <- lm(pts ~ min + I(min^2) + fgm, data = NbaPlayers)
-summary(lm_fit)
-
-lm_fit <- lm(pts ~ I(min^2) + fgm, data = NbaPlayers)
-summary(lm_fit)
-
-# y = b*X + e (perform a regression using all of the predictors)
-lm_fit <- lm(pts ~ ., data = NbaPlayers)
-s <- summary(lm_fit) 
-R2 = s$adj.r.squared
-RSE = s$sigma
-
-## Interaction Terms & Non-linear Transformations of the Predictors
-summary(lm(pts ~ . + min:gp, data = NbaPlayers))
 
 # plot residual
 lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
