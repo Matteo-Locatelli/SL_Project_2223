@@ -19,6 +19,8 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
+### Shrinkage with full dataset
+
 ## RIDGE REGRESSION
 
 # Construct Design Matrices and also automatically transforms any qualitative 
@@ -27,30 +29,20 @@ x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
 
 # lambda grid
-lambda <- 10^seq(-2,1,length = 50);
-
-# tuning elastics net (alpha 0 - RIDGE, alpha 1 - LASSO)
-ridge_fit <- glmnet(x,y,alpha = 0,lambda = lambda,standardize=TRUE)
-dim(coef(ridge_fit))
-
-# compare l2-norm at different value of lambda
-ridge_fit$lambda[5]
-sqrt(sum(coef(ridge_fit)[-1,5]^2))
-
-ridge_fit$lambda[25]
-sqrt(sum(coef(ridge_fit)[-1,25]^2))
+lambda <- 10^seq(-6,-2,length = 200);
+lambda <- c(0,lambda)
 
 set.seed(1)
 train <- sample(dim(x)[1],floor(dim(x)[1]*0.6),replace = FALSE);
 
 # lambda = seq() parameters is optional 
-cv_model <- cv.glmnet(x[train, ],y[train], alpha = 0, nfolds = 10);
-plot(cv_model)
-opt_lambda <- cv_model$lambda.min # cv_model$lambda.1se
-
+ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
+plot(ridge_cv_model)
+opt_lambda <- ridge_cv_model$lambda.min; # cv_model$lambda.1se
+opt_lambda
 # predict on test dataset
-model <- glmnet(x[train,],y[train],alpha = 0,lambda = opt_lambda,standardize=TRUE)
-fitt_value <- predict(model,newx = x[-train,])
+ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = opt_lambda,standardize=TRUE)
+fitt_value <- predict(ridge_model,newx = x[-train,])
 
 test_MSE = mean((y[-train] - fitt_value)^2)
 
@@ -60,6 +52,46 @@ lasso_mod <- glmnet( x[train , ] , y[ train ], alpha = 1,lambda = lambda)
 plot(lasso_mod)
 
 set.seed(1)
-cv_lasso <- cv.glmnet(x[train,],y[train],alpha=1,nfolds = 10);
+cv_lasso <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
 plot(cv_lasso)
 opt_lambda <- cv_lasso$lambda.min
+opt_lambda
+
+### Shrinkage with variables omitting
+
+y <- array(unlist(NbaPlayers[3]))
+all_regressors <- colnames(NbaPlayers[-3])
+
+r_squared_array <- rep(1:length(all_regressors))
+mse <- rep(1:length(all_regressors))
+j <- 1
+for(i in 1:dim(NbaPlayers)[2]){
+  if(i != 3){
+    x <- array(unlist(NbaPlayers[i]))
+    lm_fit <- lm(y ~ x)
+    r_squared_array[ j ] <- summary(lm_fit)$r.squared
+    mse[ j ] <- summary(lm_fit)$sigma
+    j <- j + 1
+  }
+}
+
+thresholds = c(0.9,0.8)
+
+ridge_optimal_lambdas <- c(0,0)
+lasso_optimal_lambdas <- c(0,0)
+for(i in 1:2){
+  colSelection <- c(all_regressors[r_squared_array <= thresholds[i]], "pts")
+  SubNbaPlayers <- NbaPlayers[colSelection]
+  
+  x <- model.matrix ( pts ~ . , SubNbaPlayers) [ , -1]
+  y <- SubNbaPlayers$pts
+  set.seed(1)
+  train <- sample(dim(x)[1],floor(dim(x)[1]*0.6),replace = FALSE);
+  
+  # Ridge
+  ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
+  ridge_optimal_lambdas[i] <- ridge_cv_model$lambda.min;
+  
+  lasso_cv_model <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
+  lasso_optimal_lambdas[i] <- lasso_cv_model$lambda.min
+}
