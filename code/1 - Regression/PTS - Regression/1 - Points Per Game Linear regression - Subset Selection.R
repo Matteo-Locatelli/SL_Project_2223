@@ -21,6 +21,8 @@ setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistic
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
+NbaPlayers <- NbaPlayers[-15]
+
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
@@ -106,10 +108,15 @@ b_lm_fit_cv <- train(pts ~ min + fgm + fga + fg + x3p_made + x3pa + x3p +
 # Stepwise Forward Regression
 f_step_reg <- ols_step_forward_p(f_lm_fit_all)
 plot(f_step_reg)
+summary(f_step_reg$model)
 
 # Stepwise Backward Regression
 b_step_reg <- ols_step_backward_p(b_lm_fit_all)
 plot(b_step_reg)
+summary(b_step_reg$model)
+
+# Backward contains oreb and dreb that are not inlcuded in forward
+# Forward contains tov  that is not included in backward
 
 # Stepwise Regression
 both_lm_fit_all <- lm(pts ~ ., data=NbaPlayers)
@@ -138,7 +145,7 @@ for(i in 1:dim(NbaPlayers)[2]){
   }
 }
 
-thresholds = c(0.9,0.8)
+thresholds = c(0.9,0.8) # We stop at 0.8 otherwise we would ho down to 0.5 as R^2
 step_forward_models <- vector(mode = "list", length = 2)
 step_backward_models <- vector(mode = "list", length = 2)
 for(i in 1:2){
@@ -151,3 +158,23 @@ for(i in 1:2){
 }
 
 
+sprintf('### Threshold: %f', thresholds[1])
+sprintf('## step forward model:')
+summary(step_forward_models[[1]]$model)
+sprintf('## step backward model:')
+summary(step_backward_models[[1]]$model)
+
+# Forward has two more variables: fta - x3p_made. All the others are the same
+# the additional variables in the forward are not significant
+
+sprintf('### Threshold: %f', thresholds[2])
+sprintf('## step forward model:')
+summary(step_forward_models[[2]]$model)
+sprintf('## step backward model:')
+summary(step_backward_models[[2]]$model)
+
+# Forward has two more variables: fta - x3p_made. All the others are the same
+# the additional variables in the forward are not significant
+# The difference btw threshold 0.9 is that min is not there anymore and it's replaced by ft
+
+#### TODO: Check the forward model without the non significan vars

@@ -94,7 +94,6 @@ par(mfrow = c(2, 2))
 plot(lm_fit)
 
 # plot residual
-lm_fit <- lm(pts ~ min + I(min^2), data = NbaPlayers)
 par(mfrow = c(1,2))
 
 # plot 1
@@ -108,6 +107,9 @@ hist(lm_fit$residuals,40,
      xlab = "Residual",
      main = "Distribuzione empirica dei residui") 
 
+
+
+##### TO DELETE
 ### Validation method 
 
 # Validation Method
