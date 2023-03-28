@@ -14,6 +14,7 @@ setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistic
 #setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
+NbaPlayers <- NbaPlayers[-15]
 
 dim(NbaPlayers)
 names(NbaPlayers)
@@ -29,23 +30,22 @@ x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
 
 # lambda grid
-lambda <- 10^seq(-6,-2,length = 200);
+lambda <- 10^seq(-4,-1,length = 400);
 lambda <- c(0,lambda)
 
 set.seed(1)
-train <- sample(dim(x)[1],floor(dim(x)[1]*0.6),replace = FALSE);
+train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
 
 # lambda = seq() parameters is optional 
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
 plot(ridge_cv_model)
-opt_lambda <- ridge_cv_model$lambda.min; # cv_model$lambda.1se
-opt_lambda
+ridge_opt_lambda <- ridge_cv_model$lambda.min; # cv_model$lambda.1se
+
 # predict on test dataset
-ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = opt_lambda,standardize=TRUE)
-fitt_value <- predict(ridge_model,newx = x[-train,])
-
-test_MSE = mean((y[-train] - fitt_value)^2)
-
+ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_opt_lambda,standardize=TRUE)
+rideg_fitt_value <- predict(ridge_model,newx = x[-train,])
+ridge_test_MSE = mean((y[-train] - rideg_fitt_value)^2)
+ridge_test_MSE
 
 ## LASSO
 lasso_mod <- glmnet( x[train , ] , y[ train ], alpha = 1,lambda = lambda)
@@ -54,9 +54,13 @@ plot(lasso_mod)
 set.seed(1)
 cv_lasso <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
 plot(cv_lasso)
-opt_lambda <- cv_lasso$lambda.min
-opt_lambda
+lasso_opt_lambda <- cv_lasso$lambda.min #cv_lasso$lambda.1se
 
+# predict on test dataset
+lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_opt_lambda,standardize=TRUE)
+lasso_fitt_value <- predict(lasso_model,newx = x[-train,])
+lasso_test_MSE = mean((y[-train] - lasso_fitt_value)^2)
+lasso_test_MSE
 ### Shrinkage with variables omitting
 
 y <- array(unlist(NbaPlayers[3]))
@@ -79,6 +83,10 @@ thresholds = c(0.9,0.8)
 
 ridge_optimal_lambdas <- c(0,0)
 lasso_optimal_lambdas <- c(0,0)
+ridge_test_mse <- c(0,0)
+lasso_test_mse <- c(0,0)
+ridge_optimal_models <- vector(mode = "list", length = 2)
+lasso_optimal_models <- vector(mode = "list", length = 2)
 for(i in 1:2){
   colSelection <- c(all_regressors[r_squared_array <= thresholds[i]], "pts")
   SubNbaPlayers <- NbaPlayers[colSelection]
@@ -90,8 +98,28 @@ for(i in 1:2){
   
   # Ridge
   ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
+  ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambda.min,standardize=TRUE)
+  ridge_fitt_value <- predict(ridge_model,newx = x[-train,])
+  ridge_test_mse[i] <- mean((y[-train] - ridge_fitt_value)^2)
   ridge_optimal_lambdas[i] <- ridge_cv_model$lambda.min;
+  ridge_optimal_models[[i]] <- ridge_cv_model
   
+  # Lasso
   lasso_cv_model <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
+  lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
+  lasso_fitt_value <- predict(lasso_model,newx = x[-train,])
+  lasso_test_mse[i] <- mean((y[-train] - lasso_fitt_value)^2)
   lasso_optimal_lambdas[i] <- lasso_cv_model$lambda.min
+  lasso_optimal_models[[i]] <- lasso_cv_model
 }
+
+ridge_optimal_lambdas
+lasso_optimal_lambdas
+
+# Plot Lasso result
+plot(lasso_optimal_models[[1]])
+plot(lasso_optimal_models[[2]])
+
+# Plot Ridge result
+plot(ridge_optimal_models[[1]])
+plot(ridge_optimal_models[[2]])

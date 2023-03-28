@@ -108,70 +108,9 @@ hist(lm_fit$residuals,40,
      main = "Distribuzione empirica dei residui") 
 
 
-
-##### TO DELETE
-### Validation method 
-
-# Validation Method
-set.seed(2)
-train <- sample (dim(NbaPlayers)[1] , floor(dim(NbaPlayers)[1]*0.5), replace = FALSE)
-
-lm_fit <- lm(pts ~ min , data = NbaPlayers , subset = train ) #we can provide a subset given by the indexes in 'train'
-err = (NbaPlayers$pts - predict(lm_fit, NbaPlayers ))^2 # R understands that we want the difference with that output
-
-trai_err = mean(err[train])
-test_err = mean(err[-train])  # - tells to give all the indexes        
-
-# quadratic fit
-lm_fit_quad <- lm ( pts ~ poly ( min , 2) , data = NbaPlayers ,
-                    subset = train )
-test_quad = mean(( NbaPlayers$pts - predict (lm_fit_quad,NbaPlayers)) [-train ]^2)
-
-# cubic fit
-lm_fit_cubic <- lm( pts ~ poly ( min , 3) , data = NbaPlayers ,
-                    subset = train )
-test_cubic = mean(( NbaPlayers$pts - predict (lm_fit_cubic,NbaPlayers)) [-train ]^2)
-
-# four fit
-lm_fit_four <- lm( pts ~ poly ( min , 4) , data = NbaPlayers ,
-                    subset = train )
-test_four = mean(( NbaPlayers$pts - predict (lm_fit_four,NbaPlayers)) [-train ]^2)
-
-par(mfrow = c(1, 1))
-plot(1:4,c(test_err,test_quad,test_cubic,test_four), type = "b", col="blue",
-     ylab = "Test MSE",
-     xlab = "Flexibility",
-     main = "Validation Test MSE")
-
-
-# Leave-one-out cross-validation (LOOCV) method
-library(boot)
-#?glm()
-#?cv.glm() :: delta (1x2) vector contain the cross-validation results, The
-# first element is the standard k-fold CV estimate. The second is a biascorrected 
-# version
-
-set.seed(1)
-loo_cv <- rep (0 , 10)
-for(i in 1:10){
-  glm_fit <- glm( pts ~ poly ( min , i ) , data = NbaPlayers )
-  loo_cv[ i ] <- cv.glm(NbaPlayers , glm_fit ,K = dim(NbaPlayers)[1])$delta[1]
-} 
-
-plot(1:10,loo_cv,type = "b",col = "blue",
-     ylab = "CV error",
-     xlab = "Flexibility (poly degree)",
-     main = "Test error estimation")
-
-# k-fold validation method (Biad variace - trade off k=5, k=10)
-set.seed(1)
-kfold <- rep (0 , 10)
-for(i in 1:10) {
-  glm_fit <- glm(pts ~ poly ( min , i ) , data = NbaPlayers )
-  kfold[ i ] <- cv.glm( NbaPlayers , glm_fit , K = 10)$delta[1]
-}
-
-lines(1:10,kfold,type = "b",col = "red", lty = 2)
-legend("topright",legend=c("LOOCV","k = 10"),col = c("blue","red"),lty = 1:2)
-
-
+## Model fitted with the most important variables
+lm_fit <- lm(pts ~ fgm + x3p_made + ftm, data=NbaPlayers)
+summary(lm_fit) # There is a linear combination: pts = 2*fgm + x3p_made + ftm
+max(lm_fit$residuals)
+y_hat <- 2*(NbaPlayers['fgm'] - NbaPlayers['x3p_made']) + 3*NbaPlayers['x3p_made'] + NbaPlayers['ftm']
+max(NbaPlayers['pts'] - y_hat)
