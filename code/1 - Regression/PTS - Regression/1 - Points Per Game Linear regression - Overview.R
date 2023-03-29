@@ -114,3 +114,4 @@ summary(lm_fit) # There is a linear combination: pts = 2*fgm + x3p_made + ftm
 max(lm_fit$residuals)
 y_hat <- 2*(NbaPlayers['fgm'] - NbaPlayers['x3p_made']) + 3*NbaPlayers['x3p_made'] + NbaPlayers['ftm']
 max(NbaPlayers['pts'] - y_hat)
+summary(lm(fga ~ fgm - 1, data=NbaPlayers))

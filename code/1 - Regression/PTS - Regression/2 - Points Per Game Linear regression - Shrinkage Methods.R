@@ -30,7 +30,7 @@ x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
 
 # lambda grid
-lambda <- 10^seq(-4,-1,length = 400);
+lambda <- 10^seq(-3,-1,length = 400)
 lambda <- c(0,lambda)
 
 set.seed(1)
@@ -87,6 +87,10 @@ ridge_test_mse <- c(0,0)
 lasso_test_mse <- c(0,0)
 ridge_optimal_models <- vector(mode = "list", length = 2)
 lasso_optimal_models <- vector(mode = "list", length = 2)
+ridge_optimal_cv_models <- vector(mode = "list", length = 2)
+lasso_optimal_cv_models <- vector(mode = "list", length = 2)
+ridge_optimal_lm <- vector(mode = "list", length = 2)
+lasso_optimal_lm <- vector(mode = "list", length = 2)
 for(i in 1:2){
   colSelection <- c(all_regressors[r_squared_array <= thresholds[i]], "pts")
   SubNbaPlayers <- NbaPlayers[colSelection]
@@ -100,26 +104,41 @@ for(i in 1:2){
   ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
   ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambda.min,standardize=TRUE)
   ridge_fitt_value <- predict(ridge_model,newx = x[-train,])
+  
+  x_ridge <- x[,array(unlist(predict(ridge_model,type="nonzero")))]
+  
   ridge_test_mse[i] <- mean((y[-train] - ridge_fitt_value)^2)
   ridge_optimal_lambdas[i] <- ridge_cv_model$lambda.min;
-  ridge_optimal_models[[i]] <- ridge_cv_model
+  ridge_optimal_cv_models[[i]] <- ridge_cv_model
+  ridge_optimal_models[[i]] <- ridge_model
+  ridge_optimal_lm[[i]] <- lm(y[train] ~ x_ridge[train,])
   
   # Lasso
   lasso_cv_model <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
   lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
   lasso_fitt_value <- predict(lasso_model,newx = x[-train,])
+  
+  x_lasso <- x[,array(unlist(predict(lasso_model,type="nonzero")))]
+  
   lasso_test_mse[i] <- mean((y[-train] - lasso_fitt_value)^2)
   lasso_optimal_lambdas[i] <- lasso_cv_model$lambda.min
-  lasso_optimal_models[[i]] <- lasso_cv_model
+  lasso_optimal_cv_models[[i]] <- lasso_cv_model
+  lasso_optimal_models[[i]] <- lasso_model
+  lasso_optimal_lm[[i]] <- lm(y[train] ~ x_lasso[train,])
 }
 
-ridge_optimal_lambdas
-lasso_optimal_lambdas
-
 # Plot Lasso result
-plot(lasso_optimal_models[[1]])
-plot(lasso_optimal_models[[2]])
+plot(lasso_optimal_cv_models[[1]])
+summary(lasso_optimal_lm[[1]])
+plot(lasso_optimal_cv_models[[2]])
+summary(lasso_optimal_lm[[2]])
 
 # Plot Ridge result
-plot(ridge_optimal_models[[1]])
-plot(ridge_optimal_models[[2]])
+plot(ridge_optimal_cv_models[[1]])
+summary(ridge_optimal_lm[[1]])
+plot(ridge_optimal_cv_models[[2]])
+summary(ridge_optimal_lm[[1]])
+
+#### Final Model: leaving fgm, fga
+
+NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))

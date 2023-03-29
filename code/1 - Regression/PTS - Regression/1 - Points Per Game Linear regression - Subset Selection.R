@@ -6,13 +6,13 @@ rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
 ### Add Libraries
-library(caret)
+library( caret )
 # in console
 # install.packages("devtools")
 # devtools::install_github("rsquaredacademy/olsrr")
-library(olsrr) # use dev tools
-library(readr)
-library(dplyr)
+library( olsrr ) # use dev tools
+library( readr )
+library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
@@ -177,4 +177,60 @@ summary(step_backward_models[[2]]$model)
 # the additional variables in the forward are not significant
 # The difference btw threshold 0.9 is that min is not there anymore and it's replaced by ft
 
-#### TODO: Check the forward model without the non significan vars
+#### Check the model without the non significan vars
+signif_model <- lm(pts ~ min + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov, data=NbaPlayers)
+signif_model_t1 <- lm(pts ~ min + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov, data=NbaPlayers)
+signif_model_t2 <- lm(pts ~ ft + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov + gp, data=NbaPlayers)
+
+
+#### Final Model: leaving fgm, fga
+
+library( boot )
+library( boot.pval )
+
+NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
+
+### Forward
+
+## Model fitting
+f_lm_all <- lm(pts ~ ., data=NbaPlayers)
+final_step_forward <- ols_step_forward_p(f_lm_all)
+final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)
+summary(final_step_forward_model)
+
+## Estimate variance of coeff. with bootstrap
+
+forward_fun_boot <- function(data,index){
+  linear <- lm(final_step_forward_model, data = data,subset = index);
+  return (linear$coefficients)
+}
+
+forward_boot <- boot(NbaPlayers,forward_fun_boot,R = 1000)
+boot.pval(forward_boot, theta_null = rep(0, length(forward_boot$t0)))
+
+boot_summary(final_step_forward_model, R = 1000)
+
+#forward_lm_fit <- lm(final_step_forward_models$model, data=NbaPlayers)
+#forward_lm_fit <- update(forward_lm_fit, ~ . - fta - x3p_made - gp - blk)
+#summary(forward_lm_fit)
+
+
+### Backward
+
+## Model fitting
+b_lm_all <- lm(pts ~ ., data=NbaPlayers)
+final_step_backward <- ols_step_backward_p(b_lm_all)
+final_step_backward_model <- lm(final_step_backward$model, data = NbaPlayers)
+summary(final_step_backward_model)
+
+## Estimate variance of coeff. with bootstrap
+
+backward_fun_boot <- function(data,index){
+  linear <- lm(final_step_backward_model, data = data,subset = index);
+  return (linear$coefficients)
+}
+
+backward_boot <- boot(NbaPlayers,backward_fun_boot,R = 1000)
+boot.pval(backward_boot, theta_null = rep(0, length(backward_boot$t0)))
+
+boot_summary(final_step_backward_model, R = 1000)
