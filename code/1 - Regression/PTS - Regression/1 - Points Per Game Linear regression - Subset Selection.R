@@ -16,8 +16,8 @@ library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -201,9 +201,9 @@ boot.pval(forward_boot, theta_null = rep(0, length(forward_boot$t0)))
 
 boot_summary(final_step_forward_model, R = 1000)
 
-forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
-forward_lm_fit <- update(forward_lm_fit, ~ . - gp - x3p_made - blk)
-summary(forward_lm_fit)
+#forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
+#forward_lm_fit <- update(forward_lm_fit, ~ . - fta - x3p_made -gp - blk)
+#summary(forward_lm_fit)
 
 
 ### Backward
