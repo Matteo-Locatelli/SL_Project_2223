@@ -184,7 +184,7 @@ NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 ### Forward
 
 ## Model fitting
-f_lm_all <- lm(pts ~ ., data=NbaPlayers)
+f_lm_all <- lm(pts ~ . -fta, data=NbaPlayers)
 final_step_forward <- ols_step_forward_p(f_lm_all)
 final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)
 summary(final_step_forward_model)
@@ -201,10 +201,15 @@ boot.pval(forward_boot, theta_null = rep(0, length(forward_boot$t0)))
 
 boot_summary(final_step_forward_model, R = 1000)
 
-#forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
-#forward_lm_fit <- update(forward_lm_fit, ~ . - fta - x3p_made -gp - blk)
-#summary(forward_lm_fit)
+forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
+forward_lm_fit <- update(forward_lm_fit, ~ . - x3p_made -gp - blk)
+summary(forward_lm_fit)
 
+forward_lm_fit <- update(forward_lm_fit, ~ . - oreb -stl)
+summary(forward_lm_fit)
+
+forward_lm_fit <- update(forward_lm_fit, ~ . - x3p)
+summary(forward_lm_fit)
 
 ### Backward
 
