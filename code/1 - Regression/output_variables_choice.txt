@@ -4,11 +4,12 @@ To compute the linear regression and the shrinkage methods, the output
 variable must be a numeric one.
 
 This section of the project uses the dataset without the classification
-output variable "target_5yrs" and tries to explain two other output
-variables one at the time using all the other regressors:
-- "min", average of minutes played per game;
-- "pts", average of points scored per game.
+output variable "target_5yrs" and tries to explain a fictitious output
+variable using all the other regressors:
+-> "pts", average of points scored per game.
 
-The choice of this fictitious output variables was done after 
-evaluating that the other regressors could have had ah higher possibility
-to explain them.
+The choice of this fictitious output variable was done after considering
+the fact that a NBA team would buy a player mostly considering number of 
+points he scores per game.
+
+Also, the other regressors could have ah higher possibility to explain it.

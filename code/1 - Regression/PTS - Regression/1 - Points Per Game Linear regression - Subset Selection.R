@@ -16,11 +16,12 @@ library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
+# Remove rebounds
 NbaPlayers <- NbaPlayers[-15]
 
 dim(NbaPlayers)
@@ -47,9 +48,9 @@ summary(f_lm_fit)
 par(mfrow = c(1,2))
 
 # plot 1
-plot(f_lm_fit$residuals, pch = "o", col = "blue" ,
-     ylab = "Residual", main = paste0("Residual plot - mean:",round(mean(f_lm_fit$residuals),digits = 4),
-                                      "- var:", round(var(f_lm_fit$residuals),digits = 2)))
+plot(f_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
+     main = paste0("Residual plot - mean:",round(mean(f_lm_fit$residuals),digits = 4),
+     "- var:", round(var(f_lm_fit$residuals),digits = 2)))
 abline(c(0,0),c(0,length(f_lm_fit$residuals)), col= "red", lwd = 2)
 
 # plot 2 
@@ -76,9 +77,9 @@ summary(b_lm_fit)
 par(mfrow = c(1,2))
 
 # plot 1
-plot(b_lm_fit$residuals, pch = "o", col = "blue" ,
-     ylab = "Residual", main = paste0("Residual plot - mean:",round(mean(b_lm_fit$residuals),digits = 4),
-                                      "- var:", round(var(b_lm_fit$residuals),digits = 2)))
+plot(b_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
+     main = paste0("Residual plot - mean:",round(mean(b_lm_fit$residuals),digits = 4),
+     "- var:", round(var(b_lm_fit$residuals),digits = 2)))
 abline(c(0,0),c(0,length(b_lm_fit$residuals)), col= "red", lwd = 2)
 
 # plot 2 
@@ -86,46 +87,32 @@ hist(b_lm_fit$residuals,40,
      xlab = "Residual",
      main = "Distribuzione empirica dei residui") 
 
-
-## Models comparison
-
-# defining training control as Leave One Out Cross Validation
-train_control <- trainControl(method = "LOOCV")
-
-f_lm_fit_cv <- train(pts ~ fgm + ftm + x3p_made + fga + fg + fta + ft + 
-                 x3pa + ast + x3p, data = NbaPlayers,
-               method = "lm",
-               trControl = train_control)
-
-b_lm_fit_cv <- train(pts ~ min + fgm + fga + fg + x3p_made + x3pa + x3p + 
-                       ftm + fta + ft + reb, data = NbaPlayers,
-                     method = "lm",
-                     trControl = train_control)
-
-
 ## Further analysis on the fitted models
 
 # Stepwise Forward Regression
 f_step_reg <- ols_step_forward_p(f_lm_fit_all)
-plot(f_step_reg)
 summary(f_step_reg$model)
+#plot(f_step_reg)
 
 # Stepwise Backward Regression
 b_step_reg <- ols_step_backward_p(b_lm_fit_all)
-plot(b_step_reg)
 summary(b_step_reg$model)
+#plot(b_step_reg)
 
-# Backward contains oreb and dreb that are not inlcuded in forward
-# Forward contains tov  that is not included in backward
+# Forward contains dreb & ast that is not included in backward
+# Backward contains oreb that are not included in forward
 
 # Stepwise Regression
 both_lm_fit_all <- lm(pts ~ ., data=NbaPlayers)
 step_reg <- ols_step_both_p(both_lm_fit_all)
-plot(step_reg)
+summary(step_reg$model)
+#plot(step_reg)
+
+# f_reg: -blk, -min, -dreb
+# b_reg: +ast, -min, -oreb, -blk 
 
 
 #### Subset selection with variables omitting
-
 
 ### Compute the R_squared for each variable
 
@@ -146,8 +133,10 @@ for(i in 1:dim(NbaPlayers)[2]){
 }
 
 thresholds = c(0.9,0.8) # We stop at 0.8 otherwise we would ho down to 0.5 as R^2
+
 step_forward_models <- vector(mode = "list", length = 2)
 step_backward_models <- vector(mode = "list", length = 2)
+
 for(i in 1:2){
   colSelection <- c(all_regressors[r_squared_array <= thresholds[i]], "pts")
   SubNbaPlayers <- NbaPlayers[colSelection]
@@ -164,8 +153,8 @@ summary(step_forward_models[[1]]$model)
 sprintf('## step backward model:')
 summary(step_backward_models[[1]]$model)
 
-# Forward has two more variables: fta - x3p_made. All the others are the same
-# the additional variables in the forward are not significant
+# Forward has one more variables: x3p_made. All the others are the same.
+# The additional variable in the forward is not significant.
 
 sprintf('### Threshold: %f', thresholds[2])
 sprintf('## step forward model:')
@@ -173,11 +162,13 @@ summary(step_forward_models[[2]]$model)
 sprintf('## step backward model:')
 summary(step_backward_models[[2]]$model)
 
-# Forward has two more variables: fta - x3p_made. All the others are the same
-# the additional variables in the forward are not significant
-# The difference btw threshold 0.9 is that min is not there anymore and it's replaced by ft
+# Forward has one more variables: x3p_made. All the others are the same
+# The additional variable in the forward is not significant
 
-#### Check the model without the non significan vars
+# The difference btw threshold 0.9 is that min is not there anymore and it has 
+# been replaced by ft in both models
+
+#### Check the model without the non significant variables
 signif_model <- lm(pts ~ min + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov, data=NbaPlayers)
 signif_model_t1 <- lm(pts ~ min + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov, data=NbaPlayers)
 signif_model_t2 <- lm(pts ~ ft + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov + gp, data=NbaPlayers)
@@ -198,21 +189,21 @@ final_step_forward <- ols_step_forward_p(f_lm_all)
 final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)
 summary(final_step_forward_model)
 
-## Estimate variance of coeff. with bootstrap
+## Estimate variance of coefficients with bootstrap
 
 forward_fun_boot <- function(data,index){
-  linear <- lm(final_step_forward_model, data = data,subset = index);
+  linear <- lm(final_step_forward_model, data = data, subset = index);
   return (linear$coefficients)
 }
 
-forward_boot <- boot(NbaPlayers,forward_fun_boot,R = 1000)
+forward_boot <- boot(NbaPlayers, forward_fun_boot, R = 1000)
 boot.pval(forward_boot, theta_null = rep(0, length(forward_boot$t0)))
 
 boot_summary(final_step_forward_model, R = 1000)
 
-#forward_lm_fit <- lm(final_step_forward_models$model, data=NbaPlayers)
-#forward_lm_fit <- update(forward_lm_fit, ~ . - fta - x3p_made - gp - blk)
-#summary(forward_lm_fit)
+forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
+forward_lm_fit <- update(forward_lm_fit, ~ . - gp - x3p_made - blk)
+summary(forward_lm_fit)
 
 
 ### Backward
@@ -223,7 +214,7 @@ final_step_backward <- ols_step_backward_p(b_lm_all)
 final_step_backward_model <- lm(final_step_backward$model, data = NbaPlayers)
 summary(final_step_backward_model)
 
-## Estimate variance of coeff. with bootstrap
+## Estimate variance of coefficients with bootstrap
 
 backward_fun_boot <- function(data,index){
   linear <- lm(final_step_backward_model, data = data,subset = index);

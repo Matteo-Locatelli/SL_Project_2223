@@ -6,6 +6,7 @@ rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
 ### Add Libraries
+library(corrplot)
 set.seed(1) # seed for random number generator
 
 # set working directory
@@ -18,6 +19,8 @@ dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
 
+NbaPlayers.cor <- cor(NbaPlayers)
+corrplot(NbaPlayers.cor)
 
 ### Simple Linear Regression
 
@@ -35,10 +38,11 @@ predict(lm_fit, data.frame(min = (c(10, 15, 20, 25, 30))),
         interval = "confidence")
 
 # Plot linear regression results
-plot(NbaPlayers$min, NbaPlayers$pts, pch = "+", ylab = "pts - points scored per game", 
-       xlab = "min - minutes played per game", 
-       main = "Linear regression")
-legend("topright",legend=c("Sampling point"),pch = "+")
+plot(NbaPlayers$min, NbaPlayers$pts, pch = "+", 
+     ylab = "pts - points scored per game", 
+     xlab = "min - minutes played per game", 
+     main = "Linear regression")
+legend("topright", legend=c("Sampling point"), pch = "+")
 
 # Add predicted value 
 abline(lm_fit, lwd = 3, col = "red")
@@ -47,6 +51,8 @@ abline(lm_fit, lwd = 3, col = "red")
 par(mfrow = c(2, 2))
 plot(lm_fit)
 # A strong pattern in the residuals indicates non-linearity in the data
+par(mfrow = c (1,1))
+plot (residuals(lm_fit))
 # plot(predict(lm.fit), residuals(lm.fit))
 # plot(predict(lm.fit), rstudent(lm.fit))
 
@@ -81,7 +87,8 @@ summary(lm_fit)
 confint(lm_fit, level = 0.98)
 
 # Plot linear regression results
-plot(NbaPlayers$fga, NbaPlayers$pts, pch = "+", ylab = "pts - Points Scored Per Game", 
+plot(NbaPlayers$fga, NbaPlayers$pts, pch = "+", 
+     ylab = "pts - Points Scored Per Game", 
      xlab = "fga - Field Goal Attempt", 
      main = "Linear regression")
 legend("topright",legend=c("Sampling point"),pch = "+")
@@ -97,21 +104,25 @@ plot(lm_fit)
 par(mfrow = c(1,2))
 
 # plot 1
-plot(lm_fit$residuals, pch = "o", col = "blue" ,
-     ylab = "Residual", main = paste0("Residual plot - mean:",round(mean(lm_fit$residuals),digits = 4),
-                                      "- var:", round(var(lm_fit$residuals),digits = 2)))
+plot(lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
+     main = paste0("Residual plot - mean:", round(mean(lm_fit$residuals), digits = 4),
+                    "- var:", round(var(lm_fit$residuals),digits = 2)))
 abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 2)
 
 # plot 2 
-hist(lm_fit$residuals,40,
+hist(lm_fit$residuals, 40,
      xlab = "Residual",
      main = "Distribuzione empirica dei residui") 
 
 
-## Model fitted with the most important variables
+## Model fitted with the most important variables for pts
+
 lm_fit <- lm(pts ~ fgm + x3p_made + ftm, data=NbaPlayers)
 summary(lm_fit) # There is a linear combination: pts = 2*fgm + x3p_made + ftm
+
 max(lm_fit$residuals)
+
 y_hat <- 2*(NbaPlayers['fgm'] - NbaPlayers['x3p_made']) + 3*NbaPlayers['x3p_made'] + NbaPlayers['ftm']
-max(NbaPlayers['pts'] - y_hat)
 summary(lm(fga ~ fgm - 1, data=NbaPlayers))
+
+max(NbaPlayers['pts'] - y_hat)
