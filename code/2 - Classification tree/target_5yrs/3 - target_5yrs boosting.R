@@ -31,25 +31,28 @@ hist(NbaPlayers$target_5yrs)
 ### Boosting
 set.seed(1)
 
-train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.7))
+train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.75))
 
 # Tune ntrees, depth, shrinkage -> many small trees
 ntrees = 5000
 boost_model <- gbm(target_5yrs ~ . , data = NbaPlayers[train,], 
                    distribution = "bernoulli" , n.trees = ntrees, cv.folds = 5,
-                   interaction.depth = 5, shrinkage = 0.01 , verbose = F)
+                   interaction.depth = 5, shrinkage = 0.001 , verbose = F)
 boost_model
+# Plot influence of each variable
 summary(boost_model)
 #plot(boost_model, i = "gp")
 best_iter = gbm.perf(boost_model, method="cv")
-plot.gbm(boost_model, "gp", best_iter)
+summary(boost_model, n.trees = best_iter)
+#plot.gbm(boost_model, "gp", best_iter)
+print(pretty.gbm.tree(boost_model, i.tree = best_iter))
 
 boost_pred <- predict(boost_model, newdata = NbaPlayers[-train,], n.trees = ntrees)
 plot(boost_pred, NbaPlayers$target[-train])
-boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) # -> boost_model$confusion
+boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) 
 boost_table
-boosting.test.err.rate = (boost_table[1,2] + boost_table[2,1])/ sum(boost_table)
-boosting.test.err.rate
+# boosting.test.err.rate = (boost_table[1,2] + boost_table[2,1])/ sum(boost_table)
+# boosting.test.err.rate
 
 boxplot(NbaPlayers$gp, main="NbaPlayers gp")
 boxplot(NbaPlayers$fg, main="NbaPlayers fg")
