@@ -28,11 +28,11 @@ names(NbaPlayers)
 head(NbaPlayers)
 hist(NbaPlayers$target_5yrs)
 
+train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
+
 
 ### Bagging
 set.seed(1)
-
-train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
 
 bagg_model <- randomForest(target ~ . -target_5yrs ,data = NbaPlayers, subset = train,
                            mtry = ncol(NbaPlayers) - 2, ntree = 200, 
@@ -146,14 +146,20 @@ set.seed(3)
 # Tune ntrees, depth, shrinkage -> many small trees
 ntrees = 5000
 boost_model <- gbm(target ~ . -target_5yrs, data = NbaPlayers[train,], 
-                   distribution = "gaussian", n.trees = ntrees,
-                   interaction.depth = 4, shrinkage = 0.01 , verbose = F)
+                   distribution = "gaussian", n.trees = ntrees, cv.folds = 5,
+                   interaction.depth = 4, shrinkage = 0.001 , verbose = F)
 boost_model
 summary(boost_model)
 plot(boost_model, i="gp")
 
-boost_pred <- predict(boost_model, newdata = NbaPlayers[-train,], n.trees = ntrees)
+best_iter = gbm.perf(boost_model, method="cv")
+summary(boost_model, n.trees = best_iter)
+
+boost_pred <- predict.gbm(boost_model, newdata = NbaPlayers[-train,], 
+                          n.trees = ntrees, type = "response")
 plot(boost_pred, NbaPlayers$target[-train])
+boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) 
+boost_table
 
 train_NbaPlayers = NbaPlayers[train, ]
 test_NbaPlayers = NbaPlayers[-train, ]
@@ -179,3 +185,27 @@ boxplot(NbaPlayers$ft, main="NbaPlayers ft")
 boxplot(NbaPlayers$min, main="NbaPlayers min")
 
 # boxplot(target ~ gp, data = NbaPlayers, main="NbaPlayers gp")
+
+
+### Compute boosting classification error rate
+
+threshold = 0.5
+
+result = data.frame(NbaPlayers[-train,]$target_5yrs, boost_pred)
+# print(result)
+
+pred_with_th = ifelse(boost_pred < threshold , 0 , 1 )
+# print(pred_with_th)
+
+result_with_th = data.frame(NbaPlayers[-train,]$target_5yrs, pred_with_th)
+# print(result_with_th)
+
+y_neg_pred_neg = sum(NbaPlayers[-train,]$target_5yrs == 0 & pred_with_th == 0)
+y_neg_pred_pos = sum(NbaPlayers[-train,]$target_5yrs == 0 & pred_with_th == 1)
+y_pos_pred_neg = sum(NbaPlayers[-train,]$target_5yrs == 1 & pred_with_th == 0)
+y_pos_pred_pos = sum(NbaPlayers[-train,]$target_5yrs == 1 & pred_with_th == 1)
+sum = y_neg_pred_neg + y_neg_pred_pos + y_pos_pred_neg + y_pos_pred_pos
+
+# Misclassification error rare
+err = (y_neg_pred_pos + y_pos_pred_neg)/(sum)
+err
