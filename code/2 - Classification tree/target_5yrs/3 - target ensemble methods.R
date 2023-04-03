@@ -194,7 +194,8 @@ threshold = 0.5
 result = data.frame(NbaPlayers[-train,]$target_5yrs, boost_pred)
 # print(result)
 
-pred_with_th = ifelse(boost_pred < threshold , 0 , 1 )
+# Put the values of boost_pred between 0 and 1, then threshold
+pred_with_th = ifelse(boost_pred - min(boost_pred) < threshold , 0 , 1 )
 # print(pred_with_th)
 
 result_with_th = data.frame(NbaPlayers[-train,]$target_5yrs, pred_with_th)
