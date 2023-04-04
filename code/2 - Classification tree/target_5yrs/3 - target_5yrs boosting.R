@@ -13,8 +13,8 @@ library(caret)
 library(ellipse)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -36,7 +36,7 @@ train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
 # Tune ntrees, depth, shrinkage -> many small trees
 ntrees = 5000
 boost_model <- gbm(target_5yrs ~ . , data = NbaPlayers[train,], 
-                   distribution = "bernoulli" , n.trees = ntrees, cv.folds = 5,
+                   distribution = "bernoulli" , n.trees = ntrees, cv.folds = 10,
                    interaction.depth = 5, shrinkage = 0.001 , verbose = F)
 boost_model
 
@@ -50,11 +50,14 @@ print(pretty.gbm.tree(boost_model, i.tree = best_iter))
 
 boost_pred <- predict.gbm(boost_model, newdata = NbaPlayers[-train,], 
                           n.trees = ntrees, type = "response")
-plot(boost_pred, NbaPlayers$target[-train])
+boost_pred <- round(boost_pred)
+plot(boost_pred, NbaPlayers$target_5yrs[-train])
 boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) 
 boost_table
 # boosting.test.err.rate = (boost_table[1,2] + boost_table[2,1])/ sum(boost_table)
 # boosting.test.err.rate
+
+cm = confusionMatrix(reference = as.factor(NbaPlayers$target_5yrs[-train]), data = as.factor(boost_pred))
 
 boxplot(NbaPlayers$gp, main="NbaPlayers gp")
 boxplot(NbaPlayers$fg, main="NbaPlayers fg")
@@ -86,3 +89,4 @@ sum = y_neg_pred_neg + y_neg_pred_pos + y_pos_pred_neg + y_pos_pred_pos
 # Misclassification error rare
 err = (y_neg_pred_pos + y_pos_pred_neg)/(sum)
 err
+
