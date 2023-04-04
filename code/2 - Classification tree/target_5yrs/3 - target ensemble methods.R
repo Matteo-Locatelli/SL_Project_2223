@@ -150,16 +150,25 @@ boost_model <- gbm(target ~ . -target_5yrs, data = NbaPlayers[train,],
                    interaction.depth = 4, shrinkage = 0.001 , verbose = F)
 boost_model
 summary(boost_model)
-plot(boost_model, i="gp")
+#plot(boost_model, i="gp")
 
 best_iter = gbm.perf(boost_model, method="cv")
 summary(boost_model, n.trees = best_iter)
+print(pretty.gbm.tree(boost_model, i.tree = best_iter))
+#plot.gbm(boost_model, "gp", best_iter)
 
 boost_pred <- predict.gbm(boost_model, newdata = NbaPlayers[-train,], 
                           n.trees = ntrees, type = "response")
+boost_pred <- round(boost_pred - min(boost_pred))
 plot(boost_pred, NbaPlayers$target[-train])
 boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) 
 boost_table
+
+# Column types as categorical factors (not numeric)
+cm = confusionMatrix(reference = as.factor(NbaPlayers$target_5yrs[-train]), 
+                     data = as.factor(boost_pred))
+
+## Various plots
 
 train_NbaPlayers = NbaPlayers[train, ]
 test_NbaPlayers = NbaPlayers[-train, ]
