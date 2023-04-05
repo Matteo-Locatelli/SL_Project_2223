@@ -13,8 +13,8 @@ library(caret)
 library(ellipse)
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -43,10 +43,11 @@ boost_model
 # Plot influence of each variable
 summary(boost_model)
 #plot(boost_model, i = "gp")
+
 best_iter = gbm.perf(boost_model, method="cv")
 summary(boost_model, n.trees = best_iter)
-#plot.gbm(boost_model, "gp", best_iter)
 print(pretty.gbm.tree(boost_model, i.tree = best_iter))
+#plot.gbm(boost_model, "gp", best_iter)
 
 boost_pred <- predict.gbm(boost_model, newdata = NbaPlayers[-train,], 
                           n.trees = ntrees, type = "response")
@@ -54,10 +55,12 @@ boost_pred <- round(boost_pred)
 plot(boost_pred, NbaPlayers$target_5yrs[-train])
 boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) 
 boost_table
-# boosting.test.err.rate = (boost_table[1,2] + boost_table[2,1])/ sum(boost_table)
-# boosting.test.err.rate
 
-cm = confusionMatrix(reference = as.factor(NbaPlayers$target_5yrs[-train]), data = as.factor(boost_pred))
+# Column types as categorical factors (not numeric)
+cm = confusionMatrix(reference = as.factor(NbaPlayers$target_5yrs[-train]), 
+                     data = as.factor(boost_pred))
+
+## Plots 
 
 boxplot(NbaPlayers$gp, main="NbaPlayers gp")
 boxplot(NbaPlayers$fg, main="NbaPlayers fg")
