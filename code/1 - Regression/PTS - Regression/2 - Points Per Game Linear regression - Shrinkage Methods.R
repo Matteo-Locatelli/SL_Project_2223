@@ -146,8 +146,12 @@ summary(ridge_optimal_lm[[2]])
 
 #### Final Model: leaving fgm, fga
 
+#install.packages("remotes")
+#remotes::install_github("pbreheny/hdrm")
+
 library( boot )
 library( boot.pval )
+library( glmnetSE )
 
 NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
@@ -175,3 +179,17 @@ lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
 
 beta_lasso = coef(lasso_model)[-1]
 fixedLassoInf(x[train,],y[train],beta = beta_lasso,lambda = lasso_cv_model$lambda.min)
+
+## Estimate variance of coefficients with bootstrap
+
+lasso_fun_boot <- function(data,index){
+  glmnet_model <- glmnet(data[index,-dim(data)[2]],data[index,dim(data)[2]],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE,subset = index)
+  return (coef(glmnet_model)[-1])
+}
+
+data = cbind(y[train],x[train,])
+lasso_boot <- boot(data,lasso_fun_boot,R = 1000)
+boot.pval(lasso_boot, theta_null = rep(0, length(lasso_boot$t0)))
+
+boot_lasso_model <- glmnetSE(data=data, cf.no.shrnkg = colnames(x), alpha=1, r=1000, perf.metric = "mse")
+summary(boot_lasso_model)
