@@ -159,7 +159,7 @@ print(pretty.gbm.tree(boost_model, i.tree = best_iter))
 
 boost_pred <- predict.gbm(boost_model, newdata = NbaPlayers[-train,], 
                           n.trees = ntrees, type = "response")
-boost_pred <- round(boost_pred - min(boost_pred))
+boost_pred <- round(boost_pred)
 
 plot(boost_pred, NbaPlayers$target[-train])
 boost_table = table(boost_pred, NbaPlayers$target_5yrs[-train]) 
