@@ -7,6 +7,7 @@ graphics.off()  # close all plot
 
 library ( boot )
 library( glmnet )
+library( selectiveInference )
 set.seed (1)
 
 # set working directory
@@ -150,6 +151,9 @@ library( boot.pval )
 
 NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
+x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
+y <- NbaPlayers$pts
+
 set.seed(1)
 train <- sample(dim(x)[1],floor(dim(x)[1]*0.8),replace = FALSE)
 
@@ -168,3 +172,6 @@ plot(lasso_cv_model)
 lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
 lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
 lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
+
+beta_lasso = coef(lasso_model)[-1]
+fixedLassoInf(x[train,],y[train],beta = beta_lasso,lambda = lasso_cv_model$lambda.min)
