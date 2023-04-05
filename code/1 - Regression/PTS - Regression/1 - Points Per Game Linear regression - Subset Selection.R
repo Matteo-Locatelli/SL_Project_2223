@@ -16,17 +16,19 @@ library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
-# Remove rebounds
-NbaPlayers <- NbaPlayers[-15]
+# Remove rebounds and categorical variable
+NbaPlayers <- subset(NbaPlayers, select = c(-reb, -target_5yrs))
 
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
+hist(NbaPlayers$pts)
+
 
 ### Subset Selection
 
@@ -87,7 +89,8 @@ hist(b_lm_fit$residuals,40,
      xlab = "Residual",
      main = "Distribuzione empirica dei residui") 
 
-## Further analysis on the fitted models
+
+### Further analysis on the fitted models
 
 # Stepwise Forward Regression
 f_step_reg <- ols_step_forward_p(f_lm_fit_all)
@@ -114,7 +117,7 @@ summary(step_reg$model)
 
 #### Subset selection with variables omitting
 
-### Compute the R_squared for each variable
+## Compute the R_squared for each variable
 
 y <- array(unlist(NbaPlayers[3]))
 all_regressors <- colnames(NbaPlayers[-3])
@@ -131,6 +134,8 @@ for(i in 1:dim(NbaPlayers)[2]){
     j <- j + 1
   }
 }
+
+## Compute models with thresholds of correlation with pts
 
 thresholds = c(0.9,0.8) # We stop at 0.8 otherwise we would ho down to 0.5 as R^2
 
@@ -168,6 +173,7 @@ summary(step_backward_models[[2]]$model)
 # The difference btw threshold 0.9 is that min is not there anymore and it has 
 # been replaced by ft in both models
 
+
 #### Check the model without the non significant variables
 signif_model <- lm(pts ~ min + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov, data=NbaPlayers)
 signif_model_t1 <- lm(pts ~ min + fg + x3pa + x3p + ftm + oreb + dreb + ast + stl + tov, data=NbaPlayers)
@@ -181,15 +187,16 @@ library( boot.pval )
 
 NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
-### Forward
+## Forward
 
-## Model fitting
+# Model fitting
+
 f_lm_all <- lm(pts ~ . -fta, data=NbaPlayers)
 final_step_forward <- ols_step_forward_p(f_lm_all)
 final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)
 summary(final_step_forward_model)
 
-## Estimate variance of coefficients with bootstrap
+# Estimate variance of coefficients with bootstrap
 
 forward_fun_boot <- function(data,index){
   linear <- lm(final_step_forward_model, data = data, subset = index);
@@ -201,7 +208,11 @@ boot.pval(forward_boot, theta_null = rep(0, length(forward_boot$t0)))
 
 boot_summary(final_step_forward_model, R = 1000)
 
+# Remove not significant variables
+
 forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
+summary(forward_lm_fit)
+
 forward_lm_fit <- update(forward_lm_fit, ~ . - x3p_made -gp - blk)
 summary(forward_lm_fit)
 
@@ -211,15 +222,31 @@ summary(forward_lm_fit)
 forward_lm_fit <- update(forward_lm_fit, ~ . - x3p)
 summary(forward_lm_fit)
 
-### Backward
+# Plots
 
-## Model fitting
+par(mfrow = c(1,2))
+
+plot(forward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
+     main = paste0("Residual plot - mean:",round(mean(forward_lm_fit$residuals),digits = 4),
+                   "- var:", round(var(forward_lm_fit$residuals),digits = 2)))
+
+abline(c(0,0),c(0,length(forward_lm_fit$residuals)), col= "red", lwd = 2)
+
+hist(forward_lm_fit$residuals,40,
+     xlab = "Residual",
+     main = "Distribuzione empirica dei residui") 
+
+
+## Backward
+
+# Model fitting
+
 b_lm_all <- lm(pts ~ ., data=NbaPlayers)
 final_step_backward <- ols_step_backward_p(b_lm_all)
 final_step_backward_model <- lm(final_step_backward$model, data = NbaPlayers)
 summary(final_step_backward_model)
 
-## Estimate variance of coefficients with bootstrap
+# Estimate variance of coefficients with bootstrap
 
 backward_fun_boot <- function(data,index){
   linear <- lm(final_step_backward_model, data = data,subset = index);
@@ -230,3 +257,28 @@ backward_boot <- boot(NbaPlayers,backward_fun_boot,R = 1000)
 boot.pval(backward_boot, theta_null = rep(0, length(backward_boot$t0)))
 
 boot_summary(final_step_backward_model, R = 1000)
+
+# Remove not significant variables
+
+backward_lm_fit <- lm(final_step_backward_model$model, data=NbaPlayers)
+summary(backward_lm_fit)
+
+backward_lm_fit <- update(backward_lm_fit, ~ . -gp - blk)
+summary(backward_lm_fit)
+
+backward_lm_fit <- update(backward_lm_fit, ~ . -oreb - stl)
+summary(backward_lm_fit)
+
+# Plots
+
+par(mfrow = c(1,2))
+
+plot(backward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
+     main = paste0("Residual plot - mean:",round(mean(backward_lm_fit$residuals),digits = 4),
+                   "- var:", round(var(backward_lm_fit$residuals),digits = 2)))
+
+abline(c(0,0),c(0,length(backward_lm_fit$residuals)), col= "red", lwd = 2)
+
+hist(backward_lm_fit$residuals,40,
+     xlab = "Residual",
+     main = "Distribuzione empirica dei residui")

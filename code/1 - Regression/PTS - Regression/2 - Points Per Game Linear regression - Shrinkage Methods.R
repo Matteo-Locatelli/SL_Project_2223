@@ -11,15 +11,18 @@ library( selectiveInference )
 set.seed (1)
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
+# Pre-processing of the dataset: removing rebounds
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
-NbaPlayers <- NbaPlayers[-15]
+NbaPlayers <- subset(NbaPlayers, select = c(-reb))
 
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
+hist(NbaPlayers$pts)
+
 
 ### Shrinkage with full dataset
 
