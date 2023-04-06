@@ -149,8 +149,43 @@ hist(lm_fit_imp$residuals, 40,
 
 
 ### Evaluate linear dependency on pts
-y_hat <- 2*(NbaPlayers['fgm'] - NbaPlayers['x3p_made']) + 3*NbaPlayers['x3p_made'] + NbaPlayers['ftm']
+y_hat_pts <- 2*(NbaPlayers['fgm'] - NbaPlayers['x3p_made']) + 
+             3*NbaPlayers['x3p_made'] + NbaPlayers['ftm']
 summary(lm(fga ~ fgm - 1, data=NbaPlayers))
 
-max(NbaPlayers['pts'] - y_hat)
+max(NbaPlayers['pts'] - y_hat_pts)
 
+
+### Model fitted to explain linear dependency on rebounsds
+
+lm_fit_reb <- lm(reb ~ oreb + dreb, data=NbaPlayers)
+summary(lm_fit_reb) # There is a linear combination: reb = oreb + dreb
+
+max(lm_fit_reb$residuals)
+
+# Compute confident interval (CI) on coefficient
+confint(lm_fit_reb, level = 0.98)
+
+#  Create Subplot region  
+par(mfrow = c(2, 2))
+plot(lm_fit_reb)
+
+# plot residual
+par(mfrow = c(1,2))
+
+# plot 1
+plot(lm_fit_reb$residuals, pch = "o", col = "blue" , ylab = "Residual", 
+     main = paste0("Residual plot - mean:", round(mean(lm_fit_reb$residuals), digits = 4),
+                   "- var:", round(var(lm_fit_reb$residuals),digits = 2)))
+abline(c(0,0),c(0,length(lm_fit_reb$residuals)), col= "red", lwd = 2)
+
+# plot 2 
+hist(lm_fit_reb$residuals, 40,
+     xlab = "Residual",
+     main = "Distribuzione empirica dei residui") 
+
+
+### Evaluate linear dependency on reb
+y_hat_reb <- NbaPlayers['oreb'] + NbaPlayers['dreb']
+
+max(NbaPlayers['reb'] - y_hat_reb)
