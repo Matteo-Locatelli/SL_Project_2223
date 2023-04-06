@@ -15,7 +15,6 @@ setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL
 
 # Pre-processing of the dataset
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
-#NbaPlayers <- subset(NbaPlayers, select = c(-target_5yrs))
 
 dim(NbaPlayers)
 names(NbaPlayers)
@@ -55,9 +54,17 @@ par(mfrow = c(2, 2))
 plot(lm_fit)
 # A strong pattern in the residuals indicates non-linearity in the data
 par(mfrow = c (1,1))
-plot (residuals(lm_fit))
+plot (residuals(lm_fit), pch = "o", col = "blue" , ylab = "Residuals", 
+      main = paste0("Residuals plot: mean=", round(mean(lm_fit$residuals), digits = 4),
+                    " & var=", round(var(lm_fit$residuals),digits = 2)))
+abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 3)
+
 # plot(predict(lm.fit), residuals(lm.fit))
 # plot(predict(lm.fit), rstudent(lm.fit))
+
+hist(lm_fit$residuals, 40,
+     xlab = "Residuals",
+     main = "Residuals empirical distribution") 
 
 
 ### Check if there is a better regressor then min
@@ -78,8 +85,15 @@ for(i in 1:dim(NbaPlayers)[2]){
   }
 }
 
-plot(factor(all_regressors), r_squared_array)
-plot(factor(all_regressors), mse)
+par(mfrow = c (1,1))
+plot(factor(all_regressors), r_squared_array, 
+     ylab = "R squared", 
+     xlab = "Regressor", 
+     main = "R squared of linear regression with pts")
+plot(factor(all_regressors), mse, 
+     ylab = "Mse", 
+     xlab = "Regressor", 
+     main = "Mse of linear regression with pts")
 
 
 ### Fit Linear Model with best regressor: pts = b0 + b1*fga + e
@@ -108,15 +122,15 @@ plot(lm_fit)
 # plot residual
 par(mfrow = c(1,2))
 
-plot(lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:", round(mean(lm_fit$residuals), digits = 4),
-                    "- var:", round(var(lm_fit$residuals),digits = 2)))
+plot(lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residuals", 
+     main = paste0("Residuals plot: mean=", round(mean(lm_fit$residuals), digits = 4),
+                    " & var=", round(var(lm_fit$residuals),digits = 2)))
 
 abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 2)
 
 hist(lm_fit$residuals, 40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
+     main = "Residuals empirical distribution") 
 
 
 ### Model fitted with the most important variables for pts
@@ -138,17 +152,18 @@ par(mfrow = c(1,2))
 
 # plot 1
 plot(lm_fit_imp$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:", round(mean(lm_fit_imp$residuals), digits = 4),
-                   "- var:", round(var(lm_fit_imp$residuals),digits = 2)))
-abline(c(0,0),c(0,length(lm_fit_imp$residuals)), col= "red", lwd = 2)
+     main = paste0("Residuals plot: mean= ", round(mean(lm_fit_imp$residuals), digits = 4),
+                   " & var=", round(var(lm_fit_imp$residuals),digits = 2)))
+abline(c(0,0),c(0,length(lm_fit_imp$residuals)), col= "red", lwd = 3)
 
 # plot 2 
 hist(lm_fit_imp$residuals, 40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
+     main = "Residuals empirical distribution") 
 
 
 ### Evaluate linear dependency on pts
+
 y_hat_pts <- 2*(NbaPlayers['fgm'] - NbaPlayers['x3p_made']) + 
              3*NbaPlayers['x3p_made'] + NbaPlayers['ftm']
 summary(lm(fga ~ fgm - 1, data=NbaPlayers))
@@ -156,7 +171,7 @@ summary(lm(fga ~ fgm - 1, data=NbaPlayers))
 max(NbaPlayers['pts'] - y_hat_pts)
 
 
-### Model fitted to explain linear dependency on rebounsds
+### Model fitted to explain linear dependency on rebounds
 
 lm_fit_reb <- lm(reb ~ oreb + dreb, data=NbaPlayers)
 summary(lm_fit_reb) # There is a linear combination: reb = oreb + dreb
@@ -174,15 +189,15 @@ plot(lm_fit_reb)
 par(mfrow = c(1,2))
 
 # plot 1
-plot(lm_fit_reb$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:", round(mean(lm_fit_reb$residuals), digits = 4),
-                   "- var:", round(var(lm_fit_reb$residuals),digits = 2)))
-abline(c(0,0),c(0,length(lm_fit_reb$residuals)), col= "red", lwd = 2)
+plot(lm_fit_reb$residuals, pch = "o", col = "blue" , ylab = "Residuals", 
+     main = paste0("Residuals plot: mean=", round(mean(lm_fit_reb$residuals), digits = 4),
+                   " & var=", round(var(lm_fit_reb$residuals),digits = 2)))
+abline(c(0,0),c(0,length(lm_fit_reb$residuals)), col= "red", lwd = 3)
 
 # plot 2 
 hist(lm_fit_reb$residuals, 40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
+     main = "Residuals empirical distribution") 
 
 
 ### Evaluate linear dependency on reb

@@ -22,12 +22,14 @@ setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
 # Remove rebounds and categorical variable
-NbaPlayers <- subset(NbaPlayers, select = c(-reb, -target_5yrs))
+NbaPlayers <- subset(NbaPlayers, select = c(-reb))
 
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
-hist(NbaPlayers$pts)
+hist(NbaPlayers$pts,
+     xlab = "pts - Points per game",
+     main = "pts histogram")
 
 
 ### Subset Selection
@@ -51,14 +53,14 @@ par(mfrow = c(1,2))
 
 # plot 1
 plot(f_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:",round(mean(f_lm_fit$residuals),digits = 4),
-     "- var:", round(var(f_lm_fit$residuals),digits = 2)))
-abline(c(0,0),c(0,length(f_lm_fit$residuals)), col= "red", lwd = 2)
+     main = paste0("Residuals plot: mean=",round(mean(f_lm_fit$residuals),digits = 4),
+     " & var=", round(var(f_lm_fit$residuals),digits = 2)))
+abline(c(0,0),c(0,length(f_lm_fit$residuals)), col= "red", lwd = 3)
 
 # plot 2 
 hist(f_lm_fit$residuals,40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
+     main = "Residuals empirical distribution") 
 
 
 ## Backward stepwise
@@ -80,14 +82,14 @@ par(mfrow = c(1,2))
 
 # plot 1
 plot(b_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:",round(mean(b_lm_fit$residuals),digits = 4),
-     "- var:", round(var(b_lm_fit$residuals),digits = 2)))
-abline(c(0,0),c(0,length(b_lm_fit$residuals)), col= "red", lwd = 2)
+     main = paste0("Residuals plot: mean=",round(mean(b_lm_fit$residuals),digits = 4),
+     " & var=", round(var(b_lm_fit$residuals),digits = 2)))
+abline(c(0,0),c(0,length(b_lm_fit$residuals)), col= "red", lwd = 3)
 
 # plot 2 
 hist(b_lm_fit$residuals,40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
+     main = "Residuals empirical distribution") 
 
 
 ### Further analysis on the fitted models
@@ -193,6 +195,7 @@ NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
 f_lm_all <- lm(pts ~ . -fta, data=NbaPlayers)
 final_step_forward <- ols_step_forward_p(f_lm_all)
+summary(final_step_forward)
 final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)
 summary(final_step_forward_model)
 
@@ -226,15 +229,14 @@ summary(forward_lm_fit)
 
 par(mfrow = c(1,2))
 
-plot(forward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:",round(mean(forward_lm_fit$residuals),digits = 4),
-                   "- var:", round(var(forward_lm_fit$residuals),digits = 2)))
-
-abline(c(0,0),c(0,length(forward_lm_fit$residuals)), col= "red", lwd = 2)
+plot(forward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residuals", 
+     main = paste0("Residuals plot: mean=",round(mean(forward_lm_fit$residuals),digits = 4),
+                   " & var=", round(var(forward_lm_fit$residuals),digits = 2)))
+abline(c(0,0),c(0,length(forward_lm_fit$residuals)), col= "red", lwd = 3)
 
 hist(forward_lm_fit$residuals,40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui") 
+     main = "Residuals empirical distribution") 
 
 
 ## Backward
@@ -273,12 +275,12 @@ summary(backward_lm_fit)
 
 par(mfrow = c(1,2))
 
-plot(backward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residual plot - mean:",round(mean(backward_lm_fit$residuals),digits = 4),
-                   "- var:", round(var(backward_lm_fit$residuals),digits = 2)))
+plot(backward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residuals", 
+     main = paste0("Residuals plot: mean=",round(mean(backward_lm_fit$residuals),digits = 4),
+                   " & var=", round(var(backward_lm_fit$residuals),digits = 2)))
 
-abline(c(0,0),c(0,length(backward_lm_fit$residuals)), col= "red", lwd = 2)
+abline(c(0,0),c(0,length(backward_lm_fit$residuals)), col= "red", lwd = 3)
 
 hist(backward_lm_fit$residuals,40,
      xlab = "Residual",
-     main = "Distribuzione empirica dei residui")
+     main = "Residuals empirical distribution")
