@@ -13,8 +13,8 @@ library(caret)
 library(ellipse)
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -28,11 +28,11 @@ names(NbaPlayers)
 head(NbaPlayers)
 hist(NbaPlayers$target_5yrs)
 
-train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
-
 
 ### Bagging
 set.seed(1)
+
+train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
 
 bagg_model <- randomForest(target ~ . -target_5yrs ,data = NbaPlayers, subset = train,
                            mtry = ncol(NbaPlayers) - 2, ntree = 200, 
@@ -98,10 +98,22 @@ for(mtry in 1:(ncol(NbaPlayers) - 2)){
 
 # plot the results
 plot(test.err.rate, type='b', main="Random Forest (m)",
-     ylab = "train vs test err rate", xlab = "m", col = 'blue', pch=18,lwd = 3)
+     ylab = "train vs test error rate", xlab = "m", 
+     col = 'blue', pch=18,lwd = 3,
+     ylim = range(c(test.err.rate, oob.err.rate)))
+
 par(new=TRUE)
+
 plot(oob.err.rate, type = 'b', main = "Random Forest (m)",
-     ylab = "train vs test err rate", xlab = "m", col = 'red', pch=18, lwd=3)
+     ylab = "train vs test error rate", xlab = "m", 
+     col = 'red', pch=18, lwd=3, axes = FALSE)
+
+abline(v = which.min(test.err.rate), col="green", lwd = 3)
+
+legend("bottomright",
+       legend=c("test error rate", "oob error rate"), 
+       col=c("blue", "red"), pch = 18)
+
 min(test.err.rate)
 
 ## Best with m = 5 ##
@@ -129,9 +141,18 @@ best_rf$err.rate[length]
 
 
 ### Compare bagging and random forest
-plot(bagg_model, type = 'b', col="green", pch = "+", lwd = 2)
+plot(bagg_model, type = 'b', col="green", pch = "+", lwd = 2, 
+     ylim = range(c(bagg_model$err.rate, best_rf$err.rate)),
+     main = "bagging vs random forest")
+
 par(new=TRUE)
-plot(best_rf, type = 'b', col = "red", pch = 'o', lwd = 2)
+
+plot(best_rf, type = 'b', col = "red", pch = 'o', lwd = 2, axes = FALSE,
+     main = "bagging vs random forest")
+
+legend("topright", legend=c("bag", "rf"), 
+       col=c("green", "red"), pch = c("+", "o"))
+
 
 ### Compare random forest models
 oob.err.rate[ncol(NbaPlayers) - 2]
@@ -168,6 +189,7 @@ boost_table
 # Column types as categorical factors (not numeric)
 cm = confusionMatrix(reference = as.factor(NbaPlayers$target_5yrs[-train]), 
                      data = as.factor(boost_pred))
+cm
 
 ## Various plots
 
