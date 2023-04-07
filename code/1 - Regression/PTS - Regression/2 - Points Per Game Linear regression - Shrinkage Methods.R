@@ -5,9 +5,9 @@
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
-library ( boot )
-library( glmnet )
-library( selectiveInference )
+library(boot)
+library(glmnet)
+library(selectiveInference)
 set.seed (1)
 
 # set working directory
@@ -40,7 +40,15 @@ lambda <- c(0,lambda)
 set.seed(1)
 train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
 
-# lambda = seq() parameters is optional 
+
+## Ridge
+ridge_mod <- glmnet(x, y, alpha = 0,lambda = lambda, standardize=TRUE)
+dim(coef(ridge_mod)) 
+plot(ridge_mod)
+ridge_mod
+coef(ridge_mod)
+
+## ridge cv 
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
 plot(ridge_cv_model)
 ridge_opt_lambda <- ridge_cv_model$lambda.min; # cv_model$lambda.1se
@@ -51,11 +59,15 @@ rideg_fitt_value <- predict(ridge_model,newx = x[-train,])
 ridge_test_MSE = mean((y[-train] - rideg_fitt_value)^2)
 ridge_test_MSE
 
-## LASSO
-lasso_mod <- glmnet( x[train , ] , y[ train ], alpha = 1,lambda = lambda)
-plot(lasso_mod)
 
-set.seed(1)
+## Lasso
+lasso_mod <- glmnet( x[train , ] , y[ train ], alpha = 1,lambda = lambda)
+dim(coef(ridge_mod)) 
+plot(lasso_mod)
+lasso_mod
+coef(lasso_mod)
+
+# lasso cv
 cv_lasso <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
 plot(cv_lasso)
 lasso_opt_lambda <- cv_lasso$lambda.min #cv_lasso$lambda.1se
@@ -136,25 +148,42 @@ for(i in 1:2){
 }
 
 # Plot Lasso result
+par(mfrow = c(1,1))
 plot(lasso_optimal_cv_models[[1]])
 summary(lasso_optimal_lm[[1]])
+par(mfrow = c(2,2))
+plot(lasso_optimal_lm[[1]])
+
+par(mfrow = c(1,1))
 plot(lasso_optimal_cv_models[[2]])
 summary(lasso_optimal_lm[[2]])
+par(mfrow = c(2,2))
+plot(lasso_optimal_lm[[2]])
 
 # Plot Ridge result
+par(mfrow = c(1,1))
 plot(ridge_optimal_cv_models[[1]])
 summary(ridge_optimal_lm[[1]])
+par(mfrow = c(2,2))
+plot(ridge_optimal_lm[[1]])
+
+par(mfrow = c(1,1))
 plot(ridge_optimal_cv_models[[2]])
 summary(ridge_optimal_lm[[2]])
+par(mfrow = c(2,2))
+plot(ridge_optimal_lm[[2]])
 
-#### Final Model: leaving fgm, fga
+par(mfrow = c(1,1))
+
+
+#### Final Model: removing fgm, fga
 
 #install.packages("remotes")
 #remotes::install_github("pbreheny/hdrm")
 
-library( boot )
-library( boot.pval )
-library( glmnetSE )
+library(boot)
+library(boot.pval)
+library(glmnetSE)
 
 NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
@@ -171,6 +200,7 @@ plot(ridge_cv_model)
 ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambda.min,standardize=TRUE)
 ridge_fitt_value <- predict(ridge_model, newx = x[-train,])
 ridge_test_mse <- mean((y[-train] - ridge_fitt_value)^2)
+ridge_test_mse
 
 ### Lasso
 lasso_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 1, nfolds = 10)
@@ -179,6 +209,7 @@ plot(lasso_cv_model)
 lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
 lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
 lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
+lasso_test_mse
 
 beta_lasso = coef(lasso_model)[-1]
 fixedLassoInf(x[train,],y[train],beta = beta_lasso,lambda = lasso_cv_model$lambda.min)

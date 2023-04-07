@@ -97,7 +97,7 @@ plot(factor(all_regressors), mse,
 
 
 ### Fit Linear Model with best regressor: pts = b0 + b1*fga + e
-lm_fit <- lm(pts ~ fga, data = NbaPlayers)
+lm_fit <- lm(pts ~ fgm, data = NbaPlayers)
 
 # View fitted results
 summary(lm_fit)
@@ -106,9 +106,9 @@ summary(lm_fit)
 confint(lm_fit, level = 0.98)
 
 # Plot linear regression results
-plot(NbaPlayers$fga, NbaPlayers$pts, pch = "+", 
+plot(NbaPlayers$fgm, NbaPlayers$pts, pch = "+", 
      ylab = "pts - Points Scored Per Game", 
-     xlab = "fga - Field Goal Attempt", 
+     xlab = "fgm - Field Goal Made", 
      main = "Linear regression")
 legend("topright",legend=c("Sampling point"),pch = "+")
 
@@ -126,7 +126,7 @@ plot(lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residuals",
      main = paste0("Residuals plot: mean=", round(mean(lm_fit$residuals), digits = 4),
                     " & var=", round(var(lm_fit$residuals),digits = 2)))
 
-abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 2)
+abline(c(0,0),c(0,length(lm_fit$residuals)), col= "red", lwd = 3)
 
 hist(lm_fit$residuals, 40,
      xlab = "Residual",
