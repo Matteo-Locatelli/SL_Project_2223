@@ -29,7 +29,7 @@ tree_model_complete
 
 # show result 
 summary(tree_model_complete)
-plot(tree_model_complete)
+plot(tree_model_complete, type = c("uniform"))
 text(tree_model_complete, pretty = 1)
 
 
@@ -41,7 +41,7 @@ train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
 # tree model with only train data
 tree_model <- tree(target ~ . -target_5yrs , NbaPlayers, subset = train)
 summary(tree_model)
-plot(tree_model)
+plot(tree_model, type = c("uniform"))
 text(tree_model, pretty = 1)
 
 # predict the values on the test data-set
@@ -69,8 +69,12 @@ tree_cv$dev
 tree_cv$k
 
 par(mfrow = c(1,2))
-plot(tree_cv$size, tree_cv$dev, type = "b")
-plot(tree_cv$k, tree_cv$dev, type = "b")
+plot(tree_cv$size, tree_cv$dev, type = "b", xlab = "Size", ylab = "Deviance", 
+     main = "size-deviance in cross-validation")
+plot(tree_cv$k, tree_cv$dev, type = "b", xlab = "k - Penalization factor", ylab = "Deviance", 
+     main = "k-deviance in cross-validation")
+plot(tree_cv$size, tree_cv$k, type = "b", xlab = "Size", ylab = "k - Penalization factor", 
+     main = "size-k in cross-validation")
 par(mfrow = c(1,1))
 
 ## Try size = 4 for the tree (dev = 338 & k = 2) ##
@@ -110,10 +114,11 @@ test.err.rate.cv2
 ## Try size 7 of the tree (dev = 341 and dev = -Inf) ###
 best3 = tree_cv$size[tree_cv$size == 7] 
 k3 = min(tree_cv$k[tree_cv$size == best3]) 
+
 prune3 <- prune.misclass(tree_model, best = best3) # don't specify k = -Inf
 summary(prune3)
 
-plot(prune3)
+plot(prune3, type = c("uniform"))
 text(prune3, pretty = 0)
 
 pred_value3 <- predict(prune3, newdata = NbaPlayers[-train,],type = "class")
@@ -144,11 +149,11 @@ test.err.rate.cv4
 ### rate and it is a bit lower than the tree with size = 4
 
 par(mfrow = c(2,2))
-plot(prune1, type = c("proportional"), main="k=4")
+plot(prune1, type = c("uniform"), main="k=4")
 text(prune1, pretty = 0)
-plot(prune2, type = c("proportional"), main="k=6")
+plot(prune2, type = c("uniform"), main="k=6")
 text(prune2, pretty = 0)
-plot(prune3, type = c("proportional"), main="k=7")
+plot(prune3, type = c("uniform"), main="k=7")
 text(prune3, pretty = 0)
-plot(prune4, type = c("proportional"), main="k=2")
+plot(prune4, type = c("uniform"), main="k=2")
 text(prune4, pretty = 0)
