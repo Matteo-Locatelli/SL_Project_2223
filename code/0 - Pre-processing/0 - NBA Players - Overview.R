@@ -23,17 +23,16 @@ summary(NbaPlayers)
 barplot(table(NbaPlayers$target_5yrs),
         beside=TRUE, 
         ylim=range(pretty(c(0, dim(NbaPlayers)[1]))),
-        ylab = "Frequency",
-        main = "Bar Plot of target_5yrs")
+        main = "target_5yrs bar plot")
 
 hist(NbaPlayers$target_5yrs, 
      xlim = c(0, 1),
-     ylim = c(0, 1000),
+     ylim = c(0, 1400),
      breaks = seq(0, 1, by = 0.5),
      labels = TRUE,
-     xlab = levels(NbaPlayers$target_5yrs),
-     ylab = "Frequency",
-     main = "Histogram of target_5yrs")
+     xlab = NULL,
+     ylab = NULL,
+     main = "target_5yrs histogram")
 
 plot(c(1:dim(NbaPlayers)[1]), NbaPlayers$target_5yrs)
 
