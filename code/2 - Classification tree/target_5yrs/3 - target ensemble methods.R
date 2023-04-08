@@ -35,22 +35,24 @@ set.seed(1)
 train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
 
 bagg_model <- randomForest(target ~ . -target_5yrs ,data = NbaPlayers, subset = train,
-                           mtry = ncol(NbaPlayers) - 2, ntree = 200, 
+                           mtry = ncol(NbaPlayers) - 2, ntree = 500, 
                            importance = TRUE, replace = TRUE)
 bagg_model
 summary(bagg_model)
-plot(bagg_model)
+plot(bagg_model, main = "Bagging model error")
+legend("topright", colnames(bagg_model$err.rate), col=1:3, cex=0.75, fill=1:3)
+bagg_model$confusion
 
 # compute prediction and compare it with test data in the data-set
 bagg_pred <- predict(bagg_model, newdata = NbaPlayers[-train,])
-plot(bagg_pred, NbaPlayers$target[-train])
-bagg_table = table(bagg_pred, NbaPlayers$target[-train]) # -> bagg_model$confusion
+plot(bagg_pred, NbaPlayers$target[-train], main = "Prediction of bagging", xlab = "", ylab = "")
+bagg_table = table(bagg_pred, NbaPlayers$target[-train]) 
 bagg_table
 bagging.test.err.rate = (bagg_table[1,2] + bagg_table[2,1])/ sum(bagg_table)
 bagging.test.err.rate
 
 importance(bagg_model)
-varImpPlot(bagg_model)
+varImpPlot(bagg_model, main = "Bagging model importance")
 
 # vector error rates of the prediction on the input data, the i-th element being 
 # the (OOB) error rate for all trees up to the i-th
@@ -62,22 +64,24 @@ bagg_model$err.rate[bagg_length]
 set.seed(2)
 
 forest_model <- randomForest(target ~ . -target_5yrs ,data = NbaPlayers, subset = train,
-                             mtry = floor(sqrt(ncol(NbaPlayers) - 2)), ntree =200, 
+                             mtry = floor(sqrt(ncol(NbaPlayers) - 2)), ntree =500, 
                              importance = TRUE)
-summary(forest_model)
 forest_model
-plot(forest_model)
+summary(forest_model)
+forest_model$confusion
+plot(forest_model, main = "Random forest model error")
+legend("topright", colnames(forest_model$err.rate), col=1:3, cex=0.75, fill=1:3)
 
 # compute prediction and compare it with test data in the data-set
 rf_pred <- predict(forest_model, newdata = NbaPlayers[-train,])
-plot(rf_pred, NbaPlayers$target[-train])
-rf_table = table(rf_pred, NbaPlayers$target[-train]) # -> rf_model$confusion
+plot(rf_pred, NbaPlayers$target[-train], main = "Prediction of random forest", xlab = "", ylab = "")
+rf_table = table(rf_pred, NbaPlayers$target[-train]) 
 rf_table
 rf.test.err.rate = (rf_table[1,2] + rf_table[2,1])/ sum(rf_table)
 rf.test.err.rate
 
 importance(forest_model)
-varImpPlot(forest_model)
+varImpPlot(forest_model, main = "Random forest model importance")
 
 rf_length = length(forest_model$err.rate) # 600 for some reason
 forest_model$err.rate[rf_length]
@@ -89,7 +93,7 @@ test.err.rate <- c(0,0)
 
 for(mtry in 1:(ncol(NbaPlayers) - 2)){
   fit = randomForest(target ~ . -target_5yrs, data = NbaPlayers, subset=train, 
-                     mtry=mtry, ntree = 200, importance = TRUE)
+                     mtry=mtry, ntree = 500, importance = TRUE)
   oob.err.rate[mtry] = fit$err.rate[600]
   yhat <- predict(fit, newdata = NbaPlayers[-train,])
   fit_table = table(yhat, NbaPlayers$target[-train])
@@ -97,44 +101,48 @@ for(mtry in 1:(ncol(NbaPlayers) - 2)){
 }
 
 # plot the results
-plot(test.err.rate, type='b', main="Random Forest (m)",
-     ylab = "train vs test error rate", xlab = "m", 
-     col = 'blue', pch=18,lwd = 3,
-     ylim = range(c(test.err.rate, oob.err.rate)))
-
+plot(oob.err.rate, type='b', main="Random Forest (m)",
+     ylab = "error rate", xlab = "m", 
+     col = 'blue', pch=18, lwd = 3,
+     ylim = range(c(oob.err.rate, test.err.rate)))
 par(new=TRUE)
-
-plot(oob.err.rate, type = 'b', main = "Random Forest (m)",
-     ylab = "train vs test error rate", xlab = "m", 
-     col = 'red', pch=18, lwd=3, axes = FALSE)
-
+lines(test.err.rate, type = 'b', main = "Random Forest (m)",
+     ylab = "error rate", xlab = "m", 
+     col = 'red', pch=18, lwd=3)
+legend("topright", legend=c("oob", "test"), 
+       col=c("blue", "red"), pch = 18)
 abline(v = which.min(test.err.rate), col="green", lwd = 3)
 
-legend("bottomright",
-       legend=c("test error rate", "oob error rate"), 
-       col=c("blue", "red"), pch = 18)
 
-min(test.err.rate)
+## Compare random forest models
+oob.err.rate[which.min(oob.err.rate)]
+test.err.rate[which.min(oob.err.rate)]
+oob.err.rate[which.min(test.err.rate)]
+test.err.rate[which.min(test.err.rate)]
+
 
 ## Best with m = 5 ##
 best_m = which.min(test.err.rate)
 
 best_rf <- randomForest(target ~ . -target_5yrs, data = NbaPlayers, subset = train,
-                             mtry = best_m, ntree =200, importance = TRUE)
+                             mtry = best_m, ntree = 500, importance = TRUE)
 best_rf
 summary(best_rf)
-plot(best_rf)
+best_rf$confusion
+plot(best_rf, main = "Random forest model error (m=5)")
+legend("topright", colnames(best_rf$err.rate), col=1:3, cex=0.75, fill=1:3)
 
 # compute prediction and compare it with test data in the data-set
 best_rf_pred <- predict(best_rf, newdata = NbaPlayers[-train,])
-plot(best_rf_pred, NbaPlayers$target[-train])
-best_rf_table = table(best_rf_pred, NbaPlayers$target[-train]) # -> best_rf_model$confusion
+plot(best_rf_pred, NbaPlayers$target[-train],  main = "Prediction of random forest (m=5)", 
+     xlab = "", ylab = "")
+best_rf_table = table(best_rf_pred, NbaPlayers$target[-train]) 
 best_rf_table
 best.rf.test.err.rate = (best_rf_table[1,2] + best_rf_table[2,1])/ sum(best_rf_table)
 best.rf.test.err.rate
 
 importance(best_rf)
-varImpPlot(best_rf)
+varImpPlot(best_rf, main = "Random forest model importance (m=5)")
 
 length = length(best_rf$err.rate) # 600 for some reason
 best_rf$err.rate[length]
@@ -144,21 +152,11 @@ best_rf$err.rate[length]
 plot(bagg_model, type = 'b', col="green", pch = "+", lwd = 2, 
      ylim = range(c(bagg_model$err.rate, best_rf$err.rate)),
      main = "bagging vs random forest")
-
 par(new=TRUE)
-
 plot(best_rf, type = 'b', col = "red", pch = 'o', lwd = 2, axes = FALSE,
      main = "bagging vs random forest")
-
 legend("topright", legend=c("bag", "rf"), 
-       col=c("green", "red"), pch = c("+", "o"))
-
-
-### Compare random forest models
-oob.err.rate[ncol(NbaPlayers) - 2]
-test.err.rate[ncol(NbaPlayers) - 2]
-oob.err.rate[best_m]
-test.err.rate[best_m]
+       col=c("green", "red"), pch = c("+", "o"), cex = 0.75)
 
 
 ### Boosting
@@ -173,7 +171,8 @@ boost_model
 summary(boost_model)
 #plot(boost_model, i="gp")
 
-best_iter = gbm.perf(boost_model, method="cv")
+# cv.error=green, train.error=black, best_iteration=blue
+best_iter = gbm.perf(boost_model, method="cv", plot.it = TRUE)
 summary(boost_model, n.trees = best_iter)
 print(pretty.gbm.tree(boost_model, i.tree = best_iter))
 #plot.gbm(boost_model, "gp", best_iter)
@@ -203,7 +202,7 @@ featurePlot(x = train_NbaPlayers[, c("gp", "fg")],
                           y = list(relation = "free")), 
             adjust = 1.5, 
             pch = "|", 
-            layout = c(2, 1), 
+            layout = c(1, 2), 
             auto.key = list(columns = 2))
 
 featurePlot(x = train_NbaPlayers[, c("gp", "fg")], 
@@ -242,3 +241,4 @@ sum = y_neg_pred_neg + y_neg_pred_pos + y_pos_pred_neg + y_pos_pred_pos
 # Misclassification error rare
 err = (y_neg_pred_pos + y_pos_pred_neg)/(sum)
 err
+
