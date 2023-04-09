@@ -6,8 +6,8 @@ graphics.off()  # close all plot
 
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -20,10 +20,16 @@ head(NbaPlayers)
 summary(NbaPlayers)
 
 # Plots of various classes: Check the data-set balance
-barplot(table(NbaPlayers$target_5yrs),
+number_of_zero <- sum(NbaPlayers$target_5yrs == 0)
+number_of_one <- sum(NbaPlayers$target_5yrs == 1)
+my_bar <- barplot(table(NbaPlayers$target_5yrs),
         beside=TRUE, 
-        ylim=range(pretty(c(0, dim(NbaPlayers)[1]))),
-        main = "target_5yrs bar plot")
+        col=c(rgb(0.3,0.5,0.4,0.6) , rgb(0.3,0.9,0.4,0.6)) ,
+        ylim=c(0, 1000),
+        main = "Target 5 Years bar plot")
+
+# Add the text 
+text(my_bar, c(number_of_zero, number_of_one) + 30, paste(c(number_of_zero, number_of_one), sep="") ,cex=1) 
 
 hist(NbaPlayers$target_5yrs, 
      xlim = c(0, 1),

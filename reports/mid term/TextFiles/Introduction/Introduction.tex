@@ -1,0 +1,34 @@
+The aim of this project is to analyze a dataset collected from NBA Rookies' games. This set contains 1340 samples, each one described by the 21 features listed in table \ref{tab:1}.
+\begin{table}[h]
+	\centering
+	\begin{tabular}{||c | c ||} 
+		\hline
+		& Description\\
+		Name & Player's name\\ 
+		GP & Games Played\\ 
+		MIN & Minutes played\\ 
+		PTS & Points per Game\\
+		FGM & Field Goals Made\\
+		FGA & Field Goals Attempts\\
+		FG\% & Field Goals Percent\\
+		3P Made & 3 Point Made\\
+		3PA & 3 Point Attempts\\
+		3P\% & 3 Point Percent\\
+		FTM & Free Throw Made\\
+		FTA & Free Throw Attempts\\
+		FT\% & Free Throw Percent\\
+		OREB & Offensive Rebounds\\
+		DREB & Defensive Rebounds\\
+		REB & Rebounds\\
+		AST & Assists\\
+		STL & Steals\\
+		BLK & Blocks\\
+		TOV & Turnovers\\
+		Target\_5Yrs & 1 if career duration $\geq 5$, 0 otherwise\\
+		\hline
+	\end{tabular}
+	\caption{Dataset features.}
+	\label{tab:1}
+\end{table} 
+
+The main goal of this analysis is to obtain two models to explain the features \textit{PTS} and \textit{Target\_5Yrs}. Clearly these are two different tasks by the nature of those two variables; in the first case there is a continuous variable, that means regression methods must be applied, in the second case the variable is binary, that leads to the application of classification methods.
