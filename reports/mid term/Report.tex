@@ -13,6 +13,10 @@
 \usepackage{import}
 \usepackage{float}
 
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
 \usepackage{todonotes}
 \usepackage{verbatim}
 
@@ -25,7 +29,7 @@
 
 \definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
 
-\DeclareFixedFont{\titlefont}{T1}{ppl}{b}{it}{0.5in}
+\DeclareFixedFont{\titlefont}{T1}{ppl}{b}{it}{0.35in}
 
 \makeatletter                       
 \def\printauthor{%                  
@@ -81,9 +85,8 @@
 
 \begin{document}
 	\begin{titlepage}
-		
 		\noindent
-		\titlefont Report\par
+		\titlefont NBA's rookies data analysis\par
 		\epigraph{Statistical Learning course.}
 		\null\vfill
 		\vspace*{1cm}
@@ -113,5 +116,7 @@
 	
 	\section{Regression}
 	\import{./TextFiles/Regression/}{RegressionIntro.tex}
+	\import{./TextFiles/Regression/}{RegressionFor.tex}
+	\import{./TextFiles/Regression/}{RegressionBack.tex}
 				
 \end{document}

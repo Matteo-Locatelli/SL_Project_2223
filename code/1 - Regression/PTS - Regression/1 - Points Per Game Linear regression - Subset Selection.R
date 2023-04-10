@@ -16,8 +16,8 @@ library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -194,7 +194,7 @@ NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 # Model fitting
 
 f_lm_all <- lm(pts ~ . -fta, data=NbaPlayers)
-final_step_forward <- ols_step_forward_p(f_lm_all)
+final_step_forward <- ols_step_forward_p(model = f_lm_all)
 summary(final_step_forward)
 final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)
 summary(final_step_forward_model)
@@ -217,12 +217,6 @@ forward_lm_fit <- lm(final_step_forward_model$model, data=NbaPlayers)
 summary(forward_lm_fit)
 
 forward_lm_fit <- update(forward_lm_fit, ~ . - x3p_made -gp - blk)
-summary(forward_lm_fit)
-
-forward_lm_fit <- update(forward_lm_fit, ~ . - oreb -stl)
-summary(forward_lm_fit)
-
-forward_lm_fit <- update(forward_lm_fit, ~ . - x3p)
 summary(forward_lm_fit)
 
 # Plots
