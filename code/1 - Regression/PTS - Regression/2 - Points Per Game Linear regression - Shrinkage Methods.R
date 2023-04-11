@@ -178,17 +178,16 @@ par(mfrow = c(1,1))
 
 #### Final Model: removing fgm, fga
 
-#install.packages("remotes")
-#remotes::install_github("pbreheny/hdrm")
 
-library(boot)
-library(boot.pval)
-library(glmnetSE)
 
 NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
 x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
+
+# lambda grid
+lambda <- 10^seq(-3,-1,length = 400)
+lambda <- c(0,lambda)
 
 set.seed(1)
 train <- sample(dim(x)[1],floor(dim(x)[1]*0.8),replace = FALSE)
@@ -196,6 +195,7 @@ train <- sample(dim(x)[1],floor(dim(x)[1]*0.8),replace = FALSE)
 ### Ridge
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10)
 plot(ridge_cv_model)
+plot(glmnet(x[train,],y[train],alpha = 0,lambda = lambda,standardize=TRUE), xvar = "lambda")
 
 ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambda.min,standardize=TRUE)
 ridge_fitt_value <- predict(ridge_model, newx = x[-train,])
@@ -205,38 +205,10 @@ ridge_test_mse
 ### Lasso
 lasso_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 1, nfolds = 10)
 plot(lasso_cv_model)
+plot(glmnet(x[train,],y[train],alpha = 1,lambda = lambda,standardize=TRUE), xvar = "lambda")
 
 lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
 lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
 lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
 lasso_test_mse
 
-## Estimate variance of coefficients with bootstrap
-
-lasso_fun_boot <- function(data,index){
-  glmnet_model <- glmnet(data[index,-1],data[index,1],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
-  return (coef(glmnet_model)[-1])
-}
-
-variable_name <- colnames(x)
-
-data = cbind(y[train],x[train,])
-lasso_boot <- boot(data,lasso_fun_boot,R = 1000)
-actual_dist <- lasso_boot$t
-hp_dist <- lasso_boot$t
-for(i in 1:dim(lasso_boot$t)[2]){
-  hp_dist[,i] <- hp_dist[,i] - mean(hp_dist[,i])
-}
-
-par(mfrow=c(2,5))
-
-c1 <- rgb(173,216,230,max = 255, alpha = 80, names = "lt.blue")
-c2 <- rgb(255,192,203, max = 255, alpha = 80, names = "lt.pink")
-
-for(i in 1:10){
-  hg1 <- hist(actual_dist[,i], plot=FALSE, breaks = 20)
-  hg2 <- hist(hp_dist[,i], plot=FALSE, breaks = 20)
-  #abline(v=0.05,col=2)
-  plot(hg1, col = c1, main=paste("p_value of", variable_name[i]), xlab = variable_name[i])
-  plot(hg2, col = c2, add = TRUE)
-}
