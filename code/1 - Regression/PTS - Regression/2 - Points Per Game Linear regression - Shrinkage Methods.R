@@ -5,9 +5,7 @@
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
-library(boot)
 library(glmnet)
-library(selectiveInference)
 set.seed (1)
 
 # set working directory
@@ -196,6 +194,7 @@ train <- sample(dim(x)[1],floor(dim(x)[1]*0.8),replace = FALSE)
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10)
 plot(ridge_cv_model)
 plot(glmnet(x[train,],y[train],alpha = 0,lambda = lambda,standardize=TRUE), xvar = "lambda")
+ridge_cv_model$lambda.min
 
 ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambda.min,standardize=TRUE)
 ridge_fitt_value <- predict(ridge_model, newx = x[-train,])
@@ -206,6 +205,7 @@ ridge_test_mse
 lasso_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 1, nfolds = 10)
 plot(lasso_cv_model)
 plot(glmnet(x[train,],y[train],alpha = 1,lambda = lambda,standardize=TRUE), xvar = "lambda")
+lasso_cv_model$lambda.min
 
 lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
 lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
