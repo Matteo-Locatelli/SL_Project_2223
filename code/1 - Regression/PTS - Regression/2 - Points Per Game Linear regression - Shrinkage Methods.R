@@ -11,8 +11,8 @@ library(selectiveInference)
 set.seed (1)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 # Pre-processing of the dataset: removing rebounds
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
@@ -211,19 +211,32 @@ lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
 lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
 lasso_test_mse
 
-beta_lasso = coef(lasso_model)[-1]
-fixedLassoInf(x[train,],y[train],beta = beta_lasso,lambda = lasso_cv_model$lambda.min)
-
 ## Estimate variance of coefficients with bootstrap
 
 lasso_fun_boot <- function(data,index){
-  glmnet_model <- glmnet(data[index,-dim(data)[2]],data[index,dim(data)[2]],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE,subset = index)
+  glmnet_model <- glmnet(data[index,-1],data[index,1],alpha = 1,lambda = lasso_cv_model$lambda.min,standardize=TRUE)
   return (coef(glmnet_model)[-1])
 }
 
+variable_name <- colnames(x)
+
 data = cbind(y[train],x[train,])
 lasso_boot <- boot(data,lasso_fun_boot,R = 1000)
-boot.pval(lasso_boot, theta_null = rep(0, length(lasso_boot$t0)))
+actual_dist <- lasso_boot$t
+hp_dist <- lasso_boot$t
+for(i in 1:dim(lasso_boot$t)[2]){
+  hp_dist[,i] <- hp_dist[,i] - mean(hp_dist[,i])
+}
 
-boot_lasso_model <- glmnetSE(data=data, cf.no.shrnkg = colnames(x), alpha=1, r=1000, perf.metric = "mse")
-summary(boot_lasso_model)
+par(mfrow=c(2,5))
+
+c1 <- rgb(173,216,230,max = 255, alpha = 80, names = "lt.blue")
+c2 <- rgb(255,192,203, max = 255, alpha = 80, names = "lt.pink")
+
+for(i in 1:10){
+  hg1 <- hist(actual_dist[,i], plot=FALSE, breaks = 20)
+  hg2 <- hist(hp_dist[,i], plot=FALSE, breaks = 20)
+  #abline(v=0.05,col=2)
+  plot(hg1, col = c1, main=paste("p_value of", variable_name[i]), xlab = variable_name[i])
+  plot(hg2, col = c2, add = TRUE)
+}
