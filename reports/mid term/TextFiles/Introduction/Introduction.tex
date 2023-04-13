@@ -11,9 +11,9 @@ The aim of this project is to analyze a dataset collected from NBA Rookies' game
 		FGM & Field Goals Made\\
 		FGA & Field Goals Attempts\\
 		FG\% & Field Goals Percent\\
-		3P Made & 3 Point Made\\
-		3PA & 3 Point Attempts\\
-		3P\% & 3 Point Percent\\
+		X3P\_Made & 3 Point Made\\
+		X3PA & 3 Point Attempts\\
+		X3P\% & 3 Point Percent\\
 		FTM & Free Throw Made\\
 		FTA & Free Throw Attempts\\
 		FT\% & Free Throw Percent\\
@@ -24,11 +24,11 @@ The aim of this project is to analyze a dataset collected from NBA Rookies' game
 		STL & Steals\\
 		BLK & Blocks\\
 		TOV & Turnovers\\
-		Target\_5Yrs & 1 if career duration $\geq 5$, 0 otherwise\\
+		TARGET\_5YRS & 1 if career duration $\geq 5$, 0 otherwise\\
 		\hline
 	\end{tabular}
 	\caption{Dataset features.}
 	\label{tab:1}
 \end{table} 
 
-The main goal of this analysis is to obtain two models to explain the features \textit{PTS} and \textit{Target\_5Yrs}. Clearly these are two different tasks by the nature of those two variables; in the first case there is a continuous variable, that means regression methods must be applied, in the second case the variable is binary, that leads to the application of classification methods.
+The main goal of this analysis is to obtain two models to explain the features \textit{PTS} and \textit{TARGET\_5YRS}. Clearly these are two different tasks by the nature of those two variables; in the first case there is a continuous variable, that means regression methods must be applied, in the second case the variable is binary, that leads to the application of classification methods.
