@@ -173,6 +173,8 @@ summary(boost_model)
 
 # cv.error=green, train.error=black, best_iteration=blue
 best_iter = gbm.perf(boost_model, method="cv", plot.it = TRUE)
+legend("topright", legend=c("cv.error", "train.error"), 
+       col=c("green", "black"), pch = c(15, 15), cex = 1)
 summary(boost_model, n.trees = best_iter)
 print(pretty.gbm.tree(boost_model, i.tree = best_iter))
 #plot.gbm(boost_model, "gp", best_iter)
