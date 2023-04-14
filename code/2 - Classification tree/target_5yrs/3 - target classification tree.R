@@ -147,6 +147,7 @@ test.err.rate.cv4
 
 ### From the summary, trees with size = 6,7 have same misclassification error 
 ### rate and it is a bit lower than the tree with size = 4
+### Test error rate for size = 4 is the lowest, equal to 0.3 (for other sizes is 0.33)
 
 par(mfrow = c(2,2))
 plot(prune1, type = c("uniform"), main="k=4")
