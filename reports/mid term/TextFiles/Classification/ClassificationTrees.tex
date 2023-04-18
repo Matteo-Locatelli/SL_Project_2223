@@ -1,8 +1,8 @@
 \subsection{Classification trees}
 
-The following section has the purpose to use tree-based classification methods to find a model which will predict if an NBA's rookie carreer will be longer than five years.
+The following section has the purpose to use tree-based classification methods to find a model which will predict if an NBA's rookie career will be longer than five years.
 
-We started to analyse the data through classification trees using the \textit{gini} minimization function. The result is a complex tree which is difficult to read.
+We started to analyze the data through classification trees using the \textit{gini} minimization function. The result is a complex tree which is difficult to read.
 
 To understand whether it was better to use a simpler tree or not, we performed cross-validation using different levels of tree size and evaluated the impact on the test error.
 
@@ -22,10 +22,10 @@ To understand whether it was better to use a simpler tree or not, we performed c
 		\caption{Different size trees.}
 		\label{fig:tree_prune_comparison}
 	\end{subfigure}
-	\caption{The obtained trees with various sizes.}
+	\caption{Obtained trees with various sizes.}
 	\label{fig:treeSize}
 \end{figure}
 
 After the evaluation of the misclassification error rate on both train and test dataset, we concluded that the best model is the one with $size = 4$.
 
-However, all the trees do the first split on the variable \textit{gp}, suggesting that it is the most important variable.
+However, all the trees do the first split on the variable \textit{GP}, suggesting that it is the most important variable.
