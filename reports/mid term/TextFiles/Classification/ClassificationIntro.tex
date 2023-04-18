@@ -1,7 +1,11 @@
-In this section we try to find a model able to explain the categorical variable \textit{"TARGET\_5YRS"} through classification techniques.
-In particular we are going to use classification trees with ensemble methods.
+In this section we try to find a model able to explain the categorical variable \textit{"TARGET\_5YRS"}.
+In particular we are going to use:
+\begin{itemize}
+	\item Classification trees with ensemble methods;
+	\item Logistic Regression.
+\end{itemize}
 
-The first thing was to check if the dataset is balanced or not. In figure \Fig~\ref{fig:target_bar_plot} we can clearly see that the 1278 samples are not equally distributed. 
+Our first step was to check whether the dataset was balanced or not. In \Fig~\ref{fig:target_bar_plot} we can clearly see that the samples are not equally distributed. 
 
 \begin{figure}[h]
 	\centering
@@ -10,10 +14,6 @@ The first thing was to check if the dataset is balanced or not. In figure \Fig~\
 	\label{fig:target_bar_plot}
 \end{figure}
 
-After this, we removed two columns from the cleaned dataset because they were linerly dependent with some other regressors:
-\begin{itemize}
-	\item \textit{"PTS"}, linear combination of \textit{"FGM"}, \textit{"X3P\_MADE"}, and \textit{"FTM"}
-	\item \textit{"REB"}, linear combination of \textit{"OREB"} and \textit{"DREB"}
-\end{itemize}
+Afterwards, we removed an additional column from the dataset, namely \textit{"PTS"}, which is a linear combination of \textit{"FGM"}, \textit{"X3P\_MADE"}, and \textit{"FTM"}.
 
-Therefore the dataset that will be used contains 1278 samples and 18 variables (17 regressors and 1 categorical output).
+Therefore the dataset that will be used contains 1278 samples and 18 features.

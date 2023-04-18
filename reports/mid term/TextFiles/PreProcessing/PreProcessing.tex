@@ -1,13 +1,11 @@
 Before diving into the analysis, some pre-processing operations were performed on the dataset.
 
 \subsection{Data cleaning}
-The first operation was data cleaning. This was necessary since there were duplicated samples and also inconsistent data.
+The initial step involved data cleaning, as it was crucial to remove any duplicated samples and reconcile any inconsistent data.
 After running this step, the number of samples left is 1278.
 
 \subsection{Columns cancellation}
-From an overview of the dataset we cancelled some columns that were not useful for the analysis.
-The first one is the \textit{"NAME"} column that is useless for our purposes, since it just contains the players' name.
-The second one is \textit{"REB"}, the reason in this case is that \textit{"REB"} is given by the sum of \textit{"OREB"} and \textit{"DREB"}, there is a redundancy then and we decided to avoid it.
- 
+After reviewing the dataset, we identified some columns that were not relevant for our analysis. Specifically, we removed the \textit{"NAME"} column as it only contained the players' names and did not provide any useful information for our purposes. Additionally, we removed the \textit{"REB"} column because it was redundant, as it can be calculated by summing the \textit{"OREB"} and \textit{"DREB"} columns."
+
 \noindent
-All the analysis presented are intended to be on the clean dataset.
+All the analysis presented are intended to be on the cleaned dataset.

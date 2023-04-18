@@ -1,6 +1,6 @@
 \subsection{Forward Stepwise Selection}
 
-The first method applied is the \textit{Forward Stepwise Selection}. In particural, the algorithm variant employed uses the \textit{p-value} a entrance criterion and the AIC as comparison metric between models. The model obtained is shown in figure \Fig~\ref{fig:ForwardModelSummary}.
+The first method applied is the \textit{Forward Stepwise Selection}. In particural, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the AIC as comparison metric between models. The model obtained is shown in \Fig~\ref{fig:ForwardModelSummary}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.35\linewidth]{ImageFiles/Regression/Forward/ForwardModelSummary}
@@ -8,12 +8,13 @@ The first method applied is the \textit{Forward Stepwise Selection}. In particur
 	\label{fig:ForwardModelSummary}
 \end{figure}
 
-As expected \textit{"MIN"} is included and also \textit{"FTM"} which resulted to be important from the preliminary analysis. However, there are three variables that are not significantly different from 0, with p-value threshold of $5\%$.
+As expected, \textit{"MIN"} and \textit{"FTM"} are included, which resulted to be important from the preliminary analysis as well. However, there are three variables that are not significantly different from 0, with p-value threshold of $5\%$.
 
 \vspace{0.2cm}
+\noindent
 \textbf{Bootstrap Statistical Inference}
 
-On the obtained model we the \textit{Bootstrap} technique in order to perform statistical inference over the model coefficients. In figure \Fig~\ref{fig:ForwardModelSummary} is possible to see the results, that are coherent with the previous ones. This shows also that the Gaussian approximation is valid in this case.
+On the obtained model we used the \textit{Bootstrap} technique in order to perform statistical inference on the model coefficients. In \Fig~\ref{fig:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the Gaussian approximation for the error is valid in this case.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.4\linewidth]{ImageFiles/Regression/Forward/BootForwardModel}
@@ -22,9 +23,10 @@ On the obtained model we the \textit{Bootstrap} technique in order to perform st
 \end{figure}
 
 \vspace{0.2cm}
+\noindent
 \textbf{Final Forward Model}
 
-The final Forward Model, shown in figure \Fig~\ref{fig:ForwardFinalModelSummary}, is obtained removing the non significant variables. In \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{ForwardFinalModelResidualsDist} instead is possible to see plot of the residuals, that have a Gaussian shape with 0 mean. This means that the model is likely good enough.
+The final Forward Model, shown in \Fig~\ref{fig:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see plots of the residuals, that have a Gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
 
 \begin{figure}[h]
 	\centering
@@ -46,5 +48,7 @@ The final Forward Model, shown in figure \Fig~\ref{fig:ForwardFinalModelSummary}
 		\caption{Forward Stepwise Selection Model Residuals.}
 		\label{fig:ForwardFinalModelResidualsDist}
 	\end{subfigure}
+	\caption{The final Forward Stepwise Selection Model.}
+	\label{fig:FinalFSSM}
 \end{figure}
 

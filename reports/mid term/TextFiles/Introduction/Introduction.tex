@@ -1,17 +1,19 @@
-The aim of this project is to analyze a dataset collected from NBA Rookies' games. This set contains 1340 samples, each one described by the 21 features listed in table \ref{tab:1}.
+The aim of this project is to analyze a dataset collected from NBA Rookies' games. This set contains 1340 samples, each one described by the 21 features listed in table \ref{tab:1}. Each feature, beside \textit{NAME}, \textit{GP} and \textit{TARGET\_5YRS}, is intended to be expressed "per game".
 \begin{table}[h]
 	\centering
-	\begin{tabular}{||c | c ||} 
+	\small
+	\begin{tabular}{||c | c ||}
 		\hline
 		& Description\\
-		Name & Player's name\\ 
+		\hline
+		NAME & Player's name\\ 
 		GP & Games Played\\ 
 		MIN & Minutes played\\ 
 		PTS & Points per Game\\
 		FGM & Field Goals Made\\
 		FGA & Field Goals Attempts\\
 		FG\% & Field Goals Percent\\
-		X3P\_Made & 3 Point Made\\
+		X3P\_MADE & 3 Point Made\\
 		X3PA & 3 Point Attempts\\
 		X3P\% & 3 Point Percent\\
 		FTM & Free Throw Made\\
@@ -31,4 +33,4 @@ The aim of this project is to analyze a dataset collected from NBA Rookies' game
 	\label{tab:1}
 \end{table} 
 
-The main goal of this analysis is to obtain two models to explain the features \textit{PTS} and \textit{TARGET\_5YRS}. Clearly these are two different tasks by the nature of those two variables; in the first case there is a continuous variable, that means regression methods must be applied, in the second case the variable is binary, that leads to the application of classification methods.
+The objective of this analysis is to develop two distinct models that can effectively explain the features \textit{PTS} and \textit{TARGET\_5YRS}. Due to the nature of these variables, two different approaches are required. For \textit{PTS}, a regression method must be utilized due to its continuous nature, whereas for \textit{TARGET\_5YRS}, a classification method must be employed given that it is a binary variable.

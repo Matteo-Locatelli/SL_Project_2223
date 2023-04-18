@@ -1,8 +1,12 @@
 \subsection{Ensemble methods}
 
-To improve the tree-based models, we used \textit{bagging} with 500 trees and afterwards \textit{random forest}, looking for the best value of \textit{m} predictors chosen among the full set of \textit{p} predictors. 
+\vspace{0.2cm}
+\noindent
+\textbf{Random Forest \& Bagging}
 
-In figure \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test and the out-of-bag error rates for increasing values of \textit{m}.
+We improved the tree-based models using bagging with 500 trees and random forest, selecting the best number of predictors (\textit{m}) from the full set of \textit{p} predictors.
+
+In \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test and the out-of-bag error rates as \textit{m} increases.
 
 \begin{figure}[h]
 	\centering
@@ -11,76 +15,85 @@ In figure \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test an
 	\label{fig:m_best_for_500_plot}
 \end{figure}
 
-Computed the best \textit{m} for random forest (which gives the least test error rate), we made a comparison between the bagging model and the random forest one obtained with that particular value of \text{m}, keeping all the other parameters the same.
-In figure \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that the random forest perform slightly better than the bagging.
+Once the best \textit{m} value for the random forest was obtained, we compared the bagging model with the random forest model using that particular value of \textit{m}, while keeping all other parameters the same.
+In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that random forest performs slightly better than bagging.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.3\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{ImageFiles/Classification/Trees/vs_bagg_for_500_plot}
-		\caption{Bagging and random forest comparison}
+		\caption{Bagging and random forest comparison.}
 		\label{fig:vs_bagg_for_500_plot}
 	\end{subfigure}%
 	\hfill
 	\begin{subfigure}{.3\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{ImageFiles/Classification/Trees/best_for_500_plot}
-		\caption{Random forest method plot (best m)}
+		\caption{Random forest method plot.}
 		\label{fig:best_for_500_plot}
 	\end{subfigure}%
 	\hfill
 	\begin{subfigure}{.3\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{ImageFiles/Classification/Trees/bagg_500_plot}
-		\caption{Bagging method plot}
+		\caption{Bagging method plot.}
 		\label{fig:bagg_500_plot}
 	\end{subfigure}
+	\caption{Random Forest vs Bagging.}
+	\label{fig:RFvsB}
 \end{figure}
 
-We can obtain an overall summary of the importance of each predictor using RSS.
-In figures \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} we can see the importance of each variable in each model.
+An overall summary of the importance of each predictor is obtained by using RSS (\textit{"Residual Sum of Squares"}). In \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} we can see the importance of each variable in the models.
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/best_for_500_var_imp_plot}
-		\caption{Random forest importance (best m)}
+		\caption{Random forest important variables.}
 		\label{fig:best_for_500_var_imp_plot}
 	\end{subfigure}%
 	\hfill
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/bagg_500_var_imp_plot}
-		\caption{Bagging importance}
+		\caption{Bagging important variable.}
 		\label{fig:bagg_500_var_imp_plot}
 	\end{subfigure}
+	\caption{Important variables.}
+	\label{fig:ImpVar}
 \end{figure}
 
 \noindent
-As in the classification trees, the \textit{gp} regressor is the most important one.
+As in the classification trees, the \textit{gp} regressor resulted to be the most important one.
 
-The goal of this section is to find the methodology that best fit our data at the cost of losing interpretability. For this purpose, we used \textit{boosting} in combination with cross-validation.
+\vspace{0.2cm}
+\noindent
+\textbf{Boosting}
 
-Many small trees were used with $\lambda = 0.001$: \Fig~\ref{fig:boost_4_rel_inf} shows the importance of each variable in the dataset given by the boosting technique.
+Since the main goal of this section is to find the model that best explain our data, we tried to improve the performance by using \textit{boosting} in conjunction with cross-validation, even at the cost of losing interpretability. 
+
+Many small trees were used with $\lambda = 0.001$. \Fig~\ref{fig:boost_4_rel_inf} shows the importance of each variable in the dataset given by the boosting technique.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.6\linewidth]{ImageFiles/Classification/Trees/boost_4_rel_inf}
-		\caption{Boosting relative influence}
+		\caption{Boosting relative influence.}
 		\label{fig:boost_4_rel_inf}
 	\end{subfigure}%
 	\hfill
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.4\linewidth]{ImageFiles/Classification/Trees/boost_4_conf_mat}
-		\caption{Boosting confusion matrix}
+		\caption{Boosting confusion matrix.}
 		\label{fig:boost_4_conf_mat}
 	\end{subfigure}
+	\caption{Boosting results.}
+	\label{BoostRes}
 \end{figure}
 
-As before, \textit{gp} is the most significant regressor.
+As with the previous models, the most significant regressor is still \textit{gp}. However, based on the confusion matrix in \Fig~\ref{fig:boost_4_conf_mat}, it results that there is no improvement in accuracy. Therefore, using \textit{boosting} is not recommended, since it would just lead to interpretability loss.
 

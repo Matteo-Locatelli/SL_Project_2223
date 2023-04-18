@@ -1,6 +1,6 @@
 \subsection{Ridge Regression}
 
-Now we applied the Ridge Regression to perform selection. In figure \Fig~\ref{fig:RidgeCoefVsLambda} are shown the coefficients' behavior as $\lambda$ increases. 
+Now we applied the Ridge Regression to perform variable selection. In \Fig~\ref{fig:RidgeCoefVsLambda} is shown the coefficients' behavior as $\lambda$ increases. 
 
 \begin{figure}[h]
 	\centering
@@ -9,9 +9,9 @@ Now we applied the Ridge Regression to perform selection. In figure \Fig~\ref{fi
 	\label{fig:RidgeCoefVsLambda}
 \end{figure}
 
-It's possible to observe that for $\lambda$ large enough, around $10^2$, all the coefficients tend become close to zero. However, they are never exactly zero.
+It is possible to observe that for enough large values of $\lambda$, around $10^2$, all the coefficients tend to become close to zero. However, they are never exactly zero.
 
-To select the optimal value of the penalization factor $\lambda$ we employed "K-Fold Cross-Validation" with $K=10$. In figure \Fig~\ref{fig:RidgeCvPlot} is possible the trend of the cross validated MSE("\textit{Mean Square Error}") when $\lambda$ increases. The optimal value was found to be $\lambda_{opt} = 0.0304$.
+To select the optimal value of the penalization factor $\lambda$ we employed "K-Fold Cross-Validation" with $K=10$. In \Fig~\ref{fig:RidgeCvPlot} it is possible to observe the trend of the cross validated MSE ("\textit{Mean Square Error}") when $\lambda$ increases. The optimal value was found to be $\lambda_{opt} = 0.0304$.
 
 \begin{figure}[h]
 	\centering
@@ -27,8 +27,10 @@ To select the optimal value of the penalization factor $\lambda$ we employed "K-
 		\caption{Ridge Regression coefficients with $\lambda_{opt}$.}
 		\label{fig:FinalRidgeCoef}
 	\end{subfigure}
+	\caption{The Ridge Regression Model.}
+	\label{fig:FinalRidgeModel}
 \end{figure}
 
-With optimal value of $\lambda$ obtained we fitted the final model and the coefficients are in figure \Fig~\ref{fig:FinalRidgeCoef}. For this model we computed also the test MSE and it is $MSE_{test} = 1.33$
+We fit the final model using the optimal $\lambda$ value ($\lambda_{opt}$). The resulting coefficients are displayed in Figure~\ref{fig:FinalRidgeCoef}. For this model we computed also the test MSE and it is $MSE_{test} = 1.33$
 
-In this case the Ridge Penalization does not reduce the number of coefficients, and it does not even improve significantly the MSE. We can then conclude that using Ridge Regression is not useful for our purposes.
+In this case the Ridge Penalization does not reduce the number of coefficients, and it does not even improve significantly the MSE. We then can conclude that using Ridge Regression is not useful for our purposes.

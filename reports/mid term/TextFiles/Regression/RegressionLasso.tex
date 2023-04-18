@@ -1,6 +1,6 @@
 \subsection{Lasso Regression}
 
-Our last method is the Lasso Regression. In figure \Fig~\ref{fig:LassoCoefVsLambda} are shown the coefficients' behavior as $\lambda$ increases. 
+Our last selection method is the Lasso Regression. In \Fig~\ref{fig:LassoCoefVsLambda} is shown the coefficients' behavior as $\lambda$ increases. 
 
 \begin{figure}[h]
 	\centering
@@ -9,7 +9,7 @@ Our last method is the Lasso Regression. In figure \Fig~\ref{fig:LassoCoefVsLamb
 	\label{fig:LassoCoefVsLambda}
 \end{figure}
 
-The same procedure applied for the Ridge is followed again. In figure \Fig~\ref{fig:LassoCvPlot} is possible the trend of the cross validated MSE("\textit{Mean Square Error}") when $\lambda$ increases. The optimal value was found to be $\lambda_{opt} = 0$, that means to penalization. The result is coherent with what obtained from Ridge Regression. Penalization in our case is not helpful.
+The same procedure followed for the Ridge is applied again. In \Fig~\ref{fig:LassoCvPlot} it is possible the trend of the cross validated MSE ("\textit{Mean Square Error}") when $\lambda$ increases. The optimal value was found to be $\lambda_{opt} = 0$, that means no penalization. The result is coherent with what obtained from Ridge Regression.
 
 \begin{figure}[h]
 	\centering
@@ -17,3 +17,5 @@ The same procedure applied for the Ridge is followed again. In figure \Fig~\ref{
 	\caption{The Cross Validated MSE as function of $\lambda$.}
 	\label{fig:LassoCvPlot}
 \end{figure}
+
+From our analysis, it appears that penalization is not helpful in improving the model's performance for our specific use case.
