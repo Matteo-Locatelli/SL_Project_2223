@@ -1,7 +1,6 @@
 The dataset is used for classification on the variable "target_5yrs".
 
-In this part of the project classification trees and ensamble methods 
-(such as bagging, boosting and random forest) will be used.
+In this part of the project logisti regression will be used.
 
 This section of the project uses the dataset without the variables "pts" 
 and "reb" because of the previous discovery of linearly independent features 
@@ -13,3 +12,6 @@ Its value is
 - "Yes" if "target_5yrs" is 1
 For this reason "target" will be used instead of "target_5yrs", but the
 meaning is the same.
+
+As in the linear regression, subset seleciton will be performed with 
+stepwise model.
