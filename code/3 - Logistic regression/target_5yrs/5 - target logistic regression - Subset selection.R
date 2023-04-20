@@ -16,6 +16,7 @@ library( readr )
 library( dplyr )
 library( leaps )
 library( sp )
+library( tidyverse )
 set.seed(1) # seed for random number generator
 
 # set working directory
@@ -38,40 +39,68 @@ hist(NbaPlayers$target_5yrs)
 train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
 
 
+
 ### Subset Selection
 
-log_reg_all <- glm( target ~ .-target_5yrs,
-                    data = NbaPlayers , family = binomial)
-summary(log_reg_all)
-
-log_reg_null <- glm( target ~ 1,
-                     data = NbaPlayers , family = binomial)
-summary(log_reg_null)
 
 ## Forward stepwise
 
 f_log_reg_fit <- regsubsets(x = NbaPlayers[, c(-18, -19)], 
                             y = NbaPlayers$target, 
-                            data = NbaPlayers, method = "forward")
+                            data = NbaPlayers, method = "forward", nvmax = 17)
 
 # Positive/Negative coefficient for a predictor
+f_log_reg_sum <- summary(f_log_reg_fit)
 summary(f_log_reg_fit)
 
-# plot residual
-par(mfrow = c(1,2))
+plot( f_log_reg_sum$adjr2, pch = 18, lwd = 3, col = "red" ,
+      ylab = "Adjusted R-squared", xlab = "Number of variables", 
+      main = "Adjusted R squared of forward stepwise selection for logistic regression")
+abline(v = which.max(f_log_reg_sum$adjr2), col="green", lwd = 3)
 
-# plot 1
-plot(f_log_reg_fit$residuals, pch = "o", col = "blue" , ylab = "Residual", 
-     main = paste0("Residuals plot: mean=",round(mean(f_log_reg_fit$residuals),digits = 4),
-                   " & var=", round(var(f_log_reg_fit$residuals),digits = 2)))
-abline(c(0,0),c(0,length(f_log_reg_fit$residuals)), col= "red", lwd = 3)
-
-# plot 2 
-hist(f_log_reg_fit$residuals,40,
-     xlab = "Residual",
-     main = "Residuals empirical distribution") 
-
-par(mfrow = c(1,1))
+plot( f_log_reg_sum$rss, pch = 18, lwd = 3, col = "blue" ,
+      ylab = "Residual Sum of Squares", xlab = "Number of variables", 
+      main = "RSS of forward stepwise selection for logistic regression")
+abline(v = which.min(f_log_reg_sum$rss), col="green", lwd = 3)
 
 
 ## Backward stepwise
+
+b_log_reg_fit <- regsubsets(x = NbaPlayers[, c(-18, -19)], 
+                            y = NbaPlayers$target, 
+                            data = NbaPlayers, method = "backward", nvmax = 17)
+
+# Positive/Negative coefficient for a predictor
+b_log_reg_sum <- summary(b_log_reg_fit)
+summary(b_log_reg_fit)
+
+plot( b_log_reg_sum$adjr2, pch = 18, lwd = 3, col = "red" ,
+      ylab = "Adjusted R-squared", xlab = "Number of variables", 
+      main = "Adjusted R squared of backward stepwise selection for logistic regression")
+abline(v = which.max(b_log_reg_sum$adjr2), col="green", lwd = 3)
+
+plot( b_log_reg_sum$rss, pch = 18, lwd = 3, col = "blue" ,
+      ylab = "Residual Sum of Squares", xlab = "Number of variables", 
+      main = "RSS of backward stepwise selection for logistic regression")
+abline(v = which.min(b_log_reg_sum$rss), col="green", lwd = 3)
+
+
+## Exhaust stepwise
+
+e_log_reg_fit <- regsubsets(x = NbaPlayers[, c(-18, -19)], 
+                            y = NbaPlayers$target, 
+                            data = NbaPlayers, method = "exhaust", nvmax = 17)
+
+# Positive/Negative coefficient for a predictor
+e_log_reg_sum <- summary(e_log_reg_fit)
+summary(e_log_reg_fit)
+
+plot( e_log_reg_sum$adjr2, pch = 18, lwd = 3, col = "red" ,
+      ylab = "Adjusted R-squared", xlab = "Number of variables", 
+      main = "Adjusted R squared of exhaust stepwise selection for logistic regression")
+abline(v = which.max(e_log_reg_sum$adjr2), col="green", lwd = 3)
+
+plot( e_log_reg_sum$rss, pch = 18, lwd = 3, col = "blue" ,
+      ylab = "Residual Sum of Squares", xlab = "Number of variables", 
+      main = "RSS of exhaust stepwise selection for logistic regression")
+abline(v = which.min(e_log_reg_sum$rss), col="green", lwd = 3)
