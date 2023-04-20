@@ -31,7 +31,7 @@ train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
 ### Logistic regression with all predictors
 
 log_reg_all <- glm( target ~ .-target_5yrs,
-                data = NbaPlayers , family = binomial)
+                data = NbaPlayers , subset = train, family = binomial)
 
 # Positive/Negative coefficient for a predictor
 summary(log_reg_all)
@@ -39,7 +39,7 @@ summary(log_reg_all)
 coef(log_reg_all)
 
 # Function to predict the probability of a rookie
-fit_all <- predict( log_reg_all , type = "response")
+fit_all <- predict( log_reg_all , type = "response",  newx = NbaPlayers[-train, c(-18,-19)])
 
 # Boolean vector of 1250 values
 clas_all <- rep ( " No ", dim(NbaPlayers)[1])
@@ -59,8 +59,8 @@ mean(clas_all == NbaPlayers$target)
 
 ### Logistic regression with only important predictors
 
-log_reg_imp <- glm( target ~ gp + x3p_made + x3pa + oreb + ast,
-                    data = NbaPlayers , family = binomial)
+log_reg_imp <- glm( target ~ gp + oreb,
+                    data = NbaPlayers , subset = train, family = binomial)
 
 # Positive/Negative coefficient for a predictor
 summary(log_reg_imp)
@@ -68,7 +68,7 @@ summary(log_reg_imp)
 coef(log_reg_imp)
 
 # Function to predict the probability of a rookie
-fit_imp <- predict( log_reg_imp , type = "response")
+fit_imp <- predict( log_reg_imp , type = "response", newx = NbaPlayers[-train, c(-18,-19)])
 
 # Boolean vector of 1250 values
 clas_imp <- rep ( " No ", dim(NbaPlayers)[1])
@@ -94,9 +94,9 @@ test_err_rate = double(9)
 p = double(9)
 
 for(ptry in 1:9){
-  log_reg <- glm( target ~ gp + x3p_made + x3pa + oreb + ast,
-                  data = NbaPlayers , family = binomial )
-  fit <- predict( log_reg , type = "response")
+  log_reg <- glm( target ~ gp + oreb,
+                  data = NbaPlayers , subset = train, family = binomial )
+  fit <- predict( log_reg , type = "response",  newx = NbaPlayers[-train, c(-18,-19)])
   clas <- rep ( " No " , dim(NbaPlayers)[1])
   p[ptry] = ptry*0.1
   clas[fit > p[ptry]] = " Yes ";
@@ -111,34 +111,39 @@ plot(p, test_err_rate, type='b', main="Logistic Regression Test Error(p)",
 which.min(test_err_rate) # 5
 min(test_err_rate)
 
-# Try 20 values from 0.4 to 0.6 for optimal threshold
+# Try 30 values from 0 to 0.3 for optimal threshold
+# Not less because there are no "No" in the prediction
+# ptry <= 8 gives only "Yes" in the prediction 
 
-test_err_rate2 = double(20)
-p2 = double(20)
+test_err_rate2 = double(30)
+p2 = double(30)
 
-for(ptry in 1:20){
-  log_reg2 <- glm( target ~ gp + x3p_made + x3pa + oreb + ast,
-                  data = NbaPlayers , family = binomial )
-  fit2 <- predict( log_reg2 , type = "response")
+for(ptry in 1:30){
+  log_reg2 <- glm( target ~ gp + oreb,
+                  data = NbaPlayers , subset = train, family = binomial )
+  fit2 <- predict( log_reg2 , type = "response", newx = NbaPlayers[-train, c(-18,-19)])
   clas2 <- rep ( " No " , dim(NbaPlayers)[1])
-  p2[ptry] = 0.4 + ptry*0.01
+  p2[ptry] = 0 + ptry*0.01
   clas2[fit2 > p2[ptry]] = " Yes ";
   table2 <- table(clas2, NbaPlayers$target)
-  test_err_rate2[ptry] = (table2[1,2] + table2[2,1]) / sum(table2)
+  if (ptry < 9)
+    test_err_rate2[ptry] = table2[1,1] / sum(table2)
+  else 
+    test_err_rate2[ptry] = (table2[1,2] + table2[2,1]) / sum(table2)
 }
 
 plot(p2, test_err_rate2, type='b', main="Logistic Regression Test Error(p)",
      ylab="test err rate", xlab="p", col='blue', pch=18,
-     lwd=3, xaxp = c(0.4, 0.6, 20))
+     lwd=3, xaxp = c(0, 0.3, 30))
 
-which.min(test_err_rate2) # minimum for p = 0.52
+which.min(test_err_rate2) # minimum for p = 0.24
 min(test_err_rate2)
 
 
 # Logistic regression with optimum threshold
 
-log_reg_opt <- glm( target ~ gp + x3p_made + x3pa + oreb + ast,
-                    data = NbaPlayers , family = binomial)
+log_reg_opt <- glm( target ~ gp + oreb,
+                    data = NbaPlayers , subset = train, family = binomial)
 
 # Positive/Negative coefficient for a predictor
 summary(log_reg_opt)
@@ -146,11 +151,11 @@ summary(log_reg_opt)
 coef(log_reg_opt)
 
 # Function to predict the probability of a rookie
-fit_opt <- predict( log_reg_opt , type = "response")
+fit_opt <- predict( log_reg_opt , type = "response", newx = NbaPlayers[-train, c(-18,-19)])
 
 # Boolean vector of 1250 values
 clas_opt <- rep ( " No ", dim(NbaPlayers)[1])
-clas_opt[fit_opt > .52] = " Yes ";
+clas_opt[fit_opt > .24] = " Yes ";
 
 # Show confusion matrix
 table_opt <- table(clas_opt, NbaPlayers$target)

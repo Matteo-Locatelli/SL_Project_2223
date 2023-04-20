@@ -19,7 +19,7 @@ NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
-hist(NbaPlayers$target_5yrs)
+#hist(NbaPlayers$target_5yrs)
 
 
 ### Shrinkage with full dataset
@@ -43,8 +43,8 @@ train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
 ridge_mod <- glmnet(x, y, family = "binomial",  alpha = 0, lambda = lambda, standardize=TRUE)
 dim(coef(ridge_mod)) 
 plot(ridge_mod, xvar="lambda")
-ridge_mod
-coef(ridge_mod)
+#ridge_mod
+#coef(ridge_mod)
 
 ## Ridge CV 
 
@@ -78,17 +78,17 @@ ridge_mer
 lasso_mod <- glmnet( x, y, family = "binomial", alpha = 1, lambda = lambda, standardize=TRUE)
 dim(coef(ridge_mod)) 
 plot(lasso_mod, xvar="lambda")
-lasso_mod
-coef(lasso_mod)
+#lasso_mod
+#coef(lasso_mod)
 
 ## Lasso CV
 
-cv_lasso <- cv.glmnet(x[train,], y[train], type.measure="class", family = "binomial",
+lasso_cv_model <- cv.glmnet(x[train,], y[train], type.measure="class", family = "binomial",
                       lambda = lambda, alpha=1, nfolds = 10);
-plot(cv_lasso)
+plot(lasso_cv_model)
 plot(glmnet(x[train,],y[train], type.measure="class", family = "binomial", 
             lambda = lambda, alpha = 1, nfolds = 10), xvar = "lambda")
-lasso_opt_lambda <- cv_lasso$lambda.min #cv_lasso$lambda.1se
+lasso_opt_lambda <- lasso_cv_model$lambda.min #lasso_cv_model$lambda.1se
 lasso_opt_lambda
 
 ## Predict on test dataset with optimal lambda

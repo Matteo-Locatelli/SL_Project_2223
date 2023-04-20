@@ -16,7 +16,6 @@ library( readr )
 library( dplyr )
 library( leaps )
 library( sp )
-library( tidyverse )
 set.seed(1) # seed for random number generator
 
 # set working directory
@@ -33,10 +32,7 @@ NbaPlayers$target <- factor( ifelse(NbaPlayers$target_5yrs == 0 , " No " , " Yes
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
-hist(NbaPlayers$target_5yrs)
-
-# split indexes vector with 75% of the data
-train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
+#hist(NbaPlayers$target_5yrs)
 
 
 
@@ -47,11 +43,13 @@ train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
 
 f_log_reg_fit <- regsubsets(x = NbaPlayers[, c(-18, -19)], 
                             y = NbaPlayers$target, 
-                            data = NbaPlayers, method = "forward", nvmax = 17)
+                            data = NbaPlayers, method = "forward", 
+                            nvmax = dim(NbaPlayers)[2]-2)
 
 # Positive/Negative coefficient for a predictor
-f_log_reg_sum <- summary(f_log_reg_fit)
 summary(f_log_reg_fit)
+
+f_log_reg_sum <- summary(f_log_reg_fit)
 
 plot( f_log_reg_sum$adjr2, pch = 18, lwd = 3, col = "red" ,
       ylab = "Adjusted R-squared", xlab = "Number of variables", 
@@ -68,11 +66,13 @@ abline(v = which.min(f_log_reg_sum$rss), col="green", lwd = 3)
 
 b_log_reg_fit <- regsubsets(x = NbaPlayers[, c(-18, -19)], 
                             y = NbaPlayers$target, 
-                            data = NbaPlayers, method = "backward", nvmax = 17)
+                            data = NbaPlayers, method = "backward", 
+                            nvmax = dim(NbaPlayers)[2]-2)
 
 # Positive/Negative coefficient for a predictor
-b_log_reg_sum <- summary(b_log_reg_fit)
 summary(b_log_reg_fit)
+
+b_log_reg_sum <- summary(b_log_reg_fit)
 
 plot( b_log_reg_sum$adjr2, pch = 18, lwd = 3, col = "red" ,
       ylab = "Adjusted R-squared", xlab = "Number of variables", 
@@ -89,11 +89,13 @@ abline(v = which.min(b_log_reg_sum$rss), col="green", lwd = 3)
 
 e_log_reg_fit <- regsubsets(x = NbaPlayers[, c(-18, -19)], 
                             y = NbaPlayers$target, 
-                            data = NbaPlayers, method = "exhaust", nvmax = 17)
+                            data = NbaPlayers, method = "exhaust", 
+                            nvmax = dim(NbaPlayers)[2]-2)
 
 # Positive/Negative coefficient for a predictor
-e_log_reg_sum <- summary(e_log_reg_fit)
 summary(e_log_reg_fit)
+
+e_log_reg_sum <- summary(e_log_reg_fit)
 
 plot( e_log_reg_sum$adjr2, pch = 18, lwd = 3, col = "red" ,
       ylab = "Adjusted R-squared", xlab = "Number of variables", 
@@ -104,3 +106,20 @@ plot( e_log_reg_sum$rss, pch = 18, lwd = 3, col = "blue" ,
       ylab = "Residual Sum of Squares", xlab = "Number of variables", 
       main = "RSS of exhaust stepwise selection for logistic regression")
 abline(v = which.min(e_log_reg_sum$rss), col="green", lwd = 3)
+
+
+
+### Boosting
+# Linear model (such as logistic regression) is not good for boosting. 
+# The reason is if you add two linear models together, the result is another linear model. 
+# On the other hand, adding two decision stumps or trees, will have a more complicated 
+# and interesting model.
+# https://stats.stackexchange.com/questions/329066/boosting-a-logistic-regression-model
+
+library( boot )
+library( boot.pval )
+
+## Forward: f_log_reg_fit
+
+
+## Backward: b_log_reg_fit
