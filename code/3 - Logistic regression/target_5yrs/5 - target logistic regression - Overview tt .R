@@ -10,8 +10,8 @@ library(MASS);
 set.seed (1)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -40,6 +40,7 @@ coef(log_reg_all)
 
 # Function to predict the probability of a rookie
 fit_all <- predict( log_reg_all, NbaPlayers[-train,], type = "response")
+hist(fit_all)
 
 # Boolean vector of 1250 values
 clas_all <- rep ( " No ", dim(NbaPlayers)[1]-length(train))

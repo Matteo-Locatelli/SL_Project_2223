@@ -11,8 +11,8 @@ library(MASS);
 set.seed (1)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -38,6 +38,12 @@ coef(log_reg_all)
 
 # Function to predict the probability of a rookie
 fit_all <- predict( log_reg_all , type = "response")
+hist(fit_all, main = "Histogram of probabilities prediction", 
+     xlab = "Probability predicted", 
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
 
 # Boolean vector of 1250 values
 clas_all <- rep ( " No ", dim(NbaPlayers)[1])
@@ -67,6 +73,12 @@ coef(log_reg_imp)
 
 # Function to predict the probability of a rookie
 fit_imp <- predict( log_reg_imp , type = "response")
+hist(fit_imp, main = "Histogram of probabilities prediction", 
+     xlab = "Probability predicted", 
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
 
 # Boolean vector of 1250 values
 clas_imp <- rep ( " No ", dim(NbaPlayers)[1])
@@ -86,7 +98,7 @@ mean(clas_imp == NbaPlayers$target)
 # Slightly worse than before
 
 
-### Try to fin the optimal classification threshold (standard 0.5)
+### Try to find the optimal classification threshold (standard 0.5)
 
 test_err_rate = double(9)
 p = double(9)
