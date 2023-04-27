@@ -6,6 +6,8 @@ graphics.off()  # close all plot
 
 library(ISLR2);
 library(MASS);
+library( boot )
+library( boot.pval )
 
 set.seed (1)
 
@@ -40,7 +42,13 @@ coef(log_reg_all)
 
 # Function to predict the probability of a rookie
 fit_all <- predict( log_reg_all, NbaPlayers[-train,], type = "response")
-hist(fit_all)
+hist(fit_all, main = "Histogram of probabilities prediction", 
+     xlab = "Probability predicted", 
+     ylim = c(0,30),
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
 
 # Boolean vector of 1250 values
 clas_all <- rep ( " No ", dim(NbaPlayers)[1]-length(train))
@@ -58,6 +66,19 @@ err_rate_all
 mean(clas_all == NbaPlayers$target[-train])
 
 
+# Estimate variance of coefficients with bootstrap
+
+fun_boot <- function(data,index){
+  log_reg <- glm( target ~ .-target_5yrs,
+                 data = NbaPlayers , subset = index, family = binomial)
+  return (log_reg$coefficients)
+}
+
+all_boot <- boot(NbaPlayers[train,], fun_boot,R = 1000)
+boot.pval(all_boot, theta_null = rep(0, length(all_boot$t0)))
+
+boot_summary(log_reg_all, R = 1000)
+
 ### Logistic regression with only important predictors
 
 log_reg_imp <- glm( target ~ gp + oreb,
@@ -70,6 +91,13 @@ coef(log_reg_imp)
 
 # Function to predict the probability of a rookie
 fit_imp <- predict( log_reg_imp, NbaPlayers[-train,], type = "response")
+hist(fit_imp, main = "Histogram of probabilities prediction", 
+     xlab = "Probability predicted",
+     ylim = c(0,30),
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
 
 # Boolean vector of 1250 values
 clas_imp <- rep ( " No ", dim(NbaPlayers)[1]-length(train))

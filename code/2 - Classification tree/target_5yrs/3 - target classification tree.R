@@ -158,3 +158,4 @@ plot(prune3, type = c("uniform"), main="k=7")
 text(prune3, pretty = 0)
 plot(prune4, type = c("uniform"), main="k=2")
 text(prune4, pretty = 0)
+
