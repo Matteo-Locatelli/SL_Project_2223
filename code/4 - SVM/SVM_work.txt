@@ -1,0 +1,13 @@
+The dataset is used for classification on the variable "target_5yrs".
+
+In this part of the project Support Vector Machine and Classifier will be used.
+
+This section of the project uses the dataset without the variables "pts" 
+and "reb" because of the previous discovery of linearly independent features 
+in the dataset.
+
+Cross-validation will be performed using the SVM method with three different 
+kernel functions:
+- linear
+- polynomial
+- radial
