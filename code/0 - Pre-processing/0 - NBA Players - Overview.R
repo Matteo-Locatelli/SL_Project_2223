@@ -6,8 +6,8 @@ graphics.off()  # close all plot
 
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -19,7 +19,8 @@ head(NbaPlayers)
 
 summary(NbaPlayers)
 
-# Plots of various classes: Check the data-set balance
+
+### Plots of various classes: Check the data-set balance
 number_of_zero <- sum(NbaPlayers$target_5yrs == 0)
 number_of_one <- sum(NbaPlayers$target_5yrs == 1)
 my_bar <- barplot(table(NbaPlayers$target_5yrs),
@@ -47,3 +48,126 @@ dim(PositiveOccurrences)
 
 NegativeOccurrences <- NbaPlayers[NbaPlayers$target_5yrs == 0,]
 dim(NegativeOccurrences)
+
+
+### Plot the histograms of various variables
+
+hist(NbaPlayers$gp,
+     ylim = c(0, 220),
+     labels = TRUE,
+     xlab = "Games played",
+     main = "GP histogram")
+
+hist(NbaPlayers$min,
+     ylim = c(0, 350),
+     labels = TRUE,
+     xlab = "Minutes per game played",
+     main = "MIN histogram")
+
+hist(NbaPlayers$pts,
+     ylim = c(0, 350),
+     labels = TRUE,
+     xlab = "Points per game",
+     main = "PTS histogram")
+
+hist(NbaPlayers$fgm,
+     ylim = c(0, 500),
+     labels = TRUE,
+     xlab = "Field goals made per game",
+     main = "FGM histogram")
+
+hist(NbaPlayers$fga,
+     ylim = c(0, 450),
+     labels = TRUE,
+     xlab = "Field goals attempts per game",
+     main = "FGA histogram")
+
+hist(NbaPlayers$fg,
+     ylim = c(0, 450),
+     labels = TRUE,
+     xlab = "Field goals (%) per game",
+     main = "FG histogram")
+
+hist(NbaPlayers$x3p_made,
+     xlim = c(0, 2.5),
+     ylim = c(0, 900),
+     labels = TRUE,
+     xlab = "3 point made per game",
+     main = "X3P_MADE histogram")
+
+hist(NbaPlayers$x3pa,
+     xlim = c(0, 7),
+     ylim = c(0, 800),
+     labels = TRUE,
+     xlab = "3 point attempts per game",
+     main = "X3PA histogram")
+
+hist(NbaPlayers$x3p,
+     ylim = c(0, 500),
+     labels = TRUE,
+     xlab = "3 point (%) per game",
+     main = "X3P histogram")
+
+hist(NbaPlayers$ftm,
+     ylim = c(0, 450),
+     labels = TRUE,
+     xlab = "Free throws made per game",
+     main = "FTM histogram")
+
+hist(NbaPlayers$fta,
+     xlim = c(0, 11),
+     ylim = c(0, 500),
+     labels = TRUE,
+     xlab = "Free throws attempts per game",
+     main = "FTA histogram")
+
+hist(NbaPlayers$ft,
+     ylim = c(0, 550),
+     labels = TRUE,
+     xlab = "Free throws (%) per game",
+     main = "FT histogram")
+
+hist(NbaPlayers$oreb,
+     ylim = c(0, 450),
+     labels = TRUE,
+     xlab = "Offensive rebounds per game",
+     main = "OREB histogram")
+
+hist(NbaPlayers$dreb,
+     xlim = c(0, 10),
+     ylim = c(0, 500),
+     labels = TRUE,
+     xlab = "Defensive rebounds per game",
+     main = "DREB histogram")
+
+hist(NbaPlayers$reb,
+     ylim = c(0, 400),
+     labels = TRUE,
+     xlab = "Rebounds per game",
+     main = "REB histogram")
+
+hist(NbaPlayers$ast,
+     xlim = c(0, 11),
+     ylim = c(0, 650),
+     labels = TRUE,
+     xlab = "Assists per game",
+     main = "AST histogram")
+
+hist(NbaPlayers$stl,
+     xlim = c(0, 2.5),
+     ylim = c(0, 400),
+     labels = TRUE,
+     xlab = "Steals per game",
+     main = "STL histogram")
+
+hist(NbaPlayers$blk,
+     ylim = c(0, 1100),
+     labels = TRUE,
+     xlab = "Blocks per game",
+     main = "BLK histogram")
+
+hist(NbaPlayers$tov,
+     ylim = c(0, 500),
+     labels = TRUE,
+     xlab = "Turnovers per game",
+     main = "TOV histogram")

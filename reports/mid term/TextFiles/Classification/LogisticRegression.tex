@@ -23,7 +23,7 @@ First of all we fitted a model using all the features, that we will name model A
 
 It can be observed that there is no significant change in performance. When all variables are used, the accuracy is $70\%$, compared to $67.5\%$ in the second case. Furthermore, the AIC coefficient changes from 1052.5 to 1050.2, which could be considered almost the same. 
 
-\Fig~\ref{fig:CM} shows the Confusion Matrices for the two models. In general, both models tend to perform slightly better in predicting the "yes" class.
+\Fig~\ref{fig:CM} shows the Confusion Matrices for the two models. In general, both models tend to perform slightly better in predicting the ``yes'' class.
 
 \begin{figure}[h]
 	\begin{subfigure}{.6\textwidth}
@@ -91,18 +91,18 @@ Since the Forward model includes all the variables, its analysis is identical to
 
 After removing the non-significant variables from the backward model, we obtained the same model as in the previous analysis, which we referred to as model B. 
 
-This confirms our results, suggesting that the model with only \textit{"GP"} and \textit{"OREB"} explains in a good way the target. 
+This confirms our results, suggesting that the model with only ``GP'' and ``OREB'' explains in a good way the target. 
 
 \vspace{0.2cm}
 \textbf{Conclusions and Observations}
 
 In general, regardless of the variables included, \textit{Logistic Regression} is able to achieve an accuracy around $70\%$. Therefore, it may be better to explore other classification methods to potentially improve the model's performances.
 
-However, the \textit{Logistic} model obtained suggests that a good trade-off between model simplicity and performances can be achieved with two variables. In particular:
+However, the \textit{Logistic Regression} model obtained suggests that a good trade-off between model simplicity and performances can be achieved with two variables. In particular:
 
 \begin{itemize}
-	\item The inclusion of \textit{"GP"} was expected, as it makes sense that players who play more games will have a longer career. The second feature, on the other hand, is not really intuitive and revealed a new characteristic about the data.
-	\item In general, all models perform better at predicting the "yes" class instead of the "no" class, but this can be traced back to the composition of the dataset, which includes more "yes" samples than "no".
+	\item The inclusion of ``GP'' was expected, as it makes sense that players who play more games will have a longer career. The second feature, on the other hand, is not really intuitive and revealed a new characteristic about the data.
+	\item In general, all models perform better at predicting the ``yes'' class instead of the ``no'' class, but this can be traced back to the composition of the dataset, which includes more ``yes'' samples than ``no''.
 \end{itemize}
 
 The performances achieved with \textit{Logistic Regression} are limited, therefore other classification techniques will be explored in the following sections.
