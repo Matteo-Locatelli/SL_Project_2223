@@ -21,7 +21,7 @@ head(NbaPlayers)
 
 summary(NbaPlayers)
 
-NbaPlayers_ <- cor(NbaPlayers)
+NbaPlayers_cor <- cor(NbaPlayers)
 corrplot(NbaPlayers_cor)
 
 
@@ -32,7 +32,7 @@ my_bar <- barplot(table(NbaPlayers$target_5yrs),
         beside=TRUE, 
         col=c(rgb(0.3,0.5,0.4,0.6) , rgb(0.3,0.9,0.4,0.6)) ,
         ylim=c(0, 1000),
-        main = "Target 5 Years bar plot")
+        main = "TARGET_5Yrs bar plot")
 
 # Add the text 
 text(my_bar, c(number_of_zero, number_of_one) + 30, paste(c(number_of_zero, number_of_one), sep="") ,cex=1) 
@@ -44,7 +44,7 @@ hist(NbaPlayers$target_5yrs,
      labels = TRUE,
      xlab = NULL,
      ylab = NULL,
-     main = "target_5yrs histogram")
+     main = "TARGET_5Yrs histogram")
 
 plot(c(1:dim(NbaPlayers)[1]), NbaPlayers$target_5yrs)
 
@@ -55,24 +55,24 @@ NegativeOccurrences <- NbaPlayers[NbaPlayers$target_5yrs == 0,]
 dim(NegativeOccurrences)
 
 
-### Plot the histograms of various variables
+### Plot the histograms of various regressors
 
 hist(NbaPlayers$gp,
      ylim = c(0, 220),
      labels = TRUE,
-     xlab = "Games played",
+     xlab = "Number of games played",
      main = "GP histogram")
 
 hist(NbaPlayers$min,
      ylim = c(0, 350),
      labels = TRUE,
-     xlab = "Minutes per game played",
+     xlab = "Minutes played per game",
      main = "MIN histogram")
 
 hist(NbaPlayers$pts,
      ylim = c(0, 350),
      labels = TRUE,
-     xlab = "Points per game",
+     xlab = "Points scored per game",
      main = "PTS histogram")
 
 hist(NbaPlayers$fgm,
@@ -90,28 +90,28 @@ hist(NbaPlayers$fga,
 hist(NbaPlayers$fg,
      ylim = c(0, 450),
      labels = TRUE,
-     xlab = "Field goals (%) per game",
-     main = "FG histogram")
+     xlab = "Field goals percent per game",
+     main = "FG% histogram")
 
 hist(NbaPlayers$x3p_made,
      xlim = c(0, 2.5),
      ylim = c(0, 900),
      labels = TRUE,
-     xlab = "3 point made per game",
-     main = "X3P_MADE histogram")
+     xlab = "Three point shots made per game",
+     main = "3P MADE histogram")
 
 hist(NbaPlayers$x3pa,
      xlim = c(0, 7),
      ylim = c(0, 800),
      labels = TRUE,
-     xlab = "3 point attempts per game",
-     main = "X3PA histogram")
+     xlab = "3 point shots attempts per game",
+     main = "3PA histogram")
 
 hist(NbaPlayers$x3p,
      ylim = c(0, 500),
      labels = TRUE,
-     xlab = "3 point (%) per game",
-     main = "X3P histogram")
+     xlab = "3 point shots percent per game",
+     main = "3P% histogram")
 
 hist(NbaPlayers$ftm,
      ylim = c(0, 450),
@@ -129,50 +129,50 @@ hist(NbaPlayers$fta,
 hist(NbaPlayers$ft,
      ylim = c(0, 550),
      labels = TRUE,
-     xlab = "Free throws (%) per game",
-     main = "FT histogram")
+     xlab = "Free throws percent per game",
+     main = "FT% histogram")
 
 hist(NbaPlayers$oreb,
      ylim = c(0, 450),
      labels = TRUE,
-     xlab = "Offensive rebounds per game",
+     xlab = "Number of offensive rebounds per game",
      main = "OREB histogram")
 
 hist(NbaPlayers$dreb,
      xlim = c(0, 10),
      ylim = c(0, 500),
      labels = TRUE,
-     xlab = "Defensive rebounds per game",
+     xlab = "Number of defensive rebounds per game",
      main = "DREB histogram")
 
 hist(NbaPlayers$reb,
      ylim = c(0, 400),
      labels = TRUE,
-     xlab = "Rebounds per game",
+     xlab = "Number of rebounds per game",
      main = "REB histogram")
 
 hist(NbaPlayers$ast,
      xlim = c(0, 11),
      ylim = c(0, 650),
      labels = TRUE,
-     xlab = "Assists per game",
+     xlab = "Number of assists per game",
      main = "AST histogram")
 
 hist(NbaPlayers$stl,
      xlim = c(0, 2.5),
      ylim = c(0, 400),
      labels = TRUE,
-     xlab = "Steals per game",
+     xlab = "Number of steals per game",
      main = "STL histogram")
 
 hist(NbaPlayers$blk,
      ylim = c(0, 1100),
      labels = TRUE,
-     xlab = "Blocks per game",
+     xlab = "Number of blocks per game",
      main = "BLK histogram")
 
 hist(NbaPlayers$tov,
      ylim = c(0, 500),
      labels = TRUE,
-     xlab = "Turnovers per game",
+     xlab = "Number of turnovers per game",
      main = "TOV histogram")
