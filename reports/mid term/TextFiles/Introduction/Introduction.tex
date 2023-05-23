@@ -1,38 +1,27 @@
-The aim of this project is to analyze a dataset collected from NBA Rookies' games. This set contains 1340 samples, each one described by the 21 features listed in table \ref{tab:1}. 
-\begin{table}[h]
-	\centering
-	\small
-	\begin{tabular}{||c | c ||}
-		\hline
-		& Description\\
-		\hline
-		NAME & Player's name\\ 
-		GP & Games Played\\ 
-		MIN & Minutes played\\ 
-		PTS & Points\\
-		FGM & Field Goals Made\\
-		FGA & Field Goals Attempts\\
-		FG\% & Field Goals Percent\\
-		X3P\_MADE & 3 Point Made\\
-		X3PA & 3 Point Attempts\\
-		X3P\% & 3 Point Percent\\
-		FTM & Free Throw Made\\
-		FTA & Free Throw Attempts\\
-		FT\% & Free Throw Percent\\
-		OREB & Offensive Rebounds\\
-		DREB & Defensive Rebounds\\
-		REB & Rebounds\\
-		AST & Assists\\
-		STL & Steals\\
-		BLK & Blocks\\
-		TOV & Turnovers\\
-		TARGET\_5YRS & 1 if career duration $\geq 5$, 0 otherwise\\
-		\hline
-	\end{tabular}
-	\caption{Dataset features.}
-	\label{tab:1}
-\end{table} 
+The aim of this project is to analyze a dataset collected from NBA Rookies' games. This set contains 1340 samples, each one described by the 21 features listed below: 
+\begin{itemize}
+	\item Name of the player (Name): string;
+	\item Number of games played (GP): discrete variable;
+	\item Minutes played per game (MIN): continuous variable;
+	\item Points scored per game (PTS): continuous variable;
+	\item Field goals made per game (FGM): continuous variable;
+	\item Field goals attempts per game (FGA): continuous variable;
+	\item Field goals percent per game (FG\%): continuous variable;
+	\item Three point shots made per game (3P MADE): continuous variable;
+	\item Three points shots attempts per game (3PA): continuous variable;
+	\item Three point shots attempts per game (3P\%): continuous variable;
+	\item Free throws made per game (FTM): continuous variable;
+	\item Free throws attempts per game (FTA): continuous variable;
+	\item Free throws made per game (FT\%): continuous variable;
+	\item Number of offensive rebounds per game (OREB): continuous variable;
+	\item Number of defensive rebounds per game (DREB): continuous variable;
+	\item Number of rebounds per game (REB): continuous variable;
+	\item Number of assists per game (AST): continuous variable;
+	\item Number of steals per game (STL): continuous variable;
+	\item Number of blocks per game (BLK): continuous variable;
+	\item Number of turnovers per game (TOV): continuous variable;
+	\item Output variable (TARGET\_5Yrs): 1 if career duration $\geq 5$, 0 otherwise\\
+\end{itemize} 
 
-Besides ``NAME, ``GP'' and ``TARGET\_5YRS'', each feature is intended to be expressed ``per game''.
-
-The objective of this analysis is to develop two distinct models that can effectively explain the features ``PTS'' and ``TARGET\_5YRS''. Due to the nature of these variables, two different approaches are required. For ``PTS'', a regression method must be utilized due to its continuous nature, whereas for ``TARGET\_5YRS'', a classification method must be employed given that it is a binary variable.
+%Besides ``Name, ``GP'' and ``TARGET\_5Yrs'', each feature is intended to be expressed ``per game''.
+The objective of this analysis is to develop two distinct models that can effectively explain the features ``PTS'' and ``TARGET\_5Yrs''. Due to the nature of these variables, two different approaches are required. For ``PTS'', a regression method must be utilized due to its continuous nature, whereas for ``TARGET\_5Yrs'', a classification method must be employed given that it is a binary variable.

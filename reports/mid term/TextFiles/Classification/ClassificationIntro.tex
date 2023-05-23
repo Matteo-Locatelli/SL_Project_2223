@@ -1,8 +1,8 @@
-In this section we try to find a model able to explain the categorical variable ``TARGET\_5YRS''.
+In this section we try to find a model able to explain the categorical variable ``TARGET\_5Yrs''.
 In particular we are going to use:
 \begin{itemize}
 	\item Classification trees with ensemble methods;
-	\item Logistic Regression.
+	\item Logistic regression.
 \end{itemize}
 
 Our first step was to check whether the dataset was balanced or not. In \Fig~\ref{fig:target_bar_plot} we can clearly see that the samples are not equally distributed. 
@@ -14,6 +14,6 @@ Our first step was to check whether the dataset was balanced or not. In \Fig~\re
 	\label{fig:target_bar_plot}
 \end{figure}
 
-Afterwards, we removed an additional column from the dataset, namely ``PTS'', which is a linear combination of ``FGM'', ``X3P\_MADE'' and ``FTM''.
+Afterwards, we removed an additional column from the dataset, namely ``PTS'', which is a linear combination of ``FGM'', ``3P MADE'' and ``FTM''.
 
 Therefore the dataset that will be used contains 1278 samples and 18 features.

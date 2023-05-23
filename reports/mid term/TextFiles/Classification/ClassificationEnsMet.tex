@@ -2,35 +2,35 @@
 
 \vspace{0.2cm}
 \noindent
-\textbf{Random Forest \& Bagging}
+\textbf{Random forest \& bagging}
 
-We improved the tree-based models using Bagging with 500 trees and Random Forest, selecting the best number of predictors (\textit{m}) from the full set of \textit{p} predictors.
+We improved the tree-based models using bagging with 500 trees and random forest, selecting the best number of predictors (\textit{m}) from the full set of \textit{p} predictors.
 
 In \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test and the out-of-bag error rates as \textit{m} increases.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/m_best_for_500_plot}
-	\caption{Test and Out-Of-Bag trends.}
+	\caption{Test and out of bag trends.}
 	\label{fig:m_best_for_500_plot}
 \end{figure}
 
-Once the best \textit{m} value for the Random Forest was obtained, we compared the Bagging model with the Random Forest model using that particular value of \textit{m}, while keeping all other parameters the same.
-In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that Random Forest performs slightly better than Bagging.
+Once the best \textit{m} value for the random forest was obtained, we compared the bagging model with the random forest model using that particular value of \textit{m}, while keeping all other parameters the same.
+In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that random forest performs slightly better than bagging.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{.3\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{ImageFiles/Classification/Trees/vs_bagg_for_500_plot}
-		\caption{Bagging and Random Forest comparison.}
+		\caption{Bagging and random forest comparison.}
 		\label{fig:vs_bagg_for_500_plot}
 	\end{subfigure}%
 	\hfill
 	\begin{subfigure}{.3\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{ImageFiles/Classification/Trees/best_for_500_plot}
-		\caption{Random Forest method plot.}
+		\caption{Random forest method plot.}
 		\label{fig:best_for_500_plot}
 	\end{subfigure}%
 	\hfill
@@ -40,18 +40,18 @@ In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that Random Forest performs sl
 		\caption{Bagging method plot.}
 		\label{fig:bagg_500_plot}
 	\end{subfigure}
-	\caption{Random Forest vs Bagging.}
+	\caption{Random forest vs bagging.}
 	\label{fig:RFvsB}
 \end{figure}
 
-An overall summary of the importance of each predictor is obtained by using RSS (\textit{``Residual Sum of Squares''}). In \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} we can see the importance of each variable in the models.
+An overall summary of the importance of each predictor is obtained by using Residual Sum of Squares (RSS). In \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} we can see the importance of each variable in the models.
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/best_for_500_var_imp_plot}
-		\caption{Random Forest important variables.}
+		\caption{Random forest important variables.}
 		\label{fig:best_for_500_var_imp_plot}
 	\end{subfigure}%
 	\hfill
