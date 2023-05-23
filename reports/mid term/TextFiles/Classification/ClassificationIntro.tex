@@ -5,15 +5,6 @@ In particular we are going to use:
 	\item Logistic regression.
 \end{itemize}
 
-Our first step was to check whether the dataset was balanced or not. In \Fig~\ref{fig:target_bar_plot} we can clearly see that the samples are not equally distributed. 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.5\linewidth]{ImageFiles/Histograms/target_bar_plot}
-	\caption{Target variable bar plot.}
-	\label{fig:target_bar_plot}
-\end{figure}
-
-Afterwards, we removed an additional column from the dataset, namely ``PTS'', which is a linear combination of ``FGM'', ``3P MADE'' and ``FTM''.
+Before diving into the analysis, we removed an additional column from the dataset, ``PTS'', which is a linear combination of ``FGM'', ``3P MADE'' and ``FTM''.
 
 Therefore the dataset that will be used contains 1278 samples and 18 features.

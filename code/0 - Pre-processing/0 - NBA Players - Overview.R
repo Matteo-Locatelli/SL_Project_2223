@@ -4,6 +4,8 @@
 rm(list = ls()) # clear all environment variable
 graphics.off()  # close all plot
 
+# Import libraries
+library(corrplot)
 
 # set working directory
 #setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
@@ -18,6 +20,9 @@ names(NbaPlayers)
 head(NbaPlayers)
 
 summary(NbaPlayers)
+
+NbaPlayers_ <- cor(NbaPlayers)
+corrplot(NbaPlayers_cor)
 
 
 ### Plots of various classes: Check the data-set balance
