@@ -2,9 +2,9 @@
 
 The first method applied is the forward stepwise selection. In particular, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the \textit{akaike information criterion} (AIC) as comparison metric between models. The model obtained is shown in \Fig~\ref{table:ForwardModelSummary}.
 
-\begin{table}[h]
+\begin{table}[H]
 	\centering
-	\begin{tabular}{||c | c | c ||} 
+	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		\multicolumn{3}{|c|}{Equation} \\
 		\hline
@@ -36,9 +36,9 @@ As expected, ``MIN'' and ``FTM'' are included, which resulted to be important fr
 
 On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Fig~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. \todo{mettiamo R=1000?}
 
-\begin{table}[h]
+\begin{table}[H]
 	\centering
-	\begin{tabular}{||c | c | c ||} 
+	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		\multicolumn{3}{|c|}{Equation} \\
 		\hline
@@ -68,9 +68,9 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 
 The final forward model, shown in \Fig~\ref{table:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see the plots of the residuals, that have a gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
 
-\begin{table}[h]
+\begin{table}[H]
 	\centering
-	\begin{tabular}{||c | c | c ||} 
+	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		\multicolumn{3}{|c|}{Equation} \\
 		\hline
@@ -93,21 +93,21 @@ The final forward model, shown in \Fig~\ref{table:ForwardFinalModelSummary}, is 
 	\label{table:ForwardFinalModelSummary}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{.6\textwidth}
 		\centering
 		\includegraphics[width=0.6\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelResiduals}
-		\caption{Forward stepwise selection model residuals.}
+		\caption{}
 		\label{fig:ForwardFinalModelResiduals}
 	\end{subfigure}%
 	\begin{subfigure}{.6\textwidth}
 		\centering
 		\includegraphics[width=0.6\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelResidualsDist}
-		\caption{Forward stepwise selection residuals histogram}
+		\caption{}
 		\label{fig:ForwardFinalModelResidualsDist}
 	\end{subfigure}
-	\caption{Final Forward stepwise selection model.}
+	\caption{Final Forward stepwise selection model. (a)Forward stepwise selection model residuals. (b)Forward stepwise selection residuals histogram.}
 	\label{fig:FinalFSSM}
 \end{figure}
 
