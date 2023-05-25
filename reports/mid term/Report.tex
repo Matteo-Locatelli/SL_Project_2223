@@ -17,6 +17,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage[titletoc,title]{appendix}
 
 \usepackage{todonotes}
 \usepackage{verbatim}
@@ -121,7 +122,7 @@
 	\section{Data pre-processing}
 	\import{./TextFiles/PreProcessing/}{PreProcessing.tex}
 	
-	\section{Regression}
+	\section{Linear regression}
 	\import{./TextFiles/Regression/}{RegressionIntro.tex}
 	\import{./TextFiles/Regression/}{RegressionFor.tex}
 	\import{./TextFiles/Regression/}{RegressionBack.tex}
@@ -138,9 +139,21 @@
 	\import{./TextFiles/Classification/}{ClassificationSVM.tex}
 	\import{./TextFiles/Classification/}{ClassificationConclusions.tex}
 			
+	\appendix
+	
+	\section*{Appendix}
+	\addcontentsline{toc}{section}{Appendix}
+	
+	\subsection*{Linear Regression}\label{appendix:lr}
+	equazione
+	
+	tabella(che cita l'equazione)
+	\subsection*{Classification techniques}\label{appendix:ct}
+
+
 	\bibliographystyle{ieeetr}
 	
 	\bibliography{./OtherFiles/Bibliography}
 	
-	\addcontentsline{toc}{chapter}{Bibliography}
+	\addcontentsline{toc}{section}{Bibliography}
 \end{document}
