@@ -210,28 +210,39 @@ axis(side = 2, at=seq(0, 400, by=100))
 hist(NbaPlayers$ast,
      xlim = c(0, 11),
      ylim = c(0, 700),
-     axees = FALSE,
+     axes = FALSE,
      labels = TRUE,
      xlab = "Number of assists per game",
      main = "AST histogram")
-axis(side = 1, at=seq(0, 171 by=1))
+axis(side = 1, at=seq(0, 11, by=1))
 axis(side = 2, at=seq(0, 700, by=100))
 
 hist(NbaPlayers$stl,
-     xlim = c(0, 2.5),
+     xlim = c(0, 2.6),
      ylim = c(0, 400),
+     axes = FALSE,
      labels = TRUE,
      xlab = "Number of steals per game",
      main = "STL histogram")
+axis(side = 1, at=seq(0, 2.6, by=0.2))
+axis(side = 2, at=seq(0, 400, by=100))
 
 hist(NbaPlayers$blk,
+     xlim = c(0, 4),
      ylim = c(0, 1100),
+     axes = FALSE,
      labels = TRUE,
      xlab = "Number of blocks per game",
      main = "BLK histogram")
+axis(side = 1, at=seq(0, 4, by=0.5))
+axis(side = 2, at=seq(0, 1000, by=100))
 
 hist(NbaPlayers$tov,
+     xlim = c(0, 4.5),
      ylim = c(0, 500),
+     axes = FALSE,
      labels = TRUE,
      xlab = "Number of turnovers per game",
      main = "TOV histogram")
+axis(side = 1, at=seq(0, 4.5, by=0.5))
+axis(side = 2, at=seq(0, 500, by=100))
