@@ -1,26 +1,26 @@
 The aim of this project is to analyze a dataset collected from NBA Rookies' games. This set contains 1340 samples, each one described by the 21 features listed below: 
 \begin{itemize}
 	\item Name of the player (Name): string;
-	\item Number of games played (GP): discrete variable;
-	\item Minutes played per game (MIN): continuous variable;
-	\item Points scored per game (PTS): continuous variable;
-	\item Field goals made per game (FGM): continuous variable;
-	\item Field goals attempts per game (FGA): continuous variable;
-	\item Field goals percent per game (FG\%): continuous variable;
-	\item 3 point shots made per game (3P MADE): continuous variable;
-	\item 3 points shots attempts per game (3PA): continuous variable;
-	\item 3 point shots percent per game (3P\%): continuous variable;
-	\item Free throws made per game (FTM): continuous variable;
-	\item Free throws attempts per game (FTA): continuous variable;
-	\item Free throws percent per game (FT\%): continuous variable;
-	\item Number of offensive rebounds per game (OREB): continuous variable;
-	\item Number of defensive rebounds per game (DREB): continuous variable;
-	\item Number of rebounds per game (REB): continuous variable;
-	\item Number of assists per game (AST): continuous variable;
-	\item Number of steals per game (STL): continuous variable;
-	\item Number of blocks per game (BLK): continuous variable;
-	\item Number of turnovers per game (TOV): continuous variable;
-	\item Output variable (TARGET\_5Yrs): 1 if career duration $\geq 5$, 0 otherwise\\
+	\item Number of games played (GP): discrete positive variable;
+	\item Minutes played per game (MIN): continuous positive variable;
+	\item Points scored per game (PTS): continuous positive variable;
+	\item Field goals made per game (FGM): continuous positive variable;
+	\item Field goals attempts per game (FGA): continuous positive  variable;
+	\item Field goals percent per game (FG\%): continuous positive variable;
+	\item 3 point shots made per game (3P MADE): continuous positive variable;
+	\item 3 points shots attempts per game (3PA): continuous positive variable;
+	\item 3 point shots percent per game (3P\%): continuous positive variable;
+	\item Free throws made per game (FTM): continuous positive variable;
+	\item Free throws attempts per game (FTA): continuous positive variable;
+	\item Free throws percent per game (FT\%): continuous positive variable;
+	\item Number of offensive rebounds per game (OREB): continuous positive variable;
+	\item Number of defensive rebounds per game (DREB): continuous positive variable;
+	\item Number of rebounds per game (REB): continuous positive variable;
+	\item Number of assists per game (AST): continuous positive variable;
+	\item Number of steals per game (STL): continuous positive variable;
+	\item Number of blocks per game (BLK): continuous positive variable;
+	\item Number of turnovers per game (TOV): continuous positive variable;
+	\item Output variable (TARGET\_5Yrs): binary variable (1 if career duration is greater than or equal to 5 years, 0 otherwise).\\
 \end{itemize} 
 
 The histograms of the 19 useful regressors are shown in \Fig~\ref{fig:Histograms}.
@@ -153,5 +153,15 @@ We can also look at the output variable to check whether the dataset was balance
 	\label{fig:target_bar_plot}
 \end{figure}
 
-%Besides ``Name, ``GP'' and ``TARGET\_5Yrs'', each feature is intended to be expressed ``per game''.
-The objective of this analysis is to develop two distinct models that can effectively explain the features ``PTS'' and ``TARGET\_5Yrs''. Due to the nature of these variables, two different approaches are required. For ``PTS'', a regression method must be utilized due to its continuous nature, whereas for ``TARGET\_5Yrs'', a classification method must be employed given that it is a binary variable.
+\textbf{Scientific questions}
+\begin{itemize}
+	\item What are the key contributing factors that significantly influence a player's ability to score points at a high level?
+	\item Is it true that a player's career length increase based only on scoring more points?
+\end{itemize}
+
+\noindent
+The objective of this analysis is to develop two distinct models that can effectively explain the variables ``PTS'' and ``TARGET\_5Yrs''. 
+ 
+Due to its continuous nature, ``PTS'' necessitates the use of regression methods. We intend to employ a linear regression model, incorporating various model selection algorithms such as subset selection and regularization.
+
+Instead, as ``TARGET\_5Yrs'' represents a categorical variable, it calls for the application of classification techniques. Our approach involves exploring various classification models, including logistic regression, tree-based methods, k-nearest neighbors, and support vector machines.
