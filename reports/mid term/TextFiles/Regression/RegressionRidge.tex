@@ -19,25 +19,25 @@ To select the optimal value of the penalization factor $\lambda$ we employed \te
 		\hline
 		\multicolumn{2}{|c|}{Equation} \\
 		\hline
-		Coefficient & Estimated value \\
+		Variable's coefficient & Estimated value \\
 		\hline
-		intercept & -3.9290 \\
-		gp & -0.0045 \\
-		min & 0.2320 \\
-		fg & 0.0641 \\
-		x3p\_made & 0.7084 \\
-		x3pa & 0.2088 \\
-		x3p & 0.0104 \\
-		ftm & 1.3534 \\
-		fta & 0.3384 \\
-		ft & 0.0052 \\
-		oreb & 0.2031 \\
-		dreb & -0.2163 \\
-		ast & -0.3492 \\			
-		stl & -0.2449 \\
-		blk & -0.1653 \\
-		tov & 1.4755 \\
-		target\_5yrs & 0.0657 \\				
+		intercept & -3.93 \\
+		GP & -0.45e-2 \\
+		MIN & 0.23 \\
+		FG\% & 0.06 \\
+		3P MADE & 0.71 \\
+		3PA & 0.21 \\
+		3P\% & 0.01 \\
+		FTM & 1.35 \\
+		FTA & 0.34 \\
+		FT & 0.52e-2 \\
+		OREB & 0.20 \\
+		DREB & -0.22 \\
+		AST & -0.35 \\			
+		STL & -0.25 \\
+		BLK & -0.17 \\
+		TOV & 1.47 \\
+		TARGET\_5Yrs & 0.07 \\				
 		\hline
 	\end{tabular}
 	\caption{Ridge regression coefficients with $\lambda_{opt}$.}
@@ -52,6 +52,6 @@ To select the optimal value of the penalization factor $\lambda$ we employed \te
 	\label{fig:RidgeCvPlot}
 \end{figure}
 
-We fit the final model using the optimal $\lambda$ value ($\lambda_{opt}$). The resulting coefficients are displayed in \Fig~\ref{table:FinalRidgeCoef}. For this model we computed also the test MSE and it is $MSE_{test} = 1.33$
+We fit the final model using the optimal $\lambda$ value ($\lambda_{opt}$). The resulting coefficients are displayed in \Tab~\ref{table:FinalRidgeCoef}. For this model we computed also the test MSE and it is $MSE_{test} = 1.33$
 
 In this case the ridge penalization does not reduce the number of coefficients, and it does not even improve significantly the MSE. We then can conclude that using ridge regression is not useful for our purposes.

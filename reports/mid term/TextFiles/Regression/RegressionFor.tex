@@ -1,6 +1,6 @@
 \subsection{Forward stepwise selection}
 
-The first method applied is the forward stepwise selection. In particular, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the \textit{akaike information criterion} (AIC) as comparison metric between models. The model obtained is shown in \Fig~\ref{table:ForwardModelSummary}.
+The first method applied is the forward stepwise selection. In particular, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the \textit{akaike information criterion} (AIC) as comparison metric between models. The model obtained is shown in \Tab~\ref{table:ForwardModelSummary}.
 
 \begin{table}[H]
 	\centering
@@ -8,22 +8,22 @@ The first method applied is the forward stepwise selection. In particular, the a
 		\hline
 		\multicolumn{3}{|c|}{Equation} \\
 		\hline
-		Coefficient & Estimated value & p value \\
+		Variable's coefficient & Estimated value & p value \\
 		\hline
-		intercept & -3.6316 & 2e-16 \\
-		min & 0.2438 & 2e-16 \\
-		ftm & 1.7242 & 2e-16 \\
-		x3p\_made & 0.2718 & 0.5716 \\
-		fg & 0.0637 & 2e-16 \\
-		tov & 1.5674 & 2e-16 \\
-		ast & -0.3606 & 1.32e-13 \\
-		dreb & -0.2563 & 1.34e-05 \\
-		x3p & 0.0103 & 4.07e-05 \\
-		oreb & 0.2878 & 0.0023 \\
-		stl & -0.3920 & 0.0059 \\
-		x3pa & 0.3563 & 0.0490 \\
-		blk & -0.1817 & 0.0919 \\
-		gp & -0.0039 & 0.0935 \\
+		intercept & -3.63 & 2e-16 \\
+		MIN & 0.24 & 2e-16 \\
+		FTM & 1.72 & 2e-16 \\
+		3P MADE & 0.27 & 0.5716 \\
+		FG\% & 0.06 & 2e-16 \\
+		TOV & 1.57 & 2e-16 \\
+		AST & -0.36 & 1.32e-13 \\
+		DREB & -0.26 & 1.34e-05 \\
+		3P\% & 0.01 & 4.07e-05 \\
+		OREB & 0.29 & 0.0023 \\
+		STL & -0.39 & 0.0059 \\
+		3PA & 0.36 & 0.0490 \\
+		BLK & -0.18 & 0.0919 \\
+		GP & -0.39e-2 & 0.0935 \\
 		\hline
 	\end{tabular}
 	\caption{Forward stepwise selection output model.}
@@ -34,7 +34,7 @@ As expected, ``MIN'' and ``FTM'' are included, which resulted to be important fr
 
 \textbf{Bootstrap Statistical Inference}
 
-On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Fig~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. \todo{mettiamo R=1000?}
+On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Tab~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. \todo{mettiamo R=1000?}
 
 \begin{table}[H]
 	\centering
@@ -42,20 +42,22 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 		\hline
 		\multicolumn{3}{|c|}{Equation} \\
 		\hline
-		Coefficient & Estimated value & p value \\
+		Variable's coefficient & Estimated value & p value \\
 		\hline
-		intercept & -3.7388 & 0.001 \\
-		min & 0.2387 & 0.000 \\
-		ftm & 1.7242 & 0.000 \\
-		fg & 0.0637 & 0.000 \\
-		tov & 1.5674 & 0.000 \\
-		ast & -0.3606 & 0.001 \\
-		dreb & -0.2563 & 0.001 \\
-		x3p & 0.0103 & 0.000 \\
-		oreb & 0.2878 & 0.007 \\
-		stl & -0.3920 & 0.011 \\
-		x3pa & 0.3563 & 0.055 \\
-		gp & -0.0039 & 0.093 \\
+		intercept & -3.63 & 1e-3 \\
+		MIN & 0.24 & 0.00 \\
+		FTM & 1.72 & 0.00 \\
+		3P MADE & 0.27 & 0.584 \\
+		FG\% & 0.06 & 0.01e-1 \\
+		TOV & 1.57 & 0.000 \\
+		AST & -0.36 & 0.001 \\
+		DREB & -0.26 & 0.001 \\
+		3P\% & 0.01 & 0.000 \\
+		OREB & 0.29 & 0.007 \\
+		STL & -0.39 & 0.011 \\
+		3PA & 0.36 & 0.055 \\
+		BLK & -0.18 & 0.092 \\
+		GP & -0.39e-2 & 0.093 \\
 		\hline
 	\end{tabular}
 	\caption{Boostrap results on forward stepwise selection output model.}
@@ -66,7 +68,7 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 \noindent
 \textbf{Final Forward Model}
 
-The final forward model, shown in \Fig~\ref{table:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see the plots of the residuals, that have a gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
+The final forward model, shown in \Tab~\ref{table:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see the plots of the residuals, that have a gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
 
 \begin{table}[H]
 	\centering
@@ -74,19 +76,19 @@ The final forward model, shown in \Fig~\ref{table:ForwardFinalModelSummary}, is 
 		\hline
 		\multicolumn{3}{|c|}{Equation} \\
 		\hline
-		Coefficient & Estimated value & p value \\
+		Variable's coefficient & Estimated value & p value \\
 		\hline
-		intercept & -3.6316 & 2e-16 \\
-		min & 0.2438 & 2e-16 \\
-		ftm & 1.7242 & 2e-16 \\
-		tov & 1.5457 & 2e-16 \\
-		ast & -0.3487 & 4.58e-13 \\
-		fg & 0.0625 & 2e-16 \\
-		dreb & -0.2890 & 1.38e-17 \\
-		x3p & 0.0107 & 1.64e-05 \\
-		oreb & 0.2875 & 0.0024 \\
-		stl & -0.3965 & 0.0051 \\
-		x3pa & 0.4677 & 2e-16 \\
+		intercept & -3.74 & 2e-16 \\
+		MIN & 0.24 & 2e-16 \\
+		FTM & 1.72 & 2e-16 \\
+		TOV & 1.55 & 2e-16 \\
+		AST & -0.35 & 4.58e-13 \\
+		FG\% & 0.06 & 2e-16 \\
+		DREB & -0.29 & 1.38e-17 \\
+		3P\% & 0.01 & 1.64e-05 \\
+		OREB & 0.29 & 0.0024 \\
+		STL & -0.40 & 0.0051 \\
+		3PA & 0.47 & 2e-16 \\
 		\hline
 	\end{tabular}
 	\caption{Final sorward stepwise selection model summary.}
