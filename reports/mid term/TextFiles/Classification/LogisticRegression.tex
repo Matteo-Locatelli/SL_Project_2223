@@ -2,24 +2,60 @@
 
 As first approach we tried to model our target using logistic regression.
 
-First of all we fitted a model using all the features, that we will name model A, and the result is displayed in \Fig~\ref{fig:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Fig~\ref{fig:LRImpSum}, that we will name model B.
+First of all we fitted a model using all the features, that we will name model A, and the result is displayed in \Fig~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Fig~\ref{fig:LRImpSum}, that we will name model B.
 
-\begin{figure}[h]
-	\begin{subfigure}{.6\textwidth}
+\begin{table}[h]
+	\begin{subtable}[h]{0.45\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/log_reg_tt_all_summary}
+		\begin{tabular}{||c | c | c ||} 
+			\hline
+			\multicolumn{3}{|c|}{Equation} \\
+			\hline
+			Coefficient & Estimated value & p value \\
+			\hline
+			intercept & -3.8884 & 0.0068 \\
+			gp & 0.0450 & 1.62e-14 \\
+			min & -0.0593 & 0.1420 \\
+			fgm & 0.0997 & 0.8668 \\
+			fga & 0.0183 & 0.9469 \\
+			fg & 0.0187 & 0.4721 \\
+			x3p\_made & 2.8171 & 0.0312 \\
+			x3pa & -0.9840 & 0.0473 \\
+			x3p & 0.0039 & 0.5511 \\
+			ftm & 0.9664 & 0.2235 \\
+			fta & -0.3906 & 0.5074 \\
+			ft & 0.0067 & 0.5652 \\
+			oreb & 0.8793 & 0.0017 \\
+			dreb & -0.1361 & 0.4137 \\
+			ast & 0.3471 & 0.0111 \\
+			stl & -0.1227 & 0.7414 \\
+			blk & 0.6291 & 0.0566 \\				
+			tov & -0.5353 & 0.1164 \\		
+			\hline
+		\end{tabular}
 		\caption{Logistic regression with all features.}
-		\label{fig:LRAllSum}
-	\end{subfigure}
-	\begin{subfigure}{.6\textwidth}
+		\label{table:LRAllSum}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[h]{0.45\textwidth}
 		\centering
-		\includegraphics[width=0.8\linewidth]{ImageFiles/Classification/LogReg/log_reg_tt_imp_summary}
-		\caption{Logistic regression with only significant features.}
-		\label{fig:LRImpSum}
-	\end{subfigure}
+		\begin{tabular}{||c | c | c ||} 
+			\hline
+			\multicolumn{3}{|c|}{Equation} \\
+			\hline
+			Coefficient & Estimated value & p value \\
+			\hline
+			intercept & -3.0111 & 2e-16 \\
+			gp & 0.0488 & 2e-16 \\
+			oreb & 0.6889 & 1.76e-07 \\		
+			\hline
+		\end{tabular}
+		\caption{Logistic regression with all features.}
+		\label{table:LRImpSum}
+	\end{subtable}
 	\caption{Logistic regression model summary.}
-	\label{fig:LRSum}
-\end{figure}
+	\label{table:LRSum}
+\end{table}
 
 It can be observed that there is no significant change in performance. When all variables are used, the accuracy is $70\%$, compared to $67.5\%$ in the second case. Furthermore, the AIC coefficient changes from 1052.5 to 1050.2, which could be considered almost the same. 
 

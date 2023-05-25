@@ -1,50 +1,109 @@
 \subsection{Forward stepwise selection}
 
-The first method applied is the forward stepwise selection. In particular, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the \textit{akaike information criterion} (AIC) as comparison metric between models. The model obtained is shown in \Fig~\ref{fig:ForwardModelSummary}.
-\begin{figure}[h]
+The first method applied is the forward stepwise selection. In particular, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the \textit{akaike information criterion} (AIC) as comparison metric between models. The model obtained is shown in \Fig~\ref{table:ForwardModelSummary}.
+
+\begin{table}[h]
 	\centering
-	\includegraphics[width=0.35\linewidth]{ImageFiles/Regression/Forward/ForwardModelSummary}
+	\begin{tabular}{||c | c | c ||} 
+		\hline
+		\multicolumn{3}{|c|}{Equation} \\
+		\hline
+		Coefficient & Estimated value & p value \\
+		\hline
+		intercept & -3.6316 & 2e-16 \\
+		min & 0.2438 & 2e-16 \\
+		ftm & 1.7242 & 2e-16 \\
+		x3p\_made & 0.2718 & 0.5716 \\
+		fg & 0.0637 & 2e-16 \\
+		tov & 1.5674 & 2e-16 \\
+		ast & -0.3606 & 1.32e-13 \\
+		dreb & -0.2563 & 1.34e-05 \\
+		x3p & 0.0103 & 4.07e-05 \\
+		oreb & 0.2878 & 0.0023 \\
+		stl & -0.3920 & 0.0059 \\
+		x3pa & 0.3563 & 0.0490 \\
+		blk & -0.1817 & 0.0919 \\
+		gp & -0.0039 & 0.0935 \\
+		\hline
+	\end{tabular}
 	\caption{Forward stepwise selection output model.}
-	\label{fig:ForwardModelSummary}
-\end{figure}
+	\label{table:ForwardModelSummary}
+\end{table}
 
 As expected, ``MIN'' and ``FTM'' are included, which resulted to be important from the preliminary analysis as well. However, there are three variables that are not significantly different from 0, with a p-value threshold of $5\%$.
 
-\vspace{0.2cm}
-\noindent
 \textbf{Bootstrap Statistical Inference}
 
-On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Fig~\ref{fig:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case.
-\begin{figure}[h]
+On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Fig~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. \todo{mettiamo R=1000?}
+
+\begin{table}[h]
 	\centering
-	\includegraphics[width=0.4\linewidth]{ImageFiles/Regression/Forward/BootForwardModel}
+	\begin{tabular}{||c | c | c ||} 
+		\hline
+		\multicolumn{3}{|c|}{Equation} \\
+		\hline
+		Coefficient & Estimated value & p value \\
+		\hline
+		intercept & -3.7388 & 0.001 \\
+		min & 0.2387 & 0.000 \\
+		ftm & 1.7242 & 0.000 \\
+		fg & 0.0637 & 0.000 \\
+		tov & 1.5674 & 0.000 \\
+		ast & -0.3606 & 0.001 \\
+		dreb & -0.2563 & 0.001 \\
+		x3p & 0.0103 & 0.000 \\
+		oreb & 0.2878 & 0.007 \\
+		stl & -0.3920 & 0.011 \\
+		x3pa & 0.3563 & 0.055 \\
+		gp & -0.0039 & 0.093 \\
+		\hline
+	\end{tabular}
 	\caption{Boostrap results on forward stepwise selection output model.}
-	\label{fig:BootForwardModel}
-\end{figure}
+	\label{table:BootForwardModel}
+\end{table}
 
 \vspace{0.2cm}
 \noindent
 \textbf{Final Forward Model}
 
-The final forward model, shown in \Fig~\ref{fig:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see the plots of the residuals, that have a gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
+The final forward model, shown in \Fig~\ref{table:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see the plots of the residuals, that have a gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{||c | c | c ||} 
+		\hline
+		\multicolumn{3}{|c|}{Equation} \\
+		\hline
+		Coefficient & Estimated value & p value \\
+		\hline
+		intercept & -3.6316 & 2e-16 \\
+		min & 0.2438 & 2e-16 \\
+		ftm & 1.7242 & 2e-16 \\
+		tov & 1.5457 & 2e-16 \\
+		ast & -0.3487 & 4.58e-13 \\
+		fg & 0.0625 & 2e-16 \\
+		dreb & -0.2890 & 1.38e-17 \\
+		x3p & 0.0107 & 1.64e-05 \\
+		oreb & 0.2875 & 0.0024 \\
+		stl & -0.3965 & 0.0051 \\
+		x3pa & 0.4677 & 2e-16 \\
+		\hline
+	\end{tabular}
+	\caption{Final sorward stepwise selection model summary.}
+	\label{table:ForwardFinalModelSummary}
+\end{table}
 
 \begin{figure}[h]
 	\centering
 	\begin{subfigure}{.6\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelSummary}
-		\caption{Forward stepwise selection model summary.}
-		\label{fig:ForwardFinalModelSummary}
-	\end{subfigure}
-	\begin{subfigure}{.6\textwidth}
-		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelResiduals}
+		\includegraphics[width=0.6\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelResiduals}
 		\caption{Forward stepwise selection model residuals.}
 		\label{fig:ForwardFinalModelResiduals}
 	\end{subfigure}%
 	\begin{subfigure}{.6\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelResidualsDist}
+		\includegraphics[width=0.6\linewidth]{ImageFiles/Regression/Forward/ForwardFinalModelResidualsDist}
 		\caption{Forward stepwise selection residuals histogram}
 		\label{fig:ForwardFinalModelResidualsDist}
 	\end{subfigure}
