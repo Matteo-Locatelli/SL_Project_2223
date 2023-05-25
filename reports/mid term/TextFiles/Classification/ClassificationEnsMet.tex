@@ -78,19 +78,27 @@ Many small trees were used with $\lambda = 0.001$. \Fig~\ref{fig:boost_4_rel_inf
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{.5\textwidth}
+	\begin{subfigure}{0.5\textwidth}
 		\centering
 		\includegraphics[width=0.6\linewidth]{ImageFiles/Classification/Trees/boost_4_rel_inf}
 		\caption{Boosting relative influence.}
 		\label{fig:boost_4_rel_inf}
 	\end{subfigure}%
 	\hfill
-	\begin{subfigure}{.5\textwidth}
+	\begin{subtable}[h]{0.5\textwidth}
 		\centering
-		\includegraphics[width=0.4\linewidth]{ImageFiles/Classification/Trees/boost_4_conf_mat}
+		\begin{tabular}{|| cr | cc ||}    
+			\hline
+			\multicolumn{2}{|c|}{Prediction} 
+			& 0 & 1 \\
+			\hline
+			& 0 & 134 & 77 \\
+			& 1 & 99 & 329 \\
+			\hline
+		\end{tabular}
 		\caption{Boosting confusion matrix.}
-		\label{fig:boost_4_conf_mat}
-	\end{subfigure}
+		\label{table:ConfMaBoost}
+	\end{subtable}
 	\caption{Boosting results.}
 	\label{BoostRes}
 \end{figure}

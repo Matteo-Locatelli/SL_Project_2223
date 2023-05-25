@@ -1,0 +1,31 @@
+\subsection{Conclusions}
+
+From the previous analysis, it was found that the variable ``GP'' is the most important in explaining the target variable, but alone is not sufficient in achieving high classification performance. In fact, all classification methods applied in this analysis were only able to achieve an accuracy of around $70\%$, indicating that other factors not captured by the available features may play a significant role in determining whether a player will have a long career or not. Thus, it appears that the dataset itself poses a limitation in achieving high performance.
+
+\todo{Tabella dei misclassification error rate}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{||c | c ||} 
+		\hline
+		\multicolumn{2}{|c|}{Misclassification error rate} \\
+		\hline
+		Logistic regression & x \\
+		\hline
+		Forward stepwise & x \\
+		\hline
+		Backward stepwise & x \\
+		\hline
+		Bagging & x \\
+		\hline
+		Random forest & x \\
+		\hline
+		Boosting & x \\
+		\hline
+		KNN & x \\
+		\hline
+		SVM & x \\
+		\hline
+	\end{tabular}
+	\caption{Missclassification error rate of various models table.}
+	\label{table:ClasEvalParams}
+\end{table}

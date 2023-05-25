@@ -5,7 +5,7 @@ As first approach we tried to model our target using logistic regression.
 First of all we fitted a model using all the features, that we will name model A, and the result is displayed in \Fig~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Fig~\ref{fig:LRImpSum}, that we will name model B.
 
 \begin{table}[h]
-	\begin{subtable}[h]{0.45\textwidth}
+	\begin{subtable}[h]{0.4\textwidth}
 		\centering
 		\begin{tabular}{||c | c | c ||} 
 			\hline
@@ -37,7 +37,7 @@ First of all we fitted a model using all the features, that we will name model A
 		\label{table:LRAllSum}
 	\end{subtable}
 	\hfill
-	\begin{subtable}[h]{0.45\textwidth}
+	\begin{subtable}[h]{0.4\textwidth}
 		\centering
 		\begin{tabular}{||c | c | c ||} 
 			\hline
@@ -50,7 +50,7 @@ First of all we fitted a model using all the features, that we will name model A
 			oreb & 0.6889 & 1.76e-07 \\		
 			\hline
 		\end{tabular}
-		\caption{Logistic regression with all features.}
+		\caption{Logistic regression with most important features.}
 		\label{table:LRImpSum}
 	\end{subtable}
 	\caption{Logistic regression model summary.}
@@ -61,22 +61,37 @@ It can be observed that there is no significant change in performance. When all 
 
 \Fig~\ref{fig:CM} shows the confusion matrices for the two models. In general, both models tend to perform slightly better in predicting the ``yes'' class.
 
-\begin{figure}[h]
-	\begin{subfigure}{.6\textwidth}
+\begin{table}[h]
+	\begin{subtable}[h]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/log_reg_tt_all_pred_table}
-		\caption{Confusion matrix of model A.}
-		\label{fig:CMA}
-	\end{subfigure}
-	\begin{subfigure}{.6\textwidth}
+		\begin{tabular}{|| cr | cc ||}    
+			\hline
+			\multicolumn{2}{|c|}{Model A} 
+			& $No$ & $Yes$ \\
+			\hline
+			& No & 66 & 44 \\
+			& Yes & 52 & 158 \\
+			\hline
+		\end{tabular}
+		\label{table:ConfMatModA}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[h]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/log_reg_tt_imp_pred_table}
-		\caption{Confusion matrix of model B.}
-		\label{fig:CMB}
-	\end{subfigure}
+		\begin{tabular}{|| cr | cc ||}    
+			\hline
+			\multicolumn{2}{|c|}{Model B} 
+			& $No$ & $Yes$ \\
+			\hline
+			& No & 65 & 51 \\
+			& Yes & 53 & 151 \\
+			\hline
+		\end{tabular}
+		\label{table:ConfMatModA}
+	\end{subtable}
 	\caption{Confusion matrices.}
-	\label{fig:CM}
-\end{figure}
+	\label{table:ConfMat}
+\end{table}
 
 Another comparison made between the two models concerns the predicted probabilities, as values close to 0.5 suggest high uncertainty of the model. Histograms showing the predicted values distribution for both models are presented in \Fig~\ref{fig:ProbPred}. From this point of view, model B appears to perform better, but in general, the two models exhibit the same behavior.
 
@@ -104,24 +119,69 @@ The model fitted using only the important variables shows the same performance a
 
 After the initial analysis, we attempted variable selection using subset selection algorithms, specifically the forward stepwise and backward stepwise methods were applied. 
 
-The results obtained are presented in \Fig~\ref{fig:LRSSSum}. The forward stepwise method resulted in a model that essentially includes all the variables. In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $a\alpha = 0.01$. The model achieved an $AIC = 1040.4$ and accuracy of $70\%$. The performances are again quiet similar, the AIC coefficient is slightly better for the backward model.
+The results obtained are presented in \Fig~\ref{fig:LRSSSum}. The forward stepwise method resulted in a model that essentially includes all the variables. In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $\alpha = 0.01$. The model achieved an $AIC = 1040.4$ and accuracy of $70\%$. The performances are again quiet similar, the AIC coefficient is slightly better for the backward model.
 
-\begin{figure}[h]
-	\begin{subfigure}{.6\textwidth}
+\begin{table}[h]
+	\begin{subtable}[h]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/lr_fss_summary}
-		\caption{Logistic regression with forward stepwise.}
-		\label{fig:LRFSSSum}
-	\end{subfigure}
-	\begin{subfigure}{.6\textwidth}
+		\begin{tabular}{||c | c | c ||} 
+			\hline
+			\multicolumn{3}{|c|}{Equation} \\
+			\hline
+			Coefficient & Estimated value & p value \\
+			\hline
+			intercept & -3.8884 & 0.0068 \\
+			gp & 0.0449 & 1.62e-14 \\
+			min & -0.0593 & 0.1420 \\
+			fgm & 0.0997 & 0.8668 \\
+			fga & 0.0183 & 0.9469 \\
+			fg & 0.0187 & 0.4721 \\
+			x3p\_made & 2.8171 & 0.0312 \\
+			x3pa & -0.9840 & 0.0473 \\
+			x3p & 0.0039 & 0.5511 \\
+			ftm & 0.9664 & 0.2235 \\
+			fta & -0.3906 & 0.5074 \\
+			ft & 0.0067 & 0.5652 \\
+			oreb & 0.8793 & 0.0017 \\
+			dreb & -0.1361 & 0.4137 \\
+			ast & 0.3471 & 0.0111 \\
+			stl & -0.1227 & 0.7414 \\
+			blk & 0.6291 & 0.0566 \\				
+			tov & -0.5353 & 0.1164 \\		
+			\hline
+		\end{tabular}
+		\caption{Logistic regression with forward stepwise selection.}
+		\label{table:LRFSSSum}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[h]{0.4\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/lr_bss_summary}
-		\caption{Logistic regression with backward stepwise.}
-		\label{fig:LRBSSSum}
-	\end{subfigure}
+		\begin{tabular}{||c | c | c ||} 
+			\hline
+			\multicolumn{3}{|c|}{Equation} \\
+			\hline
+			Coefficient & Estimated value & p value \\
+			\hline
+			intercept & -3.4010 & 6.95e-08 \\
+			gp & 0.0455 & 4.86e-15 \\
+			min & -0.0771 & 0.0205 \\
+			fgm & 0.2152 & 0.1575 \\
+			x3p\_made & 3.3156 & 0.0055 \\
+			x3pa & -1.1686 & 0.0079 \\
+			ftm & 0.4680 & 0.0240 \\
+			ft & 0.1225 & 0.1425 \\
+			oreb & 0.7474 & 0.0018 \\
+			ast & 0.3655 & 0.045 \\
+			blk & 0.5499 & 0.0760 \\				
+			tov & -0.6577 & 0.0453 \\
+			\hline
+		\end{tabular}
+		\caption{Logistic regression with backward stepwise selection.}
+		\label{table:LRBSSum}
+	\end{subtable}
 	\caption{Logistic regression models with subset selection.}
-	\label{fig:LRSSSum}
-\end{figure}
+	\label{table:LRSSum}
+\end{table}
 
 Since the forward model includes all the variables, its analysis is identical to the first one.
 
