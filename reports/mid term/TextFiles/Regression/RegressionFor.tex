@@ -2,34 +2,6 @@
 
 The first method applied is the forward stepwise selection. In particular, the algorithm variant employed uses the \textit{p-value} as entrance criterion and the \textit{akaike information criterion} (AIC) as comparison metric between models. The model obtained is shown in \Tab~\ref{table:ForwardModelSummary}.
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
-		\hline
-		Variable & Coefficient & p-value \\
-		\hline
-		intercept & -3.6316 & $<$ 0.0001 \\
-		MIN & 0.2438 & $<$ 0.0001 \\
-		FTM & 1.7242 & $<$ 0.0001 \\
-		3P MADE & 0.2718 & 0.5716 \\
-		FG\% & 0.0637 & $<$ 0.0001 \\
-		TOV & 1.5675 & $<$ 0.0001 \\
-		AST & -0.3606 & $<$ 0.0001 \\
-		DREB & -0.2564 & $<$ 0.0001 \\
-		3P\% & 0.0104 & $<$ 0.0001 \\
-		OREB & 0.2878 & 0.0023 \\
-		STL & -0.3920 & 0.0059 \\
-		3PA & 0.3563 & 0.0490 \\
-		BLK & -0.1817 & 0.0919 \\
-		GP & -0.0039 & 0.0935 \\
-		\hline
-	\end{tabular}
-	\caption{Forward stepwise selection output model.}
-	\label{table:ForwardModelSummary}
-\end{table}
-
 As expected, ``MIN'' and ``FTM'' are included, which resulted to be important from the preliminary analysis as well. However, there are three variables that are not significantly different from 0, with a p-value threshold of $5\%$.
 
 \textbf{Bootstrap Statistical Inference}

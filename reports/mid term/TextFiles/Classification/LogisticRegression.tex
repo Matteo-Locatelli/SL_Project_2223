@@ -5,56 +5,20 @@ As first approach we tried to model our target using logistic regression.
 First of all we fitted a model using all the features, that we will name model A, and the result is displayed in \Tab~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Tab~\ref{table:LRImpSum}, that we will name model B.
 
 \begin{table}[H]
-	\begin{subtable}[h]{0.3\textwidth}
-		\centering
-		\begin{tabular}{|| l | r | r ||} 
-			\hline
-			\multicolumn{3}{|c|}{Equation} \\
-			\hline
-			Variable & Coefficient & p-value \\
-			\hline
-			intercept & -3.8885 & 0.0068 \\
-			GP & 0.0449 & $<$ 0.0001 \\
-			MIN & -0.0593 & 0.1420 \\
-			FGM & 0.0997 & 0.8668 \\
-			FGA & 0.0183 & 0.9469 \\
-			FG\% & 0.0187 & 0.4721 \\
-			3P MADE & 2.8171 & 0.0312 \\
-			3PA & -0.9840 & 0.0473 \\
-			3P\% & 0.0039 & 0.5511 \\
-			FTM & 0.9664 & 0.2235 \\
-			FTA & -0.3906 & 0.5074 \\
-			FT\% & 0.0067 & 0.5652 \\
-			OREB & 0.8793 & 0.0017 \\
-			DREB & -0.1361 & 0.4137 \\
-			AST & 0.3471 & 0.0111 \\
-			STL & -0.1227 & 0.7414 \\
-			BLK & 0.6291 & 0.0566 \\				
-			TOV & -0.5353 & 0.1164 \\		
-			\hline
-		\end{tabular}
-		\caption{Logistic regression with all features.}
-		\label{table:LRAllSum}
-	\end{subtable}
-	\hfill
-	\begin{subtable}[h]{0.3\textwidth}
-		\centering
-		\begin{tabular}{|| l | r | r ||} 
-			\hline
-			\multicolumn{3}{|c|}{Equation} \\
-			\hline
-			Variable & Coefficient & p-value \\
-			\hline
-			intercept & -3.0111 & $<$ 0.0001 \\
-			GP & 0.0488 & $<$ 0.0001 \\
-			OREB & 0.6886 & $<$ 0.0001 \\	
-			\hline
-		\end{tabular}
-		\caption{Logistic regression with most significant features.}
-		\label{table:LRImpSum}
-	\end{subtable}
-	\caption{Logistic regression model summary.}
-	\label{table:LRSum}
+	\centering
+	\begin{tabular}{|| l | r | r ||} 
+		\hline
+		\multicolumn{3}{|c|}{Equation} \\
+		\hline
+		Variable & Coefficient & p-value \\
+		\hline
+		intercept & -3.0111 & $<$ 0.0001 \\
+		GP & 0.0488 & $<$ 0.0001 \\
+		OREB & 0.6886 & $<$ 0.0001 \\	
+		\hline
+	\end{tabular}
+	\caption{Logistic regression with most significant features.}
+	\label{table:LRImpSum}
 \end{table}
 
 It can be observed that there is no significant change in performance. When all variables are used, the accuracy is $70\%$, compared to $67.5\%$ in the second case. Furthermore, the AIC coefficient changes from 1052.5 to 1050.2, which could be considered almost the same. 
@@ -124,65 +88,29 @@ After the initial analysis, we attempted variable selection using subset selecti
 The results obtained are presented in \Tab~\ref{table:LRSSum}. The forward stepwise method resulted in a model that essentially includes all the variables. In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $\alpha = 0.01$. The model achieved an $AIC = 1040.4$ and accuracy of $70\%$. The performances are again quiet similar, the AIC coefficient is slightly better for the backward model.
 
 \begin{table}[H]
-	\begin{subtable}[h]{0.3\textwidth}
-		\centering
-		\begin{tabular}{|| l | r | r ||} 
-			\hline
-			\multicolumn{3}{|c|}{Equation} \\
-			\hline
-			Variable & Coefficient & p-value \\
-			\hline
-			intercept & -3.8885 & 0.0068 \\
-			GP & 0.0449 & $<$ 0.0001 \\
-			MIN & -0.0593 & 0.1420 \\
-			FGM & 0.0997 & 0.8668 \\
-			FGA & 0.0183 & 0.9469 \\
-			FG\% & 0.0187 & 0.4721 \\
-			3P MADE & 2.8171 & 0.0312 \\
-			3PA & -0.9840 & 0.0473 \\
-			3P\% & 0.0039 & 0.5511 \\
-			FTM & 0.9664 & 0.2235 \\
-			FTA & -0.3906 & 0.5074 \\
-			FT\% & 0.0067 & 0.5652 \\
-			OREB & 0.8793 & 0.0017 \\
-			DREB & -0.1361 & 0.4137 \\
-			AST & 0.3471 & 0.0111 \\
-			STL & -0.1227 & 0.7414 \\
-			BLK & 0.6291 & 0.0566 \\				
-			TOV & -0.5353 & 0.1164 \\		
-			\hline
-		\end{tabular}
-		\caption{Logistic regression with forward stepwise selection.}
-		\label{table:LRFSSSum}
-	\end{subtable}
-	\hfill
-	\begin{subtable}[h]{0.3\textwidth}
-		\centering
-		\begin{tabular}{|| l | r | r ||} 
-			\hline
-			\multicolumn{3}{|c|}{Equation} \\
-			\hline
-			Variable & Coefficient & p-value \\
-			\hline
-			intercept & -3.4011 & $<$ 0.0001 \\
-			GP & 0.0455 & $<$ 0.0001 \\
-			MIN & -0.0771 & 0.0205 \\
-			FGM & 0.2152 & 0.1575 \\
-			3P MADE & 3.3156 & 0.0055 \\
-			3PA & -1.1686 & 0.0079 \\
-			FTM & 0.4680 & 0.0240 \\
-			FT\% & 0.0123 & 0.1425 \\
-			OREB & 0.7474 & 0.0018 \\
-			AST & 0.3655 & 0.045 \\
-			BLK & 0.5499 & 0.0760 \\				
-			TOV & -0.6577 & 0.0453 \\
-			\hline
-		\end{tabular}
-		\caption{Logistic regression with backward stepwise selection.}
-		\label{table:LRBSSum}
-	\end{subtable}
-	\caption{Logistic regression models with subset selection.}
-	\label{table:LRSSum}
+	\centering
+	\begin{tabular}{|| l | r | r ||} 
+		\hline
+		\multicolumn{3}{|c|}{Equation} \\
+		\hline
+		Variable & Coefficient & p-value \\
+		\hline
+		intercept & -3.4011 & $<$ 0.0001 \\
+		GP & 0.0455 & $<$ 0.0001 \\
+		MIN & -0.0771 & 0.0205 \\
+		FGM & 0.2152 & 0.1575 \\
+		3P MADE & 3.3156 & 0.0055 \\
+		3PA & -1.1686 & 0.0079 \\
+		FTM & 0.4680 & 0.0240 \\
+		FT\% & 0.0123 & 0.1425 \\
+		OREB & 0.7474 & 0.0018 \\
+		AST & 0.3655 & 0.045 \\
+		BLK & 0.5499 & 0.0760 \\				
+		TOV & -0.6577 & 0.0453 \\
+		\hline
+	\end{tabular}
+	\caption{Logistic regression with backward stepwise selection.}
+	\label{table:LRBSSum}
 \end{table}
 
 Since the forward model includes all the variables, its analysis is identical to the first one.
