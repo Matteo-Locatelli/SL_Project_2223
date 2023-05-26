@@ -13,26 +13,40 @@ Spiegare MSE.
 		\hline
 		\multicolumn{2}{|c|}{Misclassification parameters} \\
 		\hline
-		Model & MSE \\
+		Model & MER \\
 		\hline
-		Logistic regression & x \\
+		Logistic regression all predictors (A) & 0.3000 \\
 		\hline
-		Forward stepwise & x \\
+		Logistic regression imp predictors (B) & 0.3250 \\
 		\hline
-		Backward stepwise & x \\
+		Forward stepwise & 0.3000 \\
 		\hline
-		Bagging & x \\
+		Backward stepwise & 0.3000 \\
 		\hline
-		Random forest & x \\
+		Subset selection final & 0.3250 \\
 		\hline
-		Boosting & x \\
+		Complete tree & 0.1956 \\
 		\hline
-		KNN & x \\
+		Best tree after cross-validation & 0.3000 \\ 
 		\hline
-		SVM & x \\
+		Bagging & 0.3344 \\
+		\hline
+		Random forest & 0.2968 \\
+		\hline
+		Best RF & 0.3083 || 0.2875 \\
+		\hline
+		Boosting & 0.3031 \\
+		\hline
+		KNN (\textit{k=3}) & 0.3375 \\
+		\hline
+		SVM (depends on kernel)& x \\
 		\hline
 	\end{tabular}
 	\caption{Missclassification error rate of various models table.}
 	\label{table:ClasEvalParams}
 \end{table}
 
+<<<<<<< Updated upstream
+=======
+NOTA SU RANDOM FOREST: ESSENDO CASUALE, IL RISULTATO MIGLIORE RISPETTO ALL'ERRORE DI TEST LO DAVA PER M=5, ANCHE SE USANDO 4 SI OTTIENE UN ERRORE DI TEST MINORE
+>>>>>>> Stashed changes
