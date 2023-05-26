@@ -16,8 +16,8 @@ library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -221,13 +221,13 @@ sqrt(mean(forward_lm_fit$residuals^2))
 
 par(mfrow = c(1,2))
 
-plot(forward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residuals", 
+plot(forward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual value", 
      main = paste0("Residuals plot: mean=",round(mean(forward_lm_fit$residuals),digits = 4),
-                   " & var=", round(var(forward_lm_fit$residuals),digits = 2)))
+                   " & var=", round(var(forward_lm_fit$residuals),digits = 2))))
 abline(c(0,0),c(0,length(forward_lm_fit$residuals)), col= "red", lwd = 3)
 
 hist(forward_lm_fit$residuals,40,
-     xlab = "Residual",
+     xlab = "Residual value",
      main = "Residuals empirical distribution") 
 
 
@@ -264,7 +264,6 @@ sqrt(mean(backward_lm_fit$residuals^2))
 
 #backward_lm_fit <- update(backward_lm_fit, ~ . -oreb - stl)
 #summary(backward_lm_fit)
-
 
 
 # Plots

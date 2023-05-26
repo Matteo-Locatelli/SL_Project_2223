@@ -38,6 +38,15 @@ set.seed(2)
 # split indexes vector with 75% of the data
 train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
 
+# try model complete
+tmc <- tree(target ~ . -target_5yrs , NbaPlayers, subset = train, split = "gini")
+summary(tmc)
+pv <- predict(tmc, newdata = NbaPlayers[-train,], type = "class")
+vt = table(pv, NbaPlayers$target[-train])
+vt
+ter = (vt[1,2] + vt[2,1]) / sum(vt)
+ter
+
 # tree model with only train data
 tree_model <- tree(target ~ . -target_5yrs , NbaPlayers, subset = train)
 summary(tree_model)

@@ -2,7 +2,7 @@
 
 The following section has the purpose to use tree-based classification methods to find a model which will predict if an NBA's rookie career will be longer than five years.
 
-We started to analyze the data through classification trees using the \textit{gini} minimization function. The result is a complex tree which is difficult to read (144 terminal nodes).
+We started to analyze the data through classification trees using the \textit{gini} minimization function. The result is a complex tree which is difficult to read (109 terminal nodes).
 
 To understand whether it was better to use a simpler tree or not, we performed cross-validation using different levels of tree size and evaluated the impact on the test error.
 
@@ -48,12 +48,26 @@ To understand whether it was better to use a simpler tree or not, we performed c
 After the evaluation of the misclassification error rate on both train and test dataset, we concluded that the best model is the one with $size = 4$.
 
 \todo{QUALI RISULTATI RIPROTARE?}
-Residual Mean Deviance and Misclassification Error rate (train) -> test error rate
-\begin{itemize}
-	\item 4: 1.153 \& 0.3038 -> 0.3000
-	\item 6: 1.114 \& 0.2996 -> 0.33125
-	\item 7: 1.098 \& 0.2996 -> 0.33125
-	\item 2: 1.200 \& 0.3424 -> 0.33125
-\end{itemize}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|| c | c | c ||}
+		\hline 
+		Residual Mean Deviance & Misclassification Error rate (train) & test error rate	\\
+		\hline
+		gini: 0.8146 & 0.2067 & 0.3469 \\
+		\hline
+		4: 1.153 & 0.3038 & 0.3000 \\
+		\hline
+		6: 1.114 & 0.2996 & 0.33125 \\
+		\hline
+		7: 1.098 & 0.2996 & 0.33125 \\
+		\hline
+		2: 1.200 & 0.3424 & 0.33125 \\
+		\hline
+	\end{tabular}
+	\caption{Tabella risultati degli alberi da riprotare}
+\end{table} 
 
-However, all the trees do the first split on the variable ``GP'', suggesting that it is the most important variable.
+Nonetheless, the variable ``GP'' consistently serves as the first split in all the trees, indicating its significance as the most important variable. Although ``DREB'' and ``FG\%'' also appear in splits within larger-sized trees, "GP" continues to be the variable that undergoes the highest number of splits.
+
+Despite ``GP'' being a positive integer variable, it is noteworthy that the splits on ``GP'' consistently happen at decimal values (e.g., 65.5 in the first split of all trees). This occurrence arises because the trees aim to divide the samples into two classes, distinguishing samples with ``GP'' values greater than or equal to 0.66 from those with ``GP'' values less than or equal to 0.65.
