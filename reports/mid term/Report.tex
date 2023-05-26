@@ -13,11 +13,13 @@
 \usepackage{import}
 \usepackage{float}
 \usepackage{url}
+\usepackage{cite}
 
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage[titletoc,title]{appendix}
+\usepackage{appendix}
+\usepackage[hidelinks]{hyperref}
 
 \usepackage{todonotes}
 \usepackage{verbatim}
@@ -28,6 +30,7 @@
 
 \renewcommand\epigraphflush{flushright}
 \renewcommand\epigraphsize{\normalsize}
+
 \setlength\epigraphwidth{0.7\textwidth}
 
 \definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
@@ -138,7 +141,8 @@
 	\import{./TextFiles/Classification/}{ClassificationKNN.tex}
 	\import{./TextFiles/Classification/}{ClassificationSVM.tex}
 	\import{./TextFiles/Classification/}{ClassificationConclusions.tex}
-			
+
+				
 	\appendix
 	
 	\section*{Appendix}
@@ -146,7 +150,8 @@
 	
 	\import{./TextFiles/Appendix/}{LinRegAppendix.tex}
 	\import{./TextFiles/Appendix/}{ClassAppendix.tex}
-
+	
+	
 	\bibliographystyle{ieeetr}
 	
 	\bibliography{./OtherFiles/Bibliography}
