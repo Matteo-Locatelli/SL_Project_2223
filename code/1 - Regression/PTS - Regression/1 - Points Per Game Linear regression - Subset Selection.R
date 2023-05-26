@@ -16,8 +16,8 @@ library( dplyr )
 set.seed(1) # seed for random number generator
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -218,6 +218,7 @@ summary(forward_lm_fit)
 
 forward_lm_fit <- update(forward_lm_fit, ~ . - x3p_made -gp - blk)
 summary(forward_lm_fit)
+sqrt(mean(forward_lm_fit$residuals^2))
 
 # Plots
 
@@ -262,8 +263,12 @@ summary(backward_lm_fit)
 backward_lm_fit <- update(backward_lm_fit, ~ . -gp - blk)
 summary(backward_lm_fit)
 
-backward_lm_fit <- update(backward_lm_fit, ~ . -oreb - stl)
-summary(backward_lm_fit)
+sqrt(mean(backward_lm_fit$residuals^2))
+
+#backward_lm_fit <- update(backward_lm_fit, ~ . -oreb - stl)
+#summary(backward_lm_fit)
+
+
 
 # Plots
 

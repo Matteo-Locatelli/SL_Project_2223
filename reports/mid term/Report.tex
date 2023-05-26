@@ -31,6 +31,9 @@
 \renewcommand\epigraphflush{flushright}
 \renewcommand\epigraphsize{\normalsize}
 
+\newcounter{appendix}
+\renewcommand{\theappendix}{A}
+
 \setlength\epigraphwidth{0.7\textwidth}
 
 \definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
@@ -146,6 +149,8 @@
 	\appendix
 	
 	\section*{Appendix}
+	\refstepcounter{appendix}
+	\label{appendix:app}
 	\addcontentsline{toc}{section}{Appendix}
 	
 	\import{./TextFiles/Appendix/}{LinRegAppendix.tex}

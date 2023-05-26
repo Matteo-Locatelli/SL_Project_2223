@@ -9,8 +9,8 @@ library(glmnet)
 set.seed (1)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 # Pre-processing of the dataset: removing rebounds
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
@@ -43,8 +43,7 @@ train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
 ridge_mod <- glmnet(x, y, alpha = 0,lambda = lambda, standardize=TRUE)
 dim(coef(ridge_mod)) 
 plot(ridge_mod)
-ridge_mod
-coef(ridge_mod)
+#coef(ridge_mod)
 
 ## ridge cv 
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
@@ -53,7 +52,10 @@ ridge_opt_lambda <- ridge_cv_model$lambda.min; # cv_model$lambda.1se
 
 # predict on test dataset
 ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_opt_lambda,standardize=TRUE)
+ridge_model$dev.ratio
 rideg_fitt_value <- predict(ridge_model,newx = x[-train,])
+ridge_train_MSE = mean((y[train] - predict(ridge_model,newx = x[train,]))^2)
+ridge_train_MSE
 ridge_test_MSE = mean((y[-train] - rideg_fitt_value)^2)
 ridge_test_MSE
 
@@ -72,7 +74,10 @@ lasso_opt_lambda <- cv_lasso$lambda.min #cv_lasso$lambda.1se
 
 # predict on test dataset
 lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_opt_lambda,standardize=TRUE)
+lasso_model$dev.ratio
 lasso_fitt_value <- predict(lasso_model,newx = x[-train,])
+lasso_train_MSE = mean((y[train] - predict(lasso_model,newx = x[train,]))^2)
+lasso_train_MSE
 lasso_test_MSE = mean((y[-train] - lasso_fitt_value)^2)
 lasso_test_MSE
 

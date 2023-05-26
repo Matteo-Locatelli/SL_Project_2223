@@ -1,25 +1,27 @@
 \subsection{Conclusions}
 
-Spiegare RSE
+Spiegare MSE
 
-\todo{prendere i valori. Mettiamo anche gli intermedi o solo finali?}
 \begin{table}[H]
 	\centering
-	\begin{tabular}{|| l | r | r ||} 
+	\begin{tabular}{|| l | r | r | r ||} 
+		%\hline
+		%\multicolumn{4}{|c|}{Regression metrics} \\
 		\hline
-		\multicolumn{3}{|c|}{Regression metrics} \\
+		Model & Number of regressors & MSE & $R^2$ \\
 		\hline
-		Model & RSE & $R^2$ \\
+		Forward stepwise & 10 & 1.256 & 0.9323 \\
 		\hline
-		Forward stepwise & x & x \\
+		Backward stepwise & 10 & 1.256 & 0.9323 \\
 		\hline
-		Backward stepwise & x & x \\
+		Ridge regression & 18 & 0.0056 & 0.9998 \\
 		\hline
-		Ridge regression & x & x \\
-		\hline
-		Lasso regression & x & x \\
+		Lasso regression & 18 & 0.0053 & 0.9998 \\
 		\hline
 	\end{tabular}
 	\caption{RSE and $R^2$ of various models table.}
 	\label{table:RegEvalParams}
 \end{table}
+
+Based on the model presented in \Tab~\ref{table:ForwardFinalModelSummary}, we can determine that the primary factors that impact a player's scoring ability include the following: minutes played (``MIN''), free throws made (``FTM''), turnovers (``TOV''), assists (``AST''), field goal percentage (``FG\%''), defensive rebounds (``DREB''), three-point percentage (``3P\%''), offensive rebounds (``OREB''), steals (``STL''), and three-point attempts (``3PA'').
+Surprisingly, the factor ``GP'' (games played) is not included among these influencing factors.
