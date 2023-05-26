@@ -12,8 +12,8 @@ library( boot.pval )
 set.seed (1)
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -117,7 +117,7 @@ mean(clas_imp == NbaPlayers$target[-train])
 # Slightly worse than before
 
 
-### Try to fin the optimal classification threshold (standard 0.5)
+### Try to fin the optimal classification threshold (standard 0.5) ### USELESS
 
 test_err_rate = double(9)
 p = double(9)

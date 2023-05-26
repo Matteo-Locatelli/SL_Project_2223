@@ -19,7 +19,6 @@ NbaPlayers <- subset(NbaPlayers, select = c(-reb))
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
-hist(NbaPlayers$pts)
 
 
 ### Shrinkage with full dataset
@@ -35,7 +34,6 @@ y <- NbaPlayers$pts
 lambda <- 10^seq(-3,-1,length = 400)
 lambda <- c(0,lambda)
 
-set.seed(1)
 train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
 
 
@@ -120,9 +118,6 @@ for(i in 1:2){
   x <- model.matrix ( pts ~ . , SubNbaPlayers) [ , -1]
   y <- SubNbaPlayers$pts
   
-  set.seed(1)
-  train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
-  
   # Ridge
   ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10);
   ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambda.min,standardize=TRUE)
@@ -181,8 +176,6 @@ par(mfrow = c(1,1))
 
 #### Final Model: removing fgm, fga
 
-
-
 NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
 x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
@@ -191,9 +184,6 @@ y <- NbaPlayers$pts
 # lambda grid
 lambda <- 10^seq(-3,-1,length = 400)
 lambda <- c(0,lambda)
-
-set.seed(1)
-train <- sample(dim(x)[1],floor(dim(x)[1]*0.8),replace = FALSE)
 
 ### Ridge
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10)
@@ -216,4 +206,3 @@ lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambd
 lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
 lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
 lasso_test_mse
-

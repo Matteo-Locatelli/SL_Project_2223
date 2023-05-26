@@ -27,9 +27,6 @@ NbaPlayers <- subset(NbaPlayers, select = c(-reb))
 dim(NbaPlayers)
 names(NbaPlayers)
 head(NbaPlayers)
-hist(NbaPlayers$pts,
-     xlab = "pts - Points per game",
-     main = "pts histogram")
 
 
 ### Subset Selection
@@ -193,7 +190,7 @@ NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 
 # Model fitting
 
-f_lm_all <- lm(pts ~ . -fta, data=NbaPlayers)
+f_lm_all <- lm(pts ~ ., data=NbaPlayers)
 final_step_forward <- ols_step_forward_p(model = f_lm_all)
 summary(final_step_forward)
 final_step_forward_model <- lm(final_step_forward$model, data = NbaPlayers)

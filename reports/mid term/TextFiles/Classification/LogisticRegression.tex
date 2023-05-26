@@ -3,6 +3,7 @@
 As first approach we tried to model our target using logistic regression.
 
 First of all we fitted a model using all the features, that we will name model A, and the result is displayed in \Tab~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Tab~\ref{table:LRImpSum}, that we will name model B.
+\todo{USATO BOOTSTRAP PER CALCOLARE LA VARIANZA DEI REGRESSORI E SCEGLIERE SOLO QUELLI PIù SIGNIFICATIVI (sono gli stessi di quelli del modello A con p-value < 0.01)}
 
 \begin{table}[H]
 	\centering
@@ -85,7 +86,7 @@ The model fitted using only the important variables shows the same performance a
 
 After the initial analysis, we attempted variable selection using subset selection algorithms, specifically the forward stepwise and backward stepwise methods were applied. 
 
-The results obtained are presented in \Tab~\ref{table:LRSSum}. The forward stepwise method resulted in a model that essentially includes all the variables. In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $\alpha = 0.01$. The model achieved an $AIC = 1040.4$ and accuracy of $70\%$. The performances are again quiet similar, the AIC coefficient is slightly better for the backward model.
+The results obtained are presented in \Tab~\ref{table:LRSSum}. The forward stepwise method resulted in a model that essentially includes all the variables (AIC of 1050.2 \& accuracy of $70\%$). In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $\alpha = 0.01$. The model achieved an $AIC = 1040.4$ and accuracy of $70\%$. The performances are again quiet similar, the AIC coefficient is slightly better for the backward model.
 
 \begin{table}[H]
 	\centering
@@ -104,7 +105,7 @@ The results obtained are presented in \Tab~\ref{table:LRSSum}. The forward stepw
 		FTM & 0.4680 & 0.0240 \\
 		FT\% & 0.0123 & 0.1425 \\
 		OREB & 0.7474 & 0.0018 \\
-		AST & 0.3655 & 0.045 \\
+		AST & 0.3655 & 0.0045 \\
 		BLK & 0.5499 & 0.0760 \\				
 		TOV & -0.6577 & 0.0453 \\
 		\hline
@@ -112,9 +113,9 @@ The results obtained are presented in \Tab~\ref{table:LRSSum}. The forward stepw
 	\caption{Logistic regression with backward stepwise selection.}
 	\label{table:LRBSSum}
 \end{table}
-
+\todo{RIFERIMENTI AI MODELLI A E B}
 Since the forward model includes all the variables, its analysis is identical to the first one.
-
+\todo{INDICARE IL VALORE DEL P-VALUE PER NON SIGNIFICATIVITà 0.001}
 After removing the non-significant variables from the backward model, we obtained the same model as in the previous analysis, which we referred to as model B. 
 
 This confirms our results, suggesting that the model with only ``GP'' and ``OREB'' explains in a good way the target. 

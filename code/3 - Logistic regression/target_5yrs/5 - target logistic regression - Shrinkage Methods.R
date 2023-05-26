@@ -1,5 +1,5 @@
 
-# Shrinkage Methods
+# Shrinkage Methods ### USELESS FOR CLASSIFICATION
 # Target: target_5yrs
 
 rm(list = ls()) # clear all environment variable

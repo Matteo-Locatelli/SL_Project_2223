@@ -13,8 +13,8 @@ library(caret)
 library(ellipse)
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -32,7 +32,7 @@ hist(NbaPlayers$target_5yrs)
 ### Bagging
 set.seed(1)
 
-train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.5))
+train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.75))
 
 bagg_model <- randomForest(target ~ . -target_5yrs ,data = NbaPlayers, subset = train,
                            mtry = ncol(NbaPlayers) - 2, ntree = 500, 
@@ -61,7 +61,6 @@ bagg_model$err.rate[bagg_length]
 
 
 ### Random Forest
-set.seed(2)
 
 forest_model <- randomForest(target ~ . -target_5yrs ,data = NbaPlayers, subset = train,
                              mtry = floor(sqrt(ncol(NbaPlayers) - 2)), ntree =500, 
@@ -121,7 +120,7 @@ oob.err.rate[which.min(test.err.rate)]
 test.err.rate[which.min(test.err.rate)]
 
 
-## Best with m = 5 ##
+## Best with m = 1 ##
 best_m = which.min(test.err.rate)
 
 best_rf <- randomForest(target ~ . -target_5yrs, data = NbaPlayers, subset = train,
@@ -129,7 +128,7 @@ best_rf <- randomForest(target ~ . -target_5yrs, data = NbaPlayers, subset = tra
 best_rf
 summary(best_rf)
 best_rf$confusion
-plot(best_rf, main = "Random forest model error (m=5)")
+plot(best_rf, main = "Random forest model error (m=1)")
 legend("topright", colnames(best_rf$err.rate), col=1:3, cex=0.75, fill=1:3)
 
 # compute prediction and compare it with test data in the data-set
@@ -142,7 +141,7 @@ best.rf.test.err.rate = (best_rf_table[1,2] + best_rf_table[2,1])/ sum(best_rf_t
 best.rf.test.err.rate
 
 importance(best_rf)
-varImpPlot(best_rf, main = "Random forest model importance (m=5)")
+varImpPlot(best_rf, main = "Random forest model importance (m=1)")
 
 length = length(best_rf$err.rate) # 600 for some reason
 best_rf$err.rate[length]
@@ -192,7 +191,7 @@ cm = confusionMatrix(reference = as.factor(NbaPlayers$target_5yrs[-train]),
                      data = as.factor(boost_pred))
 cm
 
-## Various plots
+## Various plots ### USELESS
 
 train_NbaPlayers = NbaPlayers[train, ]
 test_NbaPlayers = NbaPlayers[-train, ]

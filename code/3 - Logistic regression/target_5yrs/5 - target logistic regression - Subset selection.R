@@ -18,8 +18,8 @@ library( sp )
 set.seed(1) # seed for random number generator
 
 # set working directory
-setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -149,11 +149,3 @@ mean(fit_class == NbaPlayers$target[-train])
 # On the other hand, adding two decision stumps or trees, will have a more complicated 
 # and interesting model.
 # https://stats.stackexchange.com/questions/329066/boosting-a-logistic-regression-model
-
-library( boot )
-library( boot.pval )
-
-## Forward: f_log_reg_fit
-
-
-## Backward: b_log_reg_fit
