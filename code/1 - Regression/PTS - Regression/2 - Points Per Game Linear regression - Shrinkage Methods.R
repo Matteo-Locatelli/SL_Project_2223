@@ -30,6 +30,10 @@ head(NbaPlayers)
 x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
 
+# -3, 3, 400 -> plot of ridge coefficients vs lambda
+# -3, 3, 400 -> plot of lasso coefficients vs lambda
+# -3, 3, 1000 -> evaluate lambda optimal -> between -3 and -1
+# -3, -1, 400 -> values of lambda and test_MSE
 # lambda grid
 lambda <- 10^seq(-3,-1,length = 400)
 lambda <- c(0,lambda)
@@ -41,6 +45,7 @@ train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
 ridge_mod <- glmnet(x, y, alpha = 0,lambda = lambda, standardize=TRUE)
 dim(coef(ridge_mod)) 
 plot(ridge_mod)
+#ridge_mod
 #coef(ridge_mod)
 
 ## ridge cv 
@@ -62,8 +67,8 @@ ridge_test_MSE
 lasso_mod <- glmnet( x[train , ] , y[ train ], alpha = 1,lambda = lambda)
 dim(coef(ridge_mod)) 
 plot(lasso_mod)
-lasso_mod
-coef(lasso_mod)
+#lasso_mod
+#coef(lasso_mod)
 
 # lasso cv
 cv_lasso <- cv.glmnet(x[train,],y[train],lambda = lambda, alpha=1,nfolds = 10);
@@ -181,9 +186,6 @@ NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))
 x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
 
-# lambda grid
-lambda <- 10^seq(-3,-1,length = 400)
-lambda <- c(0,lambda)
 
 ### Ridge
 ridge_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10)
