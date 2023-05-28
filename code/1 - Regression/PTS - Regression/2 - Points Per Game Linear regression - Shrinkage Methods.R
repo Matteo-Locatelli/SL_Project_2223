@@ -61,6 +61,8 @@ ridge_train_MSE = mean((y[train] - predict(ridge_model,newx = x[train,]))^2)
 ridge_train_MSE
 ridge_test_MSE = mean((y[-train] - rideg_fitt_value)^2)
 ridge_test_MSE
+ridge_MSE = mean((y - predict(ridge_model,newx = x))^2)
+ridge_MSE
 
 
 ## Lasso
