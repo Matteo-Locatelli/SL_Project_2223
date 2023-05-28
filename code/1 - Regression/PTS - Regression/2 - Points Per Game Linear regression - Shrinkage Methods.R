@@ -61,8 +61,6 @@ ridge_train_MSE = mean((y[train] - predict(ridge_model,newx = x[train,]))^2)
 ridge_train_MSE
 ridge_test_MSE = mean((y[-train] - rideg_fitt_value)^2)
 ridge_test_MSE
-ridge_MSE = mean((y - predict(ridge_model,newx = x))^2)
-ridge_MSE
 
 
 ## Lasso
@@ -199,6 +197,8 @@ ridge_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge_cv_model$lambd
 ridge_fitt_value <- predict(ridge_model, newx = x[-train,])
 ridge_test_mse <- mean((y[-train] - ridge_fitt_value)^2)
 ridge_test_mse
+ridge_MSE = mean((y - predict(ridge_model,newx = x))^2)
+ridge_MSE
 
 ### Lasso
 lasso_cv_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 1, nfolds = 10)
@@ -210,3 +210,5 @@ lasso_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso_cv_model$lambd
 lasso_fitt_value <- predict(lasso_model, newx = x[-train,])
 lasso_test_mse <- mean((y[-train] - lasso_fitt_value)^2)
 lasso_test_mse
+lasso_MSE = mean((y - predict(lasso_model,newx = x))^2)
+lasso_MSE
