@@ -13,38 +13,6 @@ It is possible to observe that for enough large values of $\lambda$, around $10^
 
 To select the optimal value of the penalization factor $\lambda$ we employed \textit{k}-fold cross-validation with $\textit{k}=10$. In \Fig~\ref{fig:RidgeCvPlot} it is possible to observe the trend of the cross-validated mean square error (MSE) when $\lambda$ increases. The optimal value was found to be $\lambda_{opt} = 0.0268$.
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|| l | r ||} 
-		\hline
-		\multicolumn{2}{|c|}{Equation} \\
-		\hline
-		Variable & Coefficient \\
-		\hline
-		intercept & -3.9290 \\
-		GP & -0.0045 \\
-		MIN & 0.2320 \\
-		FG\% & 0.0641 \\
-		3P MADE & 0.7084 \\
-		3PA & 0.2088 \\
-		3P\% & 0.0104 \\
-		FTM & 1.3534 \\
-		FTA & 0.3384 \\
-		FT & 0.0052 \\
-		OREB & 0.2031 \\
-		DREB & -0.2163 \\
-		AST & -0.3492 \\			
-		STL & -0.2449 \\
-		BLK & -0.1653 \\
-		TOV & 1.4755 \\
-		TARGET\_5Yrs & 0.0657 \\				
-		\hline
-	\end{tabular}
-	\caption{Ridge regression coefficients with $\lambda_{opt}$.}
-	\label{table:FinalRidgeCoef}
-\end{table}
-
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{ImageFiles/Regression/Ridge/RidgeCvPlot.pdf}

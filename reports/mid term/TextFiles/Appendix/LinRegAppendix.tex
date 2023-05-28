@@ -58,3 +58,65 @@ tabella(che cita l'equazione)
 	\caption{Backward stepwise selection output model.}
 	\label{table:BackwardModelSummary}
 \end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|| l | r ||} 
+		\hline
+		\multicolumn{2}{|c|}{Equation} \\
+		\hline
+		Variable & Coefficient \\
+		\hline
+		intercept & -3.9290 \\
+		GP & -0.0045 \\
+		MIN & 0.2320 \\
+		FG\% & 0.0641 \\
+		3P MADE & 0.7084 \\
+		3PA & 0.2088 \\
+		3P\% & 0.0104 \\
+		FTM & 1.3534 \\
+		FTA & 0.3384 \\
+		FT & 0.0052 \\
+		OREB & 0.2031 \\
+		DREB & -0.2163 \\
+		AST & -0.3492 \\			
+		STL & -0.2449 \\
+		BLK & -0.1653 \\
+		TOV & 1.4755 \\
+		TARGET\_5Yrs & 0.0657 \\				
+		\hline
+	\end{tabular}
+	\caption{Ridge regression coefficients with $\lambda_{opt}$.}
+	\label{table:FinalRidgeCoef}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|| l | r ||} 
+		\hline
+		\multicolumn{2}{|c|}{Equation} \\
+		\hline
+		Variable & Coefficient \\
+		\hline
+		intercept & -3.7222 \\
+		GP & -0.0043 \\
+		MIN & 0.23178 \\
+		FG\% & 0.0648 \\ 
+		3P MADE & 0.5404 \\ 
+		3PA & 0.2748 \\ 
+		3P\% & 0.0105 \\
+		FTM & 1.6260 \\ 
+		FTA & 0.1097 \\ 
+		FT & 0.0021 \\ 
+		OREB & 0.2834 \\ 
+		DREB & -0.2118 \\
+		AST & -0.3009 \\
+		STL & -0.2775 \\
+		BLK & -0.1266 \\
+		TOV & 1.3888 \\ 
+		TARGET\_5Yrs & 0.0216 \\				
+		\hline
+	\end{tabular}
+	\caption{Lasso regression coefficients with $\lambda_{opt}$.}
+	\label{table:FinalLassoCoef}
+\end{table}
