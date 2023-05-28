@@ -1,122 +1,127 @@
 \subsection*{Linear Regression}\label{appendix:lr}
-equazione
 
-tabella(che cita l'equazione)
 %Tables with threshold of 90% on regressors
 \begin{table}[H]
-	\centering
-	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
-		\hline
-		Variable & Coefficient & p-value \\
-		\hline
-		intercept & -3.6316 & $<$ 0.0001 \\
-		MIN & 0.2438 & $<$ 0.0001 \\
-		FTM & 1.7242 & $<$ 0.0001 \\
-		3P MADE & 0.2718 & 0.5716 \\
-		FG\% & 0.0637 & $<$ 0.0001 \\
-		TOV & 1.5675 & $<$ 0.0001 \\
-		AST & -0.3606 & $<$ 0.0001 \\
-		DREB & -0.2564 & $<$ 0.0001 \\
-		3P\% & 0.0104 & $<$ 0.0001 \\
-		OREB & 0.2878 & 0.0023 \\
-		STL & -0.3920 & 0.0059 \\
-		3PA & 0.3563 & 0.0490 \\
-		BLK & -0.1817 & 0.0919 \\
-		GP & -0.0039 & 0.0935 \\
-		\hline
-	\end{tabular}
-	\caption{Forward stepwise selection output model.}
-	\label{table:ForwardModelSummary}
-\end{table}
-
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
-		\hline
-		Variable's coefficient & Estimated value & p value \\
-		\hline
-		intercept & -3.6949 & $<$ 0.0001 \\
-		MIN & 0.2439 & $<$ 0.0001 \\
-		FTM & 1.7223 & $<$ 0.0001 \\
-		FG\% & 0.0649 & $<$ 0.0001 \\
-		TOV & 1.5667 & $<$ 0.0001 \\
-		AST & -0.3608 & $<$ 0.0001 \\
-		DREB & -0.2569 & $<$ 0.0001 \\
-		3P\% & 0.0106 & $<$ 0.0001 \\
-		OREB & 0.2890 & 0.0022 \\
-		STL & -0.4019 & 0.0044 \\
-		3PA & 0.4550 & $<$ 0.0001 \\
-		BLK & -0.1814 & 0.0925 \\
-		GP & -0.0038 & 0.0985 \\
-		\hline
-	\end{tabular}
-	\caption{Backward stepwise selection output model.}
-	\label{table:BackwardModelSummary}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|| l | r ||} 
-		\hline
-		\multicolumn{2}{|c|}{Equation} \\
-		\hline
-		Variable & Coefficient \\
-		\hline
-		intercept & -3.9290 \\
-		GP & -0.0045 \\
-		MIN & 0.2320 \\
-		FG\% & 0.0641 \\
-		3P MADE & 0.7084 \\
-		3PA & 0.2088 \\
-		3P\% & 0.0104 \\
-		FTM & 1.3534 \\
-		FTA & 0.3384 \\
-		FT & 0.0052 \\
-		OREB & 0.2031 \\
-		DREB & -0.2163 \\
-		AST & -0.3492 \\			
-		STL & -0.2449 \\
-		BLK & -0.1653 \\
-		TOV & 1.4755 \\
-		TARGET\_5Yrs & 0.0657 \\				
-		\hline
-	\end{tabular}
-	\caption{Ridge regression coefficients with $\lambda_{opt}$.}
-	\label{table:FinalRidgeCoef}
+	\begin{subtable}[h]{0.4\textwidth}
+		\centering
+		\begin{tabular}{|| l | r | r ||} 
+			\hline
+			\multicolumn{3}{|c|}{Equation} \\
+			\hline
+			Variable & Coefficient & p-value \\
+			\hline
+			intercept & -3.6316 & $<$ 0.0001 \\
+			MIN & 0.2438 & $<$ 0.0001 \\
+			FTM & 1.7242 & $<$ 0.0001 \\
+			3P MADE & 0.2718 & 0.5716 \\
+			FG\% & 0.0637 & $<$ 0.0001 \\
+			TOV & 1.5675 & $<$ 0.0001 \\
+			AST & -0.3606 & $<$ 0.0001 \\
+			DREB & -0.2564 & $<$ 0.0001 \\
+			3P\% & 0.0104 & $<$ 0.0001 \\
+			OREB & 0.2878 & 0.0023 \\
+			STL & -0.3920 & 0.0059 \\
+			3PA & 0.3563 & 0.0490 \\
+			BLK & -0.1817 & 0.0919 \\
+			GP & -0.0039 & 0.0935 \\
+			\hline
+		\end{tabular}
+		\caption{}
+		\label{table:ForwardModelSummary}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[h]{0.4\textwidth}
+		\centering
+		\begin{tabular}{|| l | r | r ||} 
+			\hline
+			\multicolumn{3}{|c|}{Equation} \\
+			\hline
+			Variable & Coefficients & p-value \\
+			\hline
+			intercept & -3.6949 & $<$ 0.0001 \\
+			MIN & 0.2439 & $<$ 0.0001 \\
+			FTM & 1.7223 & $<$ 0.0001 \\
+			FG\% & 0.0649 & $<$ 0.0001 \\
+			TOV & 1.5667 & $<$ 0.0001 \\
+			AST & -0.3608 & $<$ 0.0001 \\
+			DREB & -0.2569 & $<$ 0.0001 \\
+			3P\% & 0.0106 & $<$ 0.0001 \\
+			OREB & 0.2890 & 0.0022 \\
+			STL & -0.4019 & 0.0044 \\
+			3PA & 0.4550 & $<$ 0.0001 \\
+			BLK & -0.1814 & 0.0925 \\
+			GP & -0.0038 & 0.0985 \\
+			\hline
+		\end{tabular}
+		\caption{}
+		\label{table:BackwardModelSummary}
+	\end{subtable}
+	\caption{Subset selection model summary. (a)Forward stepwise selection output model. (b)Backward stepwise selection output model.}
+	\label{table:SubSelModSum}
 \end{table}
 
 \begin{table}[H]
-	\centering
-	\begin{tabular}{|| l | r ||} 
-		\hline
-		\multicolumn{2}{|c|}{Equation} \\
-		\hline
-		Variable & Coefficient \\
-		\hline
-		intercept & -3.7222 \\
-		GP & -0.0043 \\
-		MIN & 0.23178 \\
-		FG\% & 0.0648 \\ 
-		3P MADE & 0.5404 \\ 
-		3PA & 0.2748 \\ 
-		3P\% & 0.0105 \\
-		FTM & 1.6260 \\ 
-		FTA & 0.1097 \\ 
-		FT & 0.0021 \\ 
-		OREB & 0.2834 \\ 
-		DREB & -0.2118 \\
-		AST & -0.3009 \\
-		STL & -0.2775 \\
-		BLK & -0.1266 \\
-		TOV & 1.3888 \\ 
-		TARGET\_5Yrs & 0.0216 \\				
-		\hline
-	\end{tabular}
-	\caption{Lasso regression coefficients with $\lambda_{opt}$.}
-	\label{table:FinalLassoCoef}
+	\begin{subtable}[h]{0.4\textwidth}
+		\centering
+		\begin{tabular}{|| l | r ||} 
+			\hline
+			\multicolumn{2}{|c|}{Equation} \\
+			\hline
+			Variable & Coefficient \\
+			\hline
+			intercept & -3.9290 \\
+			GP & -0.0045 \\
+			MIN & 0.2320 \\
+			FG\% & 0.0641 \\
+			3P MADE & 0.7084 \\
+			3PA & 0.2088 \\
+			3P\% & 0.0104 \\
+			FTM & 1.3534 \\
+			FTA & 0.3384 \\
+			FT & 0.0052 \\
+			OREB & 0.2031 \\
+			DREB & -0.2163 \\
+			AST & -0.3492 \\			
+			STL & -0.2449 \\
+			BLK & -0.1653 \\
+			TOV & 1.4755 \\
+			TARGET\_5Yrs & 0.0657 \\				
+			\hline
+		\end{tabular}
+		\caption{}
+		\label{table:FinalRidgeCoef}
+	\end{subtable}
+	\hfill
+	\begin{subtable}[h]{0.4\textwidth}
+		\centering
+		\begin{tabular}{|| l | r ||} 
+			\hline
+			\multicolumn{2}{|c|}{Equation} \\
+			\hline
+			Variable & Coefficient \\
+			\hline
+			intercept & -3.7222 \\
+			GP & -0.0043 \\
+			MIN & 0.23178 \\
+			FG\% & 0.0648 \\ 
+			3P MADE & 0.5404 \\ 
+			3PA & 0.2748 \\ 
+			3P\% & 0.0105 \\
+			FTM & 1.6260 \\ 
+			FTA & 0.1097 \\ 
+			FT & 0.0021 \\ 
+			OREB & 0.2834 \\ 
+			DREB & -0.2118 \\
+			AST & -0.3009 \\
+			STL & -0.2775 \\
+			BLK & -0.1266 \\
+			TOV & 1.3888 \\ 
+			TARGET\_5Yrs & 0.0216 \\				
+			\hline
+		\end{tabular}
+		\caption{}
+		\label{table:FinalLassoCoef}
+	\end{subtable}
+	\caption{Shrinkage model summary. (a)Ridge regression coefficients with $\lambda_{opt}$. (b)Lasso regression coefficients with $\lambda_{opt}$.}
+	\label{table:RegModSum}
 \end{table}

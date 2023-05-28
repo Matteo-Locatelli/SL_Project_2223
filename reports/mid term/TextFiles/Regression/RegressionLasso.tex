@@ -2,26 +2,24 @@
 
 Our last selection method is the lasso regression. In \Fig~\ref{fig:LassoCoefVsLambda} is shown the coefficients' behavior as $\lambda$ increases. 
 
+The identical procedure utilized for ridge regression is once again implemented. \Fig~\ref{fig:LassoCvPlot} displays the trend of cross-validated MSE as $\lambda$ increases. The optimal value, $\lambda_{opt} = 0.0036$, was identified, which does not enforce any regressor's coefficients to become zero. Similar to ridge regression, no variable selection is conducted in this case as well.
 
-
-The same procedure followed for the ridge is applied again. In \Fig~\ref{fig:LassoCvPlot} it is possible the trend of the cross validated MSE when $\lambda$ increases. The optimal value was found to be $\lambda_{opt} = 0.0036$, that means no penalization. The result is coherent with what obtained from Ridge Regression.
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}{.6\textwidth}
+	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Lasso/LassoCvPlot.pdf}
-		\caption{}
-		\label{fig:LassoCvPlot}
-	\end{subfigure}%	
-	\begin{subfigure}{.6\textwidth}
-		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Lasso/LassoCoefVsLambda.pdf}
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Regression/Lasso/LassoCoefVsLambda.pdf}
 		\caption{}
 		\label{fig:LassoCoefVsLambda}
-	\end{subfigure}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Regression/Lasso/LassoCvPlot.pdf}
+		\caption{}
+		\label{fig:LassoCvPlot}
+	\end{subfigure}	
 	\caption{Lasso regression cross-validation. (a)Lasso cross validated MSE as function of $\lambda$. (b)Lasso regression coefficients as function of $\lambda$.}
 	\label{fig:FinalFSSM}
 \end{figure}
-From our analysis, it appears that penalization is not helpful in improving the model's performance for our specific use case.
-After cross-validation on final model $MSE_{test} = 1.4163$.
+
+Upon fitting the model with $\lambda_{opt}$, the resulting coefficients are presented in \Tab~\ref{table:FinalLassoCoef}. The MSE computed for this model is 1.2544.

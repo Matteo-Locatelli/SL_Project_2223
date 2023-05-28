@@ -1,51 +1,32 @@
 \subsection{Conclusions}
 
-From on the previous analysis, it was discovered that the variable ``GP'' holds significant importance in explaining the target variable, while the variable ``PTS'' does not have the expected level of significance. 
+Based on the previous analysis, it was discovered that the variable ``GP'' holds significant importance in explaining the target variable, while the variable ``PTS'' does not have the expected level of significance. 
 However, it is not sufficient by itself to achieve a high level of classification performance.
-Indeed, all the classification methods employed were able to obtain an accuracy around $70\%$. This suggests that there might be other influential factors, not captured by the existing features, that have a substantial impact on determining whether a player will have a lengthy career or not. Thus, it appears that the dataset itself poses a limitation in achieving high performance.
 
-Spiegare MER.
+Indeed, as shown in \Tab~\ref{table:ClasEvalParams}, all the classification methods employed were able to obtain an accuracy around $70\%$. This suggests that there might be other influential factors, not captured by the existing features, that have a substantial impact on determining whether a player will have a lengthy career or not. Thus, it appears that the dataset itself poses a limitation in achieving high performance.
 
-\todo{Tabella dei misclassification error rate}
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r ||} 
 		\hline
-		\multicolumn{2}{|c|}{Misclassification parameters} \\
+		Classification technique & MER(\%) \\
 		\hline
-		Model & MER \\
+		Logistic regression & 0.3250 \\
 		\hline
-		Logistic regression all predictors (A) & 0.3000 \\
-		\hline
-		Logistic regression imp predictors (B) & 0.3250 \\
-		\hline
-		Forward stepwise & 0.3000 \\
-		\hline
-		Backward stepwise & 0.3000 \\
-		\hline
-		Subset selection final & 0.3250 \\
-		\hline
-		Complete tree (gini) & 0.3469 \\
-		\hline
-		Best tree (4) & 0.3000 \\
-		\hline
-		Best tree after cross-validation & 0.3000 \\ 
+		Best tree & 0.3000 \\
 		\hline
 		Bagging & 0.3344 \\
 		\hline
-		Random forest & 0.2968 \\
-		\hline
-		Best RF & 0.2875 \\
+		Random forest & 0.2875 \\
 		\hline
 		Boosting & 0.3031 \\
 		\hline
-		KNN (\textit{k=3}) & 0.3375 \\
+		KNN & 0.3375 \\
 		\hline
-		SVM (depends on kernel)& x \\
+		SVM & 31.25 \\
 		\hline
 	\end{tabular}
 	\caption{Missclassification error rate of various models table.}
 	\label{table:ClasEvalParams}
 \end{table}
 
-NOTA SU RANDOM FOREST: ESSENDO CASUALE, IL RISULTATO MIGLIORE RISPETTO ALL'ERRORE DI TEST LO DAVA PER M=5, ANCHE SE USANDO 4 SI OTTIENE UN ERRORE DI TEST MINORE

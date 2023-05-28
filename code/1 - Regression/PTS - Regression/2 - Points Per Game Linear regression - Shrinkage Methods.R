@@ -31,7 +31,7 @@ x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]
 y <- NbaPlayers$pts
 
 # -3, 3, 400 -> plot of ridge coefficients vs lambda
-# -3, 3, 400 -> plot of lasso coefficients vs lambda
+# -3, 1, 400 -> plot of lasso coefficients vs lambda
 # -3, 3, 1000 -> evaluate lambda optimal -> between -3 and -1
 # -3, -1, 400 -> values of lambda and test_MSE
 # lambda grid

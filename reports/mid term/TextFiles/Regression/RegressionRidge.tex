@@ -10,13 +10,13 @@ To select the optimal value of the penalization factor $\lambda$ we employed \te
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Ridge/RidgeCoefVsLambda.pdf}
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Regression/Ridge/RidgeCoefVsLambda.pdf}
 		\caption{}
 		\label{fig:RidgeCoefVsLambda}
 	\end{subfigure}%
 	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=0.5\linewidth]{ImageFiles/Regression/Ridge/RidgeCvPlot.pdf}
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Regression/Ridge/RidgeCvPlot.pdf}
 		\caption{}
 		\label{fig:RidgeCvPlot}
 	\end{subfigure}
@@ -24,6 +24,5 @@ To select the optimal value of the penalization factor $\lambda$ we employed \te
 	\label{fig:FinalFSSM}
 \end{figure}
 
-We fit the final model using the optimal $\lambda$ value ($\lambda_{opt}$). The resulting coefficients are displayed in \Tab~\ref{table:FinalRidgeCoef}. For this model we computed also the test MSE and it is $MSE_{test} = 1.2577$.
+We fit the final model using $\lambda_{opt}$. The resulting coefficients are displayed in \Tab~\ref{table:FinalRidgeCoef}. For this model the computed MSE is 1.2577.
 
-In this case the ridge penalization does not reduce the number of coefficients, and it does not even improve significantly the MSE. We then can conclude that using ridge regression is not useful for our purposes.

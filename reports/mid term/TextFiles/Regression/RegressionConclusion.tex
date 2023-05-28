@@ -1,6 +1,9 @@
 \subsection{Conclusions}
 
-Spiegare MSE
+\Tab~\ref{table:RegEvalParams} provides a summary of the results from the application of the four variable selection techniques.
+The models exhibit similar performance in terms of MSE and $R^2$. 
+However, for our analysis, it is evident that regularization does not contribute significantly to variable selection. 
+As a result, we have chosen the model derived from subset selection as our final model.
 
 \begin{table}[H]
 	\centering
@@ -8,11 +11,11 @@ Spiegare MSE
 		%\hline
 		%\multicolumn{4}{|c|}{Regression metrics} \\
 		\hline
-		Model & No. of regressors & MSE & $R^2$ \\
+		Model selection algorithm & No. of regressors & MSE & $R^2$(\%) \\
 		\hline
-		Forward stepwise final & 10 & 1.1260 & 0.9323 \\
+		Forward stepwise & 10 & 1.1260 & 0.9323 \\
 		\hline
-		Backward stepwise final & 10 & 1.1260 & 0.9323 \\
+		Backward stepwise & 10 & 1.1260 & 0.9323 \\
 		\hline
 		Ridge regression & 18 & 1.2577 & 0.9379 \\
 		\hline
