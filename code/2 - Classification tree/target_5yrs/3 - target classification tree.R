@@ -66,7 +66,7 @@ test.err.rate
 ### Cross-validation to prune the tree
 set.seed(3)
 # Input of cv.tree: fitted classification tree and function for pruning
-tree_cv <- cv.tree(tree_model, FUN = prune.misclass)
+  tree_cv <- cv.tree(tree_model, FUN = prune.misclass)
 tree_cv
 plot(tree_cv)
 

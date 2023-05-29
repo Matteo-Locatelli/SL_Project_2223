@@ -38,7 +38,7 @@ y <- NbaPlayers$pts
 lambda <- 10^seq(-3,-1,length = 400)
 lambda <- c(0,lambda)
 
-train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE);
+train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE)
 
 
 ## Ridge

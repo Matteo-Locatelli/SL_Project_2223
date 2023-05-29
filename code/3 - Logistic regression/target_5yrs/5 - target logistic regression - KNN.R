@@ -29,7 +29,7 @@ train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))
 matrix <- NbaPlayers[train,]
 data_train <- subset(NbaPlayers[train,], select = c(-target_5yrs, -target)) 
 data_test <- subset(NbaPlayers[-train,], select = c(-target_5yrs, -target))
-label_train <- NbaPlayers$target[train]; 
+label_train <- NbaPlayers$target[train]
 
 
 knn_fit <- knn(data_train,data_test,label_train, k=3)

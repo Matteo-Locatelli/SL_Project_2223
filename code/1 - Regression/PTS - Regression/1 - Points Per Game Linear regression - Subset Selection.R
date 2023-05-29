@@ -223,7 +223,7 @@ par(mfrow = c(1,2))
 
 plot(forward_lm_fit$residuals, pch = "o", col = "blue" , ylab = "Residual value", 
      main = paste0("Residuals plot: mean=",round(mean(forward_lm_fit$residuals),digits = 4),
-                   " & var=", round(var(forward_lm_fit$residuals),digits = 2))))
+                   " & var=", round(var(forward_lm_fit$residuals),digits = 2)))
 abline(c(0,0),c(0,length(forward_lm_fit$residuals)), col= "red", lwd = 3)
 
 hist(forward_lm_fit$residuals,40,

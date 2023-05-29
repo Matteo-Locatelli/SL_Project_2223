@@ -31,3 +31,133 @@
 	\caption{Logistic regression with all features.}
 	\label{table:LRAllSum}
 \end{table}
+
+\noindent
+\textbf{Logistic regression}
+
+\texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
+
+\texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
+
+\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
+
+\texttt{log\_reg\_all <- glm( target ~ .-target\_5yrs, data = NbaPlayers , subset = train, family = binomial)}
+
+\texttt{log\_reg\_imp <- glm( target ~ gp + oreb, data = NbaPlayers , subset = train, family = binomial)}
+
+\noindent
+\textbf{Logistic regression subset selection}
+
+\texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
+
+\texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
+
+\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
+
+\texttt{log\_reg\_all <- glm( target ~ .-target\_5yrs, data = NbaPlayers , subset = train, family = binomial)}
+
+\texttt{f\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction = "forward", trace = FALSE)}
+
+\texttt{b\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction = "backward", trace = FALSE)}
+
+\texttt{log\_reg\_final <- glm( target ~ gp + oreb, data = NbaPlayers , subset = train, family = binomial)}
+
+\noindent
+\textbf{Trees}
+
+\texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
+
+\texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
+
+\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
+
+\texttt{tmc <- tree(target ~ . -target\_5yrs , NbaPlayers, subset = train, split = "gini")}
+
+\texttt{tree\_cv <- cv.tree(tree\_model, FUN = prune.misclass)} --- figure 8
+
+\texttt{best1 = min(tree\_cv\$size[tree\_cv\$dev == min(tree\_cv\$dev)])} --- 9a
+
+\texttt{k1 = min(tree\_cv\$k[tree\_cv\$size == best1])}
+
+\texttt{prune1 <- prune.misclass(tree\_model, best = best1, k = k1)}
+
+\texttt{best2 = tree\_cv\$size[tree\_cv\$size == 6]} --- 9b
+
+\texttt{k2 = min(tree\_cv\$k[tree\_cv\$size == best2])}
+
+\texttt{prune2 <- prune.misclass(tree\_model, best = best2, k = k2)}
+
+\texttt{best3 = tree\_cv\$size[tree\_cv\$size == 7]} --- 9c
+
+\texttt{k3 = min(tree\_cv\$k[tree\_cv\$size == best3])}
+
+\texttt{prune3 <- prune.misclass(tree\_model, best = best3)}
+
+\texttt{best4 = min(tree\_cv\$size[tree\_cv\$size == 2])} --- 9d
+
+\texttt{k4 = min(tree\_cv\$k[tree\_cv\$size == best4])}
+
+\texttt{prune4 <- prune.misclass(tree\_model, best = best4, k = k4)}
+
+\noindent
+\textbf{Ensemble methods}
+
+\texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
+
+\texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
+
+\texttt{train <- sample(1:nrow(NbaPlayers),floor(nrow(NbaPlayers)*0.75))}
+
+\texttt{bagg\_model <- randomForest(target ~ . -target\_5yrs ,data = NbaPlayers, subset = train,	mtry = ncol(NbaPlayers) - 2, ntree = 500, importance = TRUE, replace = TRUE)}
+
+\texttt{forest\_model <- randomForest(target ~ . -target\_5yrs ,data = NbaPlayers, subset = train,	mtry = floor(sqrt(ncol(NbaPlayers) - 2)), ntree =500, importance = TRUE)}
+
+\texttt{best\_m = which.min(test.err.rate)}
+
+\texttt{best\_rf <- randomForest(target ~ . -target\_5yrs, data = NbaPlayers, subset = train, mtry = best\_m, ntree = 500, importance = TRUE)}
+
+\texttt{ntrees = 5000}
+
+\texttt{boost\_model <- gbm(target\_5yrs ~ . -target, data = NbaPlayers[train,], distribution = "bernoulli", n.trees = ntrees, cv.folds = 10, interaction.depth = 4, shrinkage = 0.001 , verbose = F)}
+
+\noindent
+\textbf{KNN}
+
+\texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
+
+\texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
+
+\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
+
+\texttt{matrix <- NbaPlayers[train,]}
+\texttt{data\_train <- subset(NbaPlayers[train,], select = c(-target\_5yrs, -target))} 
+\texttt{data\_test <- subset(NbaPlayers[-train,], select = c(-target\_5yrs, -target))}
+\texttt{label\_train <- NbaPlayers\$target[train]}
+
+\texttt{knn\_fit <- knn(data\_train, data\_test, label\_train, k=3)}
+
+\noindent
+\textbf{SVM}
+
+\texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
+
+\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
+
+\texttt{x\_train = subset(NbaPlayers[train,], select = c(-target\_5yrs))}
+
+\texttt{y\_train = NbaPlayers[train,]\$target\_5yrs}
+
+\texttt{dataframe\_train <- data.frame(x=x\_train, y=as.factor(y\_train))}
+
+\texttt{x\_test = subset(NbaPlayers[-train,], select = c(-target\_5yrs))}
+
+\texttt{y\_test = NbaPlayers[-train,]\$target\_5yrs}
+
+\texttt{dataframe\_test <- data.frame(x=x\_test, y=as.factor(y\_test))}
+
+\texttt{svm\_cross <- tune (svm, y ~ ., data = dataframe\_train, kernel = "linear",
+ranges = list(cost=c(0.001 , 0.01 , 0.1 , 1 , 5 , 10 , 100)))}
+
+\texttt{svm\_rad\_tune <- tune(svm, y ~ ., data = dataframe\_train, kernel = "radial", ranges = list (cost = c (0.01 , 0.1 , 1 , 10 , 100), gamma = c (0.5 , 1 , 2 , 3 , 4)))}
+
+\texttt{svm\_pol\_tune <- tune(svm, y ~ ., data = dataframe\_train, kernel = "polynomial", ranges = list (cost = c (0.01 , 0.1 , 1 , 10 , 100), degree = c (0.5 , 1 , 2 , 3 , 4)))}
