@@ -128,6 +128,7 @@
 
 \textbf{Linear regression overview}
 
+\begin{center}
 \texttt{lm\_fit <- lm(pts $\sim$~ min, data = NbaPlayers)}
 
 \texttt{lm\_fit <- lm(pts $\sim$ fgm, data = NbaPlayers)}
@@ -135,10 +136,12 @@
 \texttt{lm\_fit\_imp <- lm(pts $\sim$ fgm + x3p\_made + ftm, data=NbaPlayers)}
 
 \texttt{lm\_fit\_reb <- lm(reb $\sim$ oreb + dreb, data=NbaPlayers)}
-
+\end{center}
+	
 \noindent
 \textbf{Linear regression subset selection}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-reb))}
 
 \textbf{Forward model 90\%}
@@ -152,10 +155,12 @@
 \texttt{b\_lm\_all <- lm(pts $\sim$ ., data=SubNbaPlayers)}
 
 \texttt{step\_backward\_models[[i]] <- ols\_step\_backward\_p(b\_lm\_all)}
-
+\end{center}
+	
 \noindent
 \textbf{Linear regression subset selection final model forward stepwise (after bootstrap and removal of not significant variables)}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))}
 
 \texttt{f\_lm\_all <- lm(pts ~ ., data=NbaPlayers)}
@@ -165,13 +170,15 @@
 \texttt{final\_step\_forward\_model <- lm(final\_step\_forward\$model, data = NbaPlayers)}
 
 \texttt{forward\_lm\_fit <- lm(final\_step\_forward\_model\$model, data=NbaPlayers)}
-
+\end{center}
+	
 \noindent
 \textbf{Linear regression subset selection final model backward stepwise (after bootstrap and removal of not significant variables) --- same as forward}
 
 \noindent
 \textbf{Linear regression shrinkage}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-fga,-fgm))}
 
 \texttt{x <- model.matrix ( pts ~ . , NbaPlayers ) [ , -1]}
@@ -183,17 +190,22 @@
 \texttt{lambda <- c(0,lambda)}
 
 \texttt{train <- sample(dim(x)[1],floor(dim(x)[1]*0.75),replace = FALSE)}
-
+\end{center}
+	
 \textbf{RIDGE}
 
+\begin{center}
 \texttt{ridge\_cv\_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 0, nfolds = 10)}
 
 \texttt{ridge\_model <- glmnet(x[train,],y[train],alpha = 0,lambda = ridge\_cv\_model\$lambda.min,standardize=TRUE)}
 \texttt{ridge\_fitt\_value <- predict(ridge\_model, newx = x[-train,])}
-
+\end{center}
+	
 \textbf{LASSO}
 
+\begin{center}
 \texttt{lasso\_cv\_model <- cv.glmnet(x[train, ],y[train], lambda = lambda, alpha = 1, nfolds = 10)}
 
 \texttt{lasso\_model <- glmnet(x[train,],y[train],alpha = 1,lambda = lasso\_cv\_model\$lambda.min,standardize=TRUE)}
 \texttt{lasso\_fitt\_value <- predict(lasso\_model, newx = x[-train,])}
+\end{center}

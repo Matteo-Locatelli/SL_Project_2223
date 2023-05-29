@@ -35,6 +35,7 @@
 \noindent
 \textbf{Logistic regression}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
 
 \texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
@@ -44,10 +45,12 @@
 \texttt{log\_reg\_all <- glm( target ~ .-target\_5yrs, data = NbaPlayers , subset = train, family = binomial)}
 
 \texttt{log\_reg\_imp <- glm( target ~ gp + oreb, data = NbaPlayers , subset = train, family = binomial)}
+\end{center}
 
 \noindent
 \textbf{Logistic regression subset selection}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
 
 \texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
@@ -61,10 +64,12 @@
 \texttt{b\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction = "backward", trace = FALSE)}
 
 \texttt{log\_reg\_final <- glm( target ~ gp + oreb, data = NbaPlayers , subset = train, family = binomial)}
-
+\end{center}
+	
 \noindent
 \textbf{Trees}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
 
 \texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
@@ -98,10 +103,12 @@
 \texttt{k4 = min(tree\_cv\$k[tree\_cv\$size == best4])}
 
 \texttt{prune4 <- prune.misclass(tree\_model, best = best4, k = k4)}
+\end{center}
 
 \noindent
 \textbf{Ensemble methods}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
 
 \texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
@@ -119,10 +126,12 @@
 \texttt{ntrees = 5000}
 
 \texttt{boost\_model <- gbm(target\_5yrs ~ . -target, data = NbaPlayers[train,], distribution = "bernoulli", n.trees = ntrees, cv.folds = 10, interaction.depth = 4, shrinkage = 0.001 , verbose = F)}
-
+\end{center}
+	
 \noindent
 \textbf{KNN}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
 
 \texttt{NbaPlayers\$target <- factor( ifelse(NbaPlayers\$target\_5yrs == 0 , " No " , " Yes " ))}
@@ -135,10 +144,12 @@
 \texttt{label\_train <- NbaPlayers\$target[train]}
 
 \texttt{knn\_fit <- knn(data\_train, data\_test, label\_train, k=3)}
-
+\end{center}
+	
 \noindent
 \textbf{SVM}
 
+\begin{center}
 \texttt{NbaPlayers <- subset(NbaPlayers, select = c(-pts, -reb))}
 
 \texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
@@ -161,3 +172,4 @@ ranges = list(cost=c(0.001 , 0.01 , 0.1 , 1 , 5 , 10 , 100)))}
 \texttt{svm\_rad\_tune <- tune(svm, y ~ ., data = dataframe\_train, kernel = "radial", ranges = list (cost = c (0.01 , 0.1 , 1 , 10 , 100), gamma = c (0.5 , 1 , 2 , 3 , 4)))}
 
 \texttt{svm\_pol\_tune <- tune(svm, y ~ ., data = dataframe\_train, kernel = "polynomial", ranges = list (cost = c (0.01 , 0.1 , 1 , 10 , 100), degree = c (0.5 , 1 , 2 , 3 , 4)))}
+\end{center}
