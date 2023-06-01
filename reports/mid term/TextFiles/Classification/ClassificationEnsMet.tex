@@ -8,7 +8,7 @@ We improved the tree-based models using bagging with 500 trees and random forest
 
 In \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test and the out-of-bag error rates as \textit{m} increases.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/m_best_for_500_plot.pdf}
 	\caption{Plot of the error rate trends in random forest for varying values of \textit{m} (test: red, out-of-bag: blue).}
@@ -18,7 +18,7 @@ In \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test and the o
 Once the best \textit{m} value for the random forest was obtained ($m = 1$), we compared the bagging model with the random forest model using that particular value of \textit{m}, while keeping all other parameters the same.
 In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that random forest performs slightly better than bagging.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\hfill
 	\begin{subfigure}{.5\textwidth}
@@ -46,7 +46,7 @@ In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that random forest performs sl
 
 An overall summary of the importance of each predictor is obtained by using Residual Sum of Squares (RSS). \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} present the importance of each variable within the models. This importance can be interpreted as the degree to which the removal of a variable would negatively impact the model's performance, utilizing the mean decrease of the \textit{gini} index in relation to the maximum.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering
@@ -65,7 +65,6 @@ An overall summary of the importance of each predictor is obtained by using Resi
 	\label{fig:ImpVar}
 \end{figure}
 
-\noindent
 As in the classification trees, the ``GP'' regressor resulted to be the most important one.
 
 \vspace{0.2cm}
@@ -76,7 +75,7 @@ Since the main goal of this section is to find the model that best explain our d
 
 After applying the boosting technique with 5000 iterations, the importance of each variable in the dataset is shown in \Fig~\ref{fig:boost_4_rel_inf}. The figure showcases the model from the iteration that yielded the lowest cross-validation error.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{0.5\textwidth}
 		\centering
@@ -91,6 +90,7 @@ After applying the boosting technique with 5000 iterations, the importance of ea
 			\hline
 			\multicolumn{2}{|c|}{Prediction} 
 			& 0 & 1 \\
+			\hline
 			\hline
 			& 0 & 67 & 46 \\
 			& 1 & 51 & 156 \\

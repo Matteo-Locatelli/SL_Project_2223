@@ -10,11 +10,12 @@ First of all we fitted a model using all the features, that we will name model A
 	}{mod:lrimp}
 \end{center}
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		Variable & Coefficient & p-value \\
+		\hline
 		\hline
 		intercept & -3.0111 & $<$ 0.0001 \\
 		GP & 0.0488 & $<$ 0.0001 \\
@@ -29,13 +30,14 @@ We observed that there is no substantial difference in performance. When utilizi
 
 \Tab~\ref{table:ConfMat} shows the confusion matrices for the two models. In general, both models tend to perform slightly better in predicting the ``yes'' class.
 
-\begin{table}[H]
-	\begin{subtable}[h]{0.4\textwidth}
+\begin{table}[h]
+	\begin{subtable}{0.4\textwidth}
 		\centering
 		\begin{tabular}{|| cr | cc ||}    
 			\hline
 			\multicolumn{2}{|c|}{Model A} 
 			& No & Yes \\
+			\hline
 			\hline
 			& No & 66 & 44 \\
 			& Yes & 52 & 158 \\
@@ -45,12 +47,13 @@ We observed that there is no substantial difference in performance. When utilizi
 		\label{table:ConfMatModA}
 	\end{subtable}
 	\hfill
-	\begin{subtable}[h]{0.4\textwidth}
+	\begin{subtable}{0.4\textwidth}
 		\centering
 		\begin{tabular}{|| cr | cc ||}    
 			\hline
 			\multicolumn{2}{|c|}{Model B} 
 			& $No$ & $Yes$ \\
+			\hline
 			\hline
 			& No & 65 & 51 \\
 			& Yes & 53 & 151 \\
@@ -70,7 +73,7 @@ To explore this aspect further, we constructed two histograms for each model: on
 
 From this perspective, it seems that model B demonstrates slightly higher confidence in its \textit{yes} predictions. However, overall, both models exhibit similar behavior.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_all_yes}
@@ -87,7 +90,7 @@ From this perspective, it seems that model B demonstrates slightly higher confid
 	\label{fig:ProbPredA}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\begin{subfigure}{.5\textwidth}
 		\centering
 		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_imp_yes}
@@ -107,6 +110,7 @@ From this perspective, it seems that model B demonstrates slightly higher confid
 The model fitted using only the important variables shows the same performance as the first one, but it uses variables, making it a better choice.
 
 \vspace{0.2cm}
+\noindent
 \textbf{Subset selection}
 
 After the initial analysis, we attempted variable selection using subset selection algorithms, specifically the forward stepwise and backward stepwise methods were applied. 
@@ -121,11 +125,12 @@ In contrast, the backward stepwise method resulted in a model with 11 variables,
 	}{mod:lrbs}
 \end{center}
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		Variable & Coefficient & p-value \\
+		\hline
 		\hline
 		intercept & -3.4011 & $<$ 0.0001 \\
 		GP & 0.0455 & $<$ 0.0001 \\
@@ -150,6 +155,7 @@ After removing the non-significant variables from the backward model, we obtaine
 This confirms our results, suggesting that ``GP'' and ``OREB'' are the most important variables to explain the target using logistic regression. 
 
 \vspace{0.2cm}
+\noindent
 \textbf{Conclusions and observations}
 
 In general, regardless of the variables included, logistic regression is able to achieve an accuracy around $70\%$. Therefore, it may be better to explore other classification methods to potentially improve the model's performances.

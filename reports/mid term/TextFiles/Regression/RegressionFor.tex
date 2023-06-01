@@ -4,6 +4,8 @@ The first method applied is the forward stepwise selection. In particular, the a
 
 As expected, ``MIN'' and ``FTM'' are included, which resulted to be important from the preliminary analysis as well. However, there are three variables that are not significantly different from 0, with a p-value threshold of $5\%$.
 
+\vspace{0.2cm}
+\noindent
 \textbf{Bootstrap statistical inference}
 
 On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Tab~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. 
@@ -12,11 +14,12 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 	\labelText{\texttt{final\_step\_forward <- ols\_step\_forward\_p(model = f\_lm\_all)}}{mod:lrf2}
 \end{center}
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		Variable & Coefficient & p-value \\
+		\hline
 		\hline
 		intercept & -3.6316 & 0.0010 \\
 		MIN & 0.2438 & 0.0000 \\
@@ -38,7 +41,6 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 	\label{table:BootForwardModel}
 \end{table}
 
-\vspace{0.2cm}
 \noindent
 \textbf{Final forward model}
 
@@ -50,11 +52,12 @@ The final forward model, shown in \Tab~\ref{table:ForwardFinalModelSummary}, is 
 		}{mod:lrf3}
 \end{center}
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		Variable & Coefficient & p-value \\
+		\hline
 		\hline
 		intercept & -3.7388 & $<$ 0.0001 \\
 		MIN & 0.2387 & $<$ 0.0001 \\
@@ -73,7 +76,7 @@ The final forward model, shown in \Tab~\ref{table:ForwardFinalModelSummary}, is 
 	\label{table:ForwardFinalModelSummary}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{.5\textwidth}
 		\centering

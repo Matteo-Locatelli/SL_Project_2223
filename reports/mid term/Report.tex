@@ -61,8 +61,8 @@
 	{\large \@author}}              
 \makeatother
 \author{
-	Matteo Locatelli
-	Wasim Essbai
+	Matteo Locatelli - 1059210
+	Wasim Essbai - 1060652
 }
 
 \newcommand\titlepagedecoration{%
@@ -133,7 +133,10 @@
 	\end{titlepage}
 
 	\tableofcontents
+	
+	\pagebreak
 	\listoffigures
+	\pagebreak
 	\listoftables
 	\pagebreak
 	
@@ -164,7 +167,16 @@
 
 	\pagebreak
 	
+	\bibliographystyle{ieeetr}
+
+	\bibliography{./OtherFiles/Bibliography}
+
+	\addcontentsline{toc}{section}{Bibliography}
+
+	\pagebreak
+	
 	\pagenumbering{Alph}
+	
 	\appendix
 	
 	\section*{Appendix}
@@ -174,12 +186,5 @@
 	
 	\import{./TextFiles/Appendix/}{LinRegAppendix.tex}
 	\import{./TextFiles/Appendix/}{ClassAppendix.tex}
-	
-	
-	\bibliographystyle{ieeetr}
-	
-	\bibliography{./OtherFiles/Bibliography}
-	
-	\addcontentsline{toc}{section}{Bibliography}
 	
 \end{document}

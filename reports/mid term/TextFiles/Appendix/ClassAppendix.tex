@@ -7,11 +7,13 @@
 \end{center}
 % Same model obtained by forward stepwise selection
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
+	\scalebox{0.9}{%
 	\begin{tabular}{|| l | r | r ||} 
 		\hline
 		Variable & Coefficient & p-value \\
+		\hline
 		\hline
 		intercept & -3.8885 & 0.0068 \\
 		GP & 0.0449 & $<$ 0.0001 \\
@@ -32,7 +34,8 @@
 		BLK & 0.6291 & 0.0566 \\				
 		TOV & -0.5353 & 0.1164 \\		
 		\hline
-	\end{tabular}
+	\end{tabular}%
+	}
 	\caption{Estimated coefficients' value and corresponding p-value obtained with \Mod~\ref{mod:lrall} which uses logistic regression including all regressors.}
 	\label{table:LRAllSum}
 \end{table}

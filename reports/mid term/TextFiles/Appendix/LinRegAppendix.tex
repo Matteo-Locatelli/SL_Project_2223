@@ -12,12 +12,14 @@
 	}{mod:lrb0}
 \end{center}
 
-\begin{table}[H]
-	\begin{subtable}[h]{0.4\textwidth}
+\begin{table}[h]
+	\begin{subtable}{0.4\textwidth}
 		\centering
+		\scalebox{1}{%
 		\begin{tabular}{|| l | r | r ||} 
 			\hline
 			Variable & Coefficient & p-value \\
+			\hline
 			\hline
 			intercept & -3.6316 & $<$ 0.0001 \\
 			MIN & 0.2438 & $<$ 0.0001 \\
@@ -34,16 +36,19 @@
 			BLK & -0.1817 & 0.0919 \\
 			GP & -0.0039 & 0.0935 \\
 			\hline
-		\end{tabular}
+		\end{tabular}%
+		}
 		\caption{}
 		\label{table:ForwardModelSummary}
 	\end{subtable}
 	\hfill
-	\begin{subtable}[h]{0.4\textwidth}
+	\begin{subtable}{0.4\textwidth}
 		\centering
+		\scalebox{1}{%
 		\begin{tabular}{|| l | r | r ||} 
 			\hline
 			Variable & Coefficients & p-value \\
+			\hline
 			\hline
 			intercept & -3.6949 & $<$ 0.0001 \\
 			MIN & 0.2439 & $<$ 0.0001 \\
@@ -59,7 +64,8 @@
 			BLK & -0.1814 & 0.0925 \\
 			GP & -0.0038 & 0.0985 \\
 			\hline
-		\end{tabular}
+		\end{tabular}%
+		}	
 		\caption{}
 		\label{table:BackwardModelSummary}
 	\end{subtable}
@@ -78,12 +84,14 @@
 	}{mod:lrl0}
 \end{center}
 
-\begin{table}[H]
-	\begin{subtable}[h]{0.4\textwidth}
+\begin{table}[h]
+	\begin{subtable}{0.4\textwidth}
 		\centering
+		\scalebox{0.95}{%
 		\begin{tabular}{|| l | r ||} 
 			\hline
 			Variable & Coefficient \\
+			\hline
 			\hline
 			intercept & -3.9290 \\
 			GP & -0.0045 \\
@@ -103,16 +111,19 @@
 			TOV & 1.4755 \\
 			TARGET\_5Yrs & 0.0657 \\				
 			\hline
-		\end{tabular}
+		\end{tabular}%
+		}	
 		\caption{}
 		\label{table:FinalRidgeCoef}
 	\end{subtable}
 	\hfill
-	\begin{subtable}[h]{0.4\textwidth}
+	\begin{subtable}{0.4\textwidth}
 		\centering
+		\scalebox{0.95}{%
 		\begin{tabular}{|| l | r ||} 
 			\hline
 			Variable & Coefficient \\
+			\hline
 			\hline
 			intercept & -3.7222 \\
 			GP & -0.0043 \\
@@ -132,7 +143,8 @@
 			TOV & 1.3888 \\ 
 			TARGET\_5Yrs & 0.0216 \\				
 			\hline
-		\end{tabular}
+		\end{tabular}%
+		}	
 		\caption{}
 		\label{table:FinalLassoCoef}
 	\end{subtable}

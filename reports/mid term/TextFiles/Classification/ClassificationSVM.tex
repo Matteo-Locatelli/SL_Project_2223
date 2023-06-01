@@ -2,11 +2,14 @@
 
 As a last method, we tried applying the support vector machine (SVM) technique, with three different kernel function, in combination with cross-validation to see if we can achieve better performances. The results are displayed in \Tab~\ref{table:SVMkernels}.
 
+Unfortunately, even the SVM technique did not improve the classification performances in this case. 
+
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r ||} 
 		\hline
 		Kernel & Accuracy \\
+		\hline
 		\hline
 		Linear & $68.75\%$ \\
 		\hline
@@ -17,6 +20,4 @@ As a last method, we tried applying the support vector machine (SVM) technique, 
 	\end{tabular}
 	\caption{Values of accuracy reached with the three applied SVM kernel functions.}
 	\label{table:SVMkernels}
-\end{table} 
-
-Unfortunately, even the SVM technique did not improve the classification performances in this case. 
+\end{table}

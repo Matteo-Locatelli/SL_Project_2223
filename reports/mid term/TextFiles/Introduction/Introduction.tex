@@ -24,7 +24,7 @@ The aim of this project is to analyze a dataset collected from \textit{'NBA Rook
 \end{itemize} 
 
 The histograms of the 19 useful regressors are shown in \Fig~\ref{fig:Histograms}.
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\begin{subfigure}{.33\textwidth}
 		\centering
@@ -127,13 +127,15 @@ The histograms of the 19 useful regressors are shown in \Fig~\ref{fig:Histograms
 
 We can also look at the output variable to check whether the dataset was balanced or not. In \Fig~\ref{fig:target_bar_plot} we can clearly see that the samples are not equally distributed, but this is not a problem in out case because the difference between the two classes is not too large compared to the size of the dataset.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\linewidth]{ImageFiles/Histograms/bp_target5yrs.pdf}
 	\caption{Classes distribution in the dataset.}
 	\label{fig:target_bar_plot}
 \end{figure}
 
+\vspace{0.2cm}
+\noindent
 \textbf{Scientific questions}
 \begin{itemize}
 	\item What are the key contributing factors that significantly influence a player's ability to score points at a high level?
@@ -148,3 +150,5 @@ Due to its continuous nature, ``PTS'' necessitates the use of regression methods
 Instead, as ``TARGET\_5Yrs'' represents a categorical variable, it calls for the application of classification techniques. Our approach involves exploring various classification models, including logistic regression, tree-based methods, k-nearest neighbors, and support vector machines.
 
 All the techniques employed are obtained from the book \textit{'An Introduction to Statistical Learning with Applications in R'} \cite{James2013}.
+
+The analysis was conducted using R 4.2.2 software, with the support of the RStudio editor version 2022.12.0+353.
