@@ -129,13 +129,13 @@
 \textbf{Linear regression overview}
 
 \begin{center}
-\texttt{lm\_fit <- lm(pts$\sim$min, data=NbaPlayers)}
+\labelText{\texttt{lm\_fit <- lm(pts$\sim$min, data=NbaPlayers)}}{mod:lr1}
 
-\texttt{lm\_fit <- lm(pts$\sim$fgm, data=NbaPlayers)}
+\labelText{\texttt{lm\_fit <- lm(pts$\sim$fgm, data=NbaPlayers)}}{mod:lr2}
 
-\texttt{lm\_fit\_imp <- lm(pts$\sim$fgm+x3p\_made+ftm, data=NbaPlayers)}
+\labelText{\texttt{lm\_fit\_imp <- lm(pts$\sim$fgm+x3p\_made+ftm, data=NbaPlayers)}}{mod:lr3}
 
-\texttt{lm\_fit\_reb <- lm(reb$\sim$oreb+dreb, data=NbaPlayers)}
+\labelText{\texttt{lm\_fit\_reb <- lm(reb$\sim$oreb+dreb, data=NbaPlayers)}}{mod:lr4}
 \end{center}
 	
 \noindent
@@ -152,9 +152,9 @@
 
 \textbf{Backward model 90\%}
 
-\texttt{b\_lm\_all <- lm(pts$\sim$.,data=SubNbaPlayers)}
+\labelText{\texttt{\texttt{b\_lm\_all <- lm(pts$\sim$.,data=SubNbaPlayers)}}}{mod:lrb1}
 
-\texttt{step\_backward\_models[[i]] <- ols\_step\_backward\_p(b\_lm\_all)}
+\labelText{\texttt{step\_backward\_models[[i]] <- ols\_step\_backward\_p(b\_lm\_all)}}{mod:lrb2}
 \end{center}
 	
 \noindent
@@ -173,9 +173,9 @@
 
 \texttt{SubNbaPlayers <- NbaPlayers[colSelection]}
 
-\texttt{f\_lm\_all <- lm(pts$\sim$., data=NbaPlayers)}
+\labelText{\texttt{f\_lm\_all <- lm(pts$\sim$., data=NbaPlayers)}}{mod:lrf1}
 
-\texttt{final\_step\_forward <- ols\_step\_forward\_p(model = f\_lm\_all)}
+\labelText{\texttt{final\_step\_forward <- ols\_step\_forward\_p(model = f\_lm\_all)}}{mod:lrf2}
 
 \texttt{final\_step\_forward\_model <- lm(final\_step\_forward\$model, data=NbaPlayers)}
 
@@ -207,7 +207,7 @@
 \begin{center}
 \texttt{ridge\_cv\_model <- cv.glmnet(x[train,], y[train], lambda=lambda, alpha=0, nfolds=10)}
 
-\texttt{ridge\_model <- glmnet(x[train,], y[train], alpha=0, lambda=ridge\_cv\_model\$lambda.min, standardize=TRUE)}
+\labelText{\texttt{ridge\_model <- glmnet(x[train,], y[train], alpha=0, lambda=ridge\_cv\_model\$lambda.min, standardize=TRUE)}}{mod:lrr1}
 
 \texttt{ridge\_fitt\_value <- predict(ridge\_model, newx=x[-train,])}
 \end{center}
@@ -217,7 +217,7 @@
 \begin{center}
 \texttt{lasso\_cv\_model <- cv.glmnet(x[train,], y[train], lambda=lambda, alpha=1, nfolds=10)}
 
-\texttt{lasso\_model <- glmnet(x[train,], y[train], alpha=1, lambda=lasso\_cv\_model\$lambda.min, standardize=TRUE)}
+\labelText{\texttt{lasso\_model <- glmnet(x[train,], y[train], alpha=1, lambda=lasso\_cv\_model\$lambda.min, standardize=TRUE)}}{mod:lrl1}
 
 \texttt{lasso\_fitt\_value <- predict(lasso\_model, newx=x[-train,])}
 \end{center}
