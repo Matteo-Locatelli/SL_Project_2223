@@ -173,5 +173,11 @@
 
 \texttt{svm\_rad\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="radial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), gamma=c(0.5, 1, 2, 3, 4)))}
 
-\texttt{svm\_pol\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="polynomial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), degree=c(0.5, 1, 2, 3, 4)))}
+\labelText{	
+		\texttt{svm\_pol\_tune <- tune(svm, y$\sim$., data=dataframe\_train, \\	
+		kernel="polynomial", 
+		ranges=list(cost=c(0.01, 0.1, 1, 10, 100), \\
+		degree=c(0.5, 1, 2, 3, 4)))}
+	}{mod:svmpol}
+
 \end{center}

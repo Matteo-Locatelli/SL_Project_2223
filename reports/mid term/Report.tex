@@ -35,6 +35,19 @@
 \newcounter{appendix}
 \renewcommand{\theappendix}{A}
 
+\newcounter{mylabelcounter}
+\renewcommand\themylabelcounter{\alph{mylabelcounter}}
+
+\makeatletter
+\newcommand{\labelText}[2]{%
+	#1\refstepcounter{mylabelcounter}%
+	(\themylabelcounter)%
+	\immediate\write\@auxout{%
+		\string\newlabel{#2}{{\themylabelcounter}{\thepage}{{\unexpanded{#1}}}{mylabelcounter.\themylabelcounter}{}}%
+	}%
+}
+\makeatother
+
 \setlength\epigraphwidth{0.7\textwidth}
 
 \definecolor{titlepagecolor}{cmyk}{1,.60,0,.40}
@@ -124,6 +137,7 @@
 	\pagenumbering{arabic}
 	
 	\section{Introduction}
+	~\ref{mod:svmpol}
 	\import{./TextFiles/Introduction/}{Introduction.tex}
 	
 	\section{Data pre-processing}
