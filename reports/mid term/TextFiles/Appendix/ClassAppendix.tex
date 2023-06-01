@@ -153,31 +153,58 @@
 \textbf{SVM}
 
 \begin{center}
-\texttt{NbaPlayers <- subset(NbaPlayers, select=c(-pts, -reb))}
 
-\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}
+\labelText{
+		\texttt{NbaPlayers <- subset(NbaPlayers, select=c(-pts, -reb))}	\\
+	}{mod:dfsvm}
 
-\texttt{x\_train = subset(NbaPlayers[train,], select=c(-target\_5yrs))}
+\labelText{
+		\texttt{train <- sample(1:nrow(NbaPlayers), floor(nrow(NbaPlayers)*0.75))}	\\
+	}{mod:trsvm}
 
-\texttt{y\_train = NbaPlayers[train,]\$target\_5yrs}
+\labelText{
+		\texttt{x\_train = subset(NbaPlayers[train,], select=c(-target\_5yrs))}	\\
+	}{mod:xtrsvm}
 
-\texttt{dataframe\_train <- data.frame(x=x\_train, y=as.factor(y\_train))}
+\labelText{
+		\texttt{y\_train = NbaPlayers[train,]\$target\_5yrs}	\\
+	}{mod:ytrsvm}
 
-\texttt{x\_test = subset(NbaPlayers[-train,], select=c(-target\_5yrs))}
+\labelText{
+		\texttt{dataframe\_train <- data.frame(x=x\_train, y=as.factor(y\_train))}	\\
+	}{mod:dftrsvm}
 
-\texttt{y\_test = NbaPlayers[-train,]\$target\_5yrs}
+\labelText{
+		\texttt{x\_test = subset(NbaPlayers[-train,], select=c(-target\_5yrs))}	\\
+	}{mod:xtesvm}
 
-\texttt{dataframe\_test <- data.frame(x=x\_test, y=as.factor(y\_test))}
+\labelText{
+		\texttt{y\_test = NbaPlayers[-train,]\$target\_5yrs}	\\
+	}{mod:ytesvm}
 
-\texttt{svm\_cross <- tune (svm, y$\sim$., data=dataframe\_train, kernel="linear", ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))}
+\labelText{
+		\texttt{dataframe\_test <- data.frame(x=x\_test, y=as.factor(y\_test))}	\\
+	}{mod:dftesvm}
 
-\texttt{svm\_rad\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="radial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), gamma=c(0.5, 1, 2, 3, 4)))}
+\labelText{
+		\texttt{svm\_cross <- tune (svm, y$\sim$., 
+		data=dataframe\_train, 	\\ 
+		kernel="linear", 	\\
+		ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))}	\\
+	}{mod:svmcross}
+
+\labelText{
+		\texttt{svm\_rad\_tune <- tune(svm, y$\sim$., data=dataframe\_train, \\ 
+		kernel="radial", 
+		ranges=list(cost=c(0.01, 0.1, 1, 10, 100), \\ 
+		gamma=c(0.5, 1, 2, 3, 4)))}	\\
+	}{mod:svmrad}
 
 \labelText{	
-		\texttt{svm\_pol\_tune <- tune(svm, y$\sim$., data=dataframe\_train, \\	
+		\texttt{svm\_pol\_tune <- tune(svm, y$\sim$., 			data=dataframe\_train, \\	
 		kernel="polynomial", 
 		ranges=list(cost=c(0.01, 0.1, 1, 10, 100), \\
-		degree=c(0.5, 1, 2, 3, 4)))}
+		degree=c(0.5, 1, 2, 3, 4)))}	\\
 	}{mod:svmpol}
 
 \end{center}
