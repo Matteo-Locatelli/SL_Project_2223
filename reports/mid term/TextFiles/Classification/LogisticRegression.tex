@@ -59,28 +59,48 @@ We observed that there is no substantial difference in performance. When utilizi
 	\label{table:ConfMat}
 \end{table}
 
-\todo{MATTEO}
-Another comparison made between the two models concerns the predicted probabilities, as values close to 0.5 suggest high uncertainty of the model. Histograms showing the predicted values distribution for both models are presented in \Fig~\ref{fig:ProbPred}. From this point of view, model B appears to perform better, but in general, the two models exhibit the same behavior.
+
+Another comparison made between the two models concerns the predicted probabilities, as values close to 0.5 suggest high uncertainty of the model.
+
+To explore this aspect further, we constructed two histograms for each model: one illustrating the distribution of predicted values for true \textit{yes} samples, and the other for true \textit{no} samples. The histograms corresponding to the two models are presented in \Fig~\ref{fig:ProbPredA} and \Fig~\ref{fig:ProbPredB}. 
+
+From this perspective, it seems that model B demonstrates slightly higher confidence in its \textit{yes} predictions. However, overall, both models exhibit similar behavior.
 
 \begin{figure}[H]
 	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_all}
-		\caption{Probabilities predicted by model A.}
-		\label{fig:ProbPredA}
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_all_yes}
+		\caption{}
+		\label{fig:ProbPredYesA}
 	\end{subfigure}
 	\begin{subfigure}{.5\textwidth}
 		\centering
-		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_imp}
-		\caption{Probabilities predicted by model B.}
-		\label{fig:ProbPredB}
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_all_no}
+		\caption{}
+		\label{fig:ProbPredNoA}
 	\end{subfigure}
-	\caption{Probabilities predicted.}
-	\label{fig:ProbPred}
+	\caption{Probabilities predicted by Model A. (a) Yes (b) No}
+	\label{fig:ProbPredA}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_imp_yes}
+		\caption{}
+		\label{fig:ProbPredYesB}
+	\end{subfigure}
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{ImageFiles/Classification/LogReg/probability_pred_imp_no}
+		\caption{}
+		\label{fig:ProbPredNoB}
+	\end{subfigure}
+	\caption{Probabilities predicted by model B. (a) Yes (b) No}
+	\label{fig:ProbPredB}
 \end{figure}
 
 The model fitted using only the important variables shows the same performance as the first one, but it uses variables, making it a better choice.
-\todo{MATTEO}
 
 \vspace{0.2cm}
 \textbf{Subset selection}

@@ -12,8 +12,8 @@ library( boot.pval )
 set.seed (1)
 
 # set working directory
-#setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
-setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
+setwd("C:/Users/Wasim/Documents/Universita/Magistrale/Secondo Semestre/Statistical Learning/SL_Project_2223")
+#setwd("C:/Scuola/unibg/magistrale/II anno/II semestre/SL-Statistical_learning/SL_Project_2223")
 
 NbaPlayers <- read.csv("./nba_logreg_clean.csv")
 
@@ -41,6 +41,29 @@ summary(log_reg_all)
 coef(log_reg_all)
 
 # Function to predict the probability of a rookie
+df_yes = (NbaPlayers[-train,])[NbaPlayers[-train,]$target == " Yes ",]
+df_no = (NbaPlayers[-train,])[NbaPlayers[-train,]$target == " No ",]
+
+# Model A hist.
+fit_df_yes <- predict( log_reg_all, df_yes, type = "response")
+hist(fit_df_yes, main = "Histogram of probabilities prediction for true yes samples", 
+     xlab = "Probability predicted", 
+     ylim = c(0,30),
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
+
+fit_df_no <- predict( log_reg_all, df_no, type = "response")
+hist(fit_df_no, main = "Histogram of probabilities prediction for true no samples", 
+     xlab = "Probability predicted", 
+     ylim = c(0,30),
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
+
+
 fit_all <- predict( log_reg_all, NbaPlayers[-train,], type = "response")
 hist(fit_all, main = "Histogram of probabilities prediction", 
      xlab = "Probability predicted", 
@@ -90,6 +113,26 @@ summary(log_reg_imp)
 coef(log_reg_imp)
 
 # Function to predict the probability of a rookie
+
+# Model B hist.
+fit_df_yes_imp <- predict( log_reg_imp, df_yes, type = "response")
+hist(fit_df_yes_imp, main = "Histogram of probabilities prediction for true yes samples", 
+     xlab = "Probability predicted", 
+     ylim = c(0,30),
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
+
+fit_df_no_imp <- predict( log_reg_imp, df_no, type = "response")
+hist(fit_df_no_imp, main = "Histogram of probabilities prediction for true no samples", 
+     xlab = "Probability predicted", 
+     ylim = c(0,30),
+     breaks = 20, xaxt='n')
+axis(side=1, at=seq(0, 1, 0.05))
+abline(v = 0.45, col='red', lwd = 3)
+abline(v = 0.55, col='red', lwd = 3)
+
 fit_imp <- predict( log_reg_imp, NbaPlayers[-train,], type = "response")
 hist(fit_imp, main = "Histogram of probabilities prediction", 
      xlab = "Probability predicted",
