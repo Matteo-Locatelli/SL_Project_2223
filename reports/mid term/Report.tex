@@ -41,6 +41,7 @@
 \makeatletter
 \newcommand{\labelText}[2]{%
 	#1\refstepcounter{mylabelcounter}%
+	\\ %
 	(\themylabelcounter)%
 	\immediate\write\@auxout{%
 		\string\newlabel{#2}{{\themylabelcounter}{\thepage}{{\unexpanded{#1}}}{mylabelcounter.\themylabelcounter}{}}%
