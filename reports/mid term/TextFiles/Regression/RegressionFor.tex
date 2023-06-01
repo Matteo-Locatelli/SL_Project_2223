@@ -4,15 +4,17 @@ The first method applied is the forward stepwise selection. In particular, the a
 
 As expected, ``MIN'' and ``FTM'' are included, which resulted to be important from the preliminary analysis as well. However, there are three variables that are not significantly different from 0, with a p-value threshold of $5\%$.
 
-\textbf{Bootstrap Statistical Inference}
+\textbf{Bootstrap statistical inference}
 
 On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Tab~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. 
+
+\begin{center}
+	\labelText{\texttt{final\_step\_forward <- ols\_step\_forward\_p(model = f\_lm\_all)}}{mod:lrf2}
+\end{center}
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
 		\hline
 		Variable & Coefficient & p-value \\
 		\hline
@@ -32,21 +34,24 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 		GP & -0.0039 & 0.0930 \\
 		\hline
 	\end{tabular}
-	\caption{Estimated coefficients' value and corresponding p-value applying boostrap on model on ~\ref{}.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained applying forward stepwise selection to a linear regression model, given by \Mod~\ref{mod:lrf2}.}
 	\label{table:BootForwardModel}
 \end{table}
 
 \vspace{0.2cm}
 \noindent
-\textbf{Final Forward Model}
+\textbf{Final forward model}
 
 The final forward model, shown in \Tab~\ref{table:ForwardFinalModelSummary}, is obtained removing the non significant variables. Instead, in \Fig~\ref{fig:ForwardFinalModelResiduals} and \Fig~\ref{fig:ForwardFinalModelResidualsDist} it is possible to see the plots of the residuals, that have a gaussian shape with 0 mean. This means that the model is likely adequate for our purposes.
 
+\begin{center}
+	\labelText{
+			\texttt{forward\_lm\_fit <- update(final\_step\_forward, $\sim$.-x3p\_made-gp- blk)}
+		}{mod:lrf3}
+\end{center}
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
 		\hline
 		Variable & Coefficient & p-value \\
 		\hline
@@ -63,7 +68,7 @@ The final forward model, shown in \Tab~\ref{table:ForwardFinalModelSummary}, is 
 		3PA & 0.4677 & $<$ 0.0001 \\
 		\hline
 	\end{tabular}
-	\caption{Final sorward stepwise selection model summary.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained applying forward stepwise selection to a linear regression model, given by \Mod~\ref{mod:lrf3}.}
 	\label{table:ForwardFinalModelSummary}
 \end{table}
 
@@ -81,7 +86,7 @@ The final forward model, shown in \Tab~\ref{table:ForwardFinalModelSummary}, is 
 		\caption{}
 		\label{fig:ForwardFinalModelResidualsDist}
 	\end{subfigure}
-	\caption{Final Forward stepwise selection model. (a)Forward stepwise selection model residuals (mean = 0 \& var = 1.26). (b)Forward stepwise selection residuals histogram.}
+	\caption{Residuals obtained by predicting with \Mod~\ref{mod:lrf3}. (a) Plot of the residuals (mean = 0 \& var = 1.26). (b) Empirical distribution of the residuals.}
 	\label{fig:FinalFSSM}
 \end{figure}
 

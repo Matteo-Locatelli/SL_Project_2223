@@ -2,13 +2,17 @@
 
 As first approach we tried to model our target using logistic regression.
 
-First of all we fitted a model using all the features, that we will name model A, and the result is displayed in \Tab~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Tab~\ref{table:LRImpSum}, that we will name model B.
+First of all we fitted a model using all the features, that we will name model A (\ref{mod:lrall}), and the result is displayed in \Tab~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Tab~\ref{table:LRImpSum}, that we will name model B (\ref{mod:lrimp}).
+
+\begin{center}
+	\labelText{
+		\texttt{log\_reg\_imp <- glm(target$\sim$gp+oreb, data=NbaPlayers, subset=train, family=binomial)}	
+	}{mod:lrimp}
+\end{center}
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
 		\hline
 		Variable & Coefficient & p-value \\
 		\hline
@@ -17,7 +21,7 @@ First of all we fitted a model using all the features, that we will name model A
 		OREB & 0.6886 & $<$ 0.0001 \\	
 		\hline
 	\end{tabular}
-	\caption{Logistic regression with most significant features.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained using logistic regression with the most important regressors given by \Mod~\ref{mod:lrimp}.}
 	\label{table:LRImpSum}
 \end{table}
 
@@ -55,7 +59,7 @@ We observed that there is no substantial difference in performance. When utilizi
 		\caption{}
 		\label{table:ConfMatModA}
 	\end{subtable}
-	\caption{Confusion matrices. (a)Model A. (b)Model B.}
+	\caption{Classification models' performance. (a) Confusion matrix of model A. (b) Confusion matrix of model B.}
 	\label{table:ConfMat}
 \end{table}
 
@@ -79,7 +83,7 @@ From this perspective, it seems that model B demonstrates slightly higher confid
 		\caption{}
 		\label{fig:ProbPredNoA}
 	\end{subfigure}
-	\caption{Probabilities predicted by Model A. (a) Yes (b) No}
+	\caption{Distribution of the probabilities predicted by model A. (a) Probabilities predicted on true \textit{yes} samples. (b) Probabilities predicted on true \textit{no} samples.}
 	\label{fig:ProbPredA}
 \end{figure}
 
@@ -96,7 +100,7 @@ From this perspective, it seems that model B demonstrates slightly higher confid
 		\caption{}
 		\label{fig:ProbPredNoB}
 	\end{subfigure}
-	\caption{Probabilities predicted by model B. (a) Yes (b) No}
+	\caption{Distribution of the probabilities predicted by model B. (a) Probabilities predicted on true \textit{yes} samples. (b) Probabilities predicted on true \textit{no} samples.}
 	\label{fig:ProbPredB}
 \end{figure}
 
@@ -109,13 +113,17 @@ After the initial analysis, we attempted variable selection using subset selecti
 
 The results obtained are presented in \Tab~\ref{table:LRAllSum}. The forward stepwise method resulted in a model that includes all the variables, like model A. Therefore, its analysis is identical to the previous one.
 
-In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $\alpha = 0.01$. The model achieved an $AIC = 1040.4$ and a MER of $30\%$. The performances are again quiet similar, but the AIC coefficient is slightly better for the backward model.
+In contrast, the backward stepwise method resulted in a model with 11 variables, but 7 of them are not significantly different from zero with respect to $\alpha = 0.01$. The model is shown in \Tab~\ref{table:LRBSSum}. The model achieved an $AIC = 1040.4$ and a MER of $30\%$. The performances are again quiet similar, but the AIC coefficient is slightly better for the backward model.
+
+\begin{center}
+	\labelText{
+		\texttt{b\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction="backward", trace=FALSE)}	
+	}{mod:lrbs}
+\end{center}
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
-		\hline
-		\multicolumn{3}{|c|}{Equation} \\
 		\hline
 		Variable & Coefficient & p-value \\
 		\hline
@@ -133,7 +141,7 @@ In contrast, the backward stepwise method resulted in a model with 11 variables,
 		TOV & -0.6577 & 0.0453 \\
 		\hline
 	\end{tabular}
-	\caption{Logistic regression with backward stepwise selection.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained applying forward stepwise selection to a logistic regression model, given by \Mod~\ref{mod:lrbs}.}
 	\label{table:LRBSSum}
 \end{table}
 

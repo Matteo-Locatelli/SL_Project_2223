@@ -180,6 +180,9 @@
 \texttt{final\_step\_forward\_model <- lm(final\_step\_forward\$model, data=NbaPlayers)}
 
 \texttt{forward\_lm\_fit <- lm(final\_step\_forward\_model\$model, data=NbaPlayers)}
+
+\texttt{forward\_lm\_fit <- update(final\_step\_forward, ~ . - x3p\_made -gp - blk)}
+
 \end{center}
 	
 \noindent

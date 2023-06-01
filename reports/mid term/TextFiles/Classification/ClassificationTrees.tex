@@ -6,12 +6,12 @@ We started to analyze the data through classification trees using the \textit{gi
 
 To understand whether it was better to use a simpler tree or not, we performed cross-validation using different levels of tree size and evaluated the impact on the test error.
 
-\Fig~\ref{fig:tree_cv_plot} shows the trends of the deviance and the penalization factor \textit{k} for different values of tree size as determined by cross-validation. In \Fig~\ref{fig:trees_size} are shown the obtained trees with different sizes.
+\Fig~\ref{fig:tree_cv_plot} shows the number of misclassifications trend and the tree size for different values of the penalization factor \textit{k} as determined by cross-validation. In \Fig~\ref{fig:trees_size} are shown the obtained trees with different sizes.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/tree_cv_plot.pdf}
-	\caption{Size (bottom), deviance (left), k (top).}
+	\caption{Trend of misclassifications number (left) and tree size (bottom) as function of the penalization factor \textit{k} (top) obtained through cross-validation.}
 	\label{fig:tree_cv_plot}
 \end{figure}
 
@@ -41,7 +41,7 @@ To understand whether it was better to use a simpler tree or not, we performed c
 		\caption{}
 		\label{fig:tree_size_2}
 	\end{subfigure}
-	\caption{Trees with various sizes. (a)4. (b)6. (c)7. (d)2.}
+	\caption{Pruned trees generated with different sizes: (a) 4, (b) 6, (c) 7, (d) 2.}
 	\label{fig:trees_size}
 \end{figure}
 
@@ -64,7 +64,7 @@ After the evaluation of the MER on both train and test dataset, we concluded tha
 		2 & 0.3424 & 0.33125 \\
 		\hline
 	\end{tabular}
-	\caption{Different tree size results.}
+	\caption{Values of train and test MER obtained with the five applied tree sizes.}
 \end{table} 
 
 Nonetheless, the variable ``GP'' consistently serves as the first split in all the trees, indicating its significance as the most important variable. Although ``DREB'' and ``FG\%'' also appear in splits within larger-sized trees, "GP" continues to be the variable that undergoes the highest number of splits.

@@ -1,5 +1,12 @@
 \subsection*{Classification techniques}\label{appendix:ct}
 
+\begin{center}
+	\labelText{
+		\texttt{log\_reg\_all <- glm(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, family=binomial)}	
+	}{mod:lrall}
+\end{center}
+% Same model obtained by forward stepwise selection
+
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
@@ -28,57 +35,30 @@
 		TOV & -0.5353 & 0.1164 \\		
 		\hline
 	\end{tabular}
-	\caption{Logistic regression with all features.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained using logistic regression with all regressors given by \Mod~\ref{mod:lrall}.}
 	\label{table:LRAllSum}
 \end{table}
-
-\noindent
-\textbf{Logistic regression}
-
-\begin{center}
-
-\labelText{
-		\texttt{log\_reg\_all <- glm(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, family=binomial)}	\\
-	}{mod:lrall}
-
-\labelText{
-		\texttt{log\_reg\_imp <- glm(target$\sim$gp+oreb, data=NbaPlayers, subset=train, family=binomial)}	\\
-	}{mod:lrimp}
-
-\end{center}
 
 \noindent
 \textbf{Logistic regression subset selection}
 
 \begin{center}
-	
-\labelText{
-		\texttt{f\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction="forward", trace=FALSE)}	\\
-	}{mod:lrfs}
 
-\labelText{
-		\texttt{b\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction="backward", trace=FALSE)}	\\
-	}{mod:lrbs}
+\texttt{f\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction="forward", trace=FALSE)}	
 
-\labelText{
-		\texttt{log\_reg\_final <- glm(target$\sim$gp+oreb, data=NbaPlayers, subset=train, family=binomial)}	\\
-	}{mod:lrfin}
+\texttt{log\_reg\_final <- glm(target$\sim$gp+oreb, data=NbaPlayers, subset=train, family=binomial)}	
+
 
 \end{center}
-	
-\noindent
-\textbf{Trees}
 
 \begin{center}
 
-\labelText{
-		\texttt{tmc <- tree(target$\sim$.-target\_5yrs, NbaPlayers, subset=train, split="gini")}
-	}{mod:treecom}
+\texttt{tmc <- tree(target$\sim$.-target\_5yrs, NbaPlayers, subset=train, split="gini")}
+
 
 --- figure 8
-\labelText{
-		\texttt{tree\_cv <- cv.tree(tree\_model, FUN=prune.misclass)}
-	}{mod:labpr}
+\texttt{tree\_cv <- cv.tree(tree\_model, FUN=prune.misclass)}
+
 
 \texttt{prune1 <- prune.misclass(tree\_model, best=best1, k=k1)}
 
@@ -96,47 +76,17 @@
 \begin{center}
 
 \labelText{
-		\texttt{bagg\_model <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=ncol(NbaPlayers)-2, ntree=500, importance=TRUE, replace=TRUE)}	\\
+		\texttt{bagg\_model <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=ncol(NbaPlayers)-2, ntree=500, importance=TRUE, replace=TRUE)}	
 	}{mod:bag}
 
 \texttt{forest\_model <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=floor(sqrt(ncol(NbaPlayers)-2)), ntree=500, importance=TRUE)}
 
 \labelText{
-		\texttt{best\_rf <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=best\_m, ntree=500, importance = TRUE)}	\\
+		\texttt{best\_rf <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=best\_m, ntree=500, importance = TRUE)}	
 	}{mod:rf}
 
 \labelText{
-		\texttt{boost\_model <- gbm(target\_5yrs$\sim$.-target, data=NbaPlayers[train,], distribution="bernoulli", n.trees=ntrees, cv.folds=10, interaction.depth=4,	 shrinkage=0.001, verbose=F)}	\\
+		\texttt{boost\_model <- gbm(target\_5yrs$\sim$.-target, data=NbaPlayers[train,], distribution="bernoulli", n.trees=ntrees, cv.folds=10, interaction.depth=4,	 shrinkage=0.001, verbose=F)}	
 	}{mod:boost}
-
-\end{center}
-	
-\noindent
-\textbf{KNN}
-
-\begin{center}
-
-\labelText{
-		\texttt{knn\_fit <- knn(data\_train, data\_test, label\_train, k=3)}	\\
-	}{mod:knn}
-
-\end{center}
-	
-\noindent
-\textbf{SVM}
-
-\begin{center}
-
-\labelText{
-		\texttt{svm\_cross <- tune (svm, y$\sim$., data=dataframe\_train, kernel="linear", ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))}	\\
-	}{mod:svmcross}
-
-\labelText{
-		\texttt{svm\_rad\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="radial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), gamma=c(0.5, 1, 2, 3, 4)))}	\\
-	}{mod:svmrad}
-
-\labelText{	
-		\texttt{svm\_pol\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="polynomial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), degree=c(0.5, 1, 2, 3, 4)))}	\\
-	}{mod:svmpol}
 
 \end{center}
