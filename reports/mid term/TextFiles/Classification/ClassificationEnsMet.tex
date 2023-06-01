@@ -11,7 +11,7 @@ In \Fig~\ref{fig:m_best_for_500_plot} we can see the trend of the test and the o
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{ImageFiles/Classification/Trees/m_best_for_500_plot.pdf}
-	\caption{Test and out of bag trends.}
+	\caption{Plot of the error rate trends in random forest for varying values of \textit{m} (test: red, out-of-bag: blue).}
 	\label{fig:m_best_for_500_plot}
 \end{figure}
 
@@ -40,11 +40,11 @@ In \Fig~\ref{fig:vs_bagg_for_500_plot} we can see that random forest performs sl
 		\caption{}
 		\label{fig:vs_bagg_for_500_plot}
 	\end{subfigure}
-	\caption{Random forest vs bagging. (a)Random forest method plot. (b)Bagging method plot. (c)Bagging and random forest comparison.}
+	\caption{Comparison between random forest and bagging performances as the number of trees increases. (a) Random forest error rate trends (red: no, black: out-of-bag, green: yes). (b) Bagging error rate trends (same legend). (c) Comparison between yes, no and out-of-bag error rates (red: random forest, green: bagging).}
 	\label{fig:RFvsB}
 \end{figure}
 
-An overall summary of the importance of each predictor is obtained by using Residual Sum of Squares (RSS). In \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} we can see the importance of each variable in the models.
+An overall summary of the importance of each predictor is obtained by using Residual Sum of Squares (RSS). \Fig~\ref{fig:best_for_500_var_imp_plot} and \Fig~\ref{fig:bagg_500_var_imp_plot} present the importance of each variable within the models. This importance can be interpreted as the degree to which the removal of a variable would negatively impact the model's performance, utilizing the mean decrease of the \textit{gini} index in relation to the maximum.
 
 \begin{figure}[H]
 	\centering
@@ -61,7 +61,7 @@ An overall summary of the importance of each predictor is obtained by using Resi
 		\caption{}
 		\label{fig:bagg_500_var_imp_plot}
 	\end{subfigure}
-	\caption{Important variables. (a)Random forest important variables. (b)Bagging important variables.}
+	\caption{Plot of the importance of all the variables. (a) Importance in the random forest model. (b) Importance in the bagging model.}
 	\label{fig:ImpVar}
 \end{figure}
 
@@ -99,7 +99,7 @@ After applying the boosting technique with 5000 iterations, the importance of ea
 		\caption{}
 		\label{table:ConfMaBoost}
 	\end{subtable}
-	\caption{Boosting results. (a)Boosting relative influence. (b)Boosting confusion matrix.}
+	\caption{Plot of the main results from the boosting technique, taking the model of the best iteration (the one with the minimum cross-validation error). (a) Boosting relative influence of each variable: it provides insights about the key contributors to the model's performance. (b) Confusion matrix of the boosting model.}
 	\label{BoostRes}
 \end{figure}
 

@@ -11,8 +11,6 @@
 	\centering
 	\begin{tabular}{|| l | r | r ||} 
 		\hline
-		\multicolumn{3}{|c|}{Equation} \\
-		\hline
 		Variable & Coefficient & p-value \\
 		\hline
 		intercept & -3.8885 & 0.0068 \\
@@ -35,58 +33,6 @@
 		TOV & -0.5353 & 0.1164 \\		
 		\hline
 	\end{tabular}
-	\caption{Estimated coefficients' value and corresponding p-value obtained using logistic regression with all regressors given by \Mod~\ref{mod:lrall}.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained with \Mod~\ref{mod:lrall} which uses logistic regression including all regressors.}
 	\label{table:LRAllSum}
 \end{table}
-
-\noindent
-\textbf{Logistic regression subset selection}
-
-\begin{center}
-
-\texttt{f\_log\_reg\_fit <- stepAIC(log\_reg\_all, direction="forward", trace=FALSE)}	
-
-\texttt{log\_reg\_final <- glm(target$\sim$gp+oreb, data=NbaPlayers, subset=train, family=binomial)}	
-
-
-\end{center}
-
-\begin{center}
-
-\texttt{tmc <- tree(target$\sim$.-target\_5yrs, NbaPlayers, subset=train, split="gini")}
-
-
---- figure 8
-\texttt{tree\_cv <- cv.tree(tree\_model, FUN=prune.misclass)}
-
-
-\texttt{prune1 <- prune.misclass(tree\_model, best=best1, k=k1)}
-
-\texttt{prune2 <- prune.misclass(tree\_model, best=best2, k=k2)}
-
-\texttt{prune3 <- prune.misclass(tree\_model, best=best3)} --- k=-Inf
-
-\texttt{prune4 <- prune.misclass(tree\_model, best=best4, k=k4)}
-
-\end{center}
-
-\noindent
-\textbf{Ensemble methods}
-
-\begin{center}
-
-\labelText{
-		\texttt{bagg\_model <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=ncol(NbaPlayers)-2, ntree=500, importance=TRUE, replace=TRUE)}	
-	}{mod:bag}
-
-\texttt{forest\_model <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=floor(sqrt(ncol(NbaPlayers)-2)), ntree=500, importance=TRUE)}
-
-\labelText{
-		\texttt{best\_rf <- randomForest(target$\sim$.-target\_5yrs, data=NbaPlayers, subset=train, mtry=best\_m, ntree=500, importance = TRUE)}	
-	}{mod:rf}
-
-\labelText{
-		\texttt{boost\_model <- gbm(target\_5yrs$\sim$.-target, data=NbaPlayers[train,], distribution="bernoulli", n.trees=ntrees, cv.folds=10, interaction.depth=4,	 shrinkage=0.001, verbose=F)}	
-	}{mod:boost}
-
-\end{center}

@@ -15,24 +15,8 @@ As a last method, we tried applying the support vector machine (SVM) technique, 
 		Radial & $67.50\%$ \\
 		\hline
 	\end{tabular}
-	\caption{SVM kernel.}
+	\caption{Values of accuracy reached with the three applied SVM kernel functions.}
 	\label{table:SVMkernels}
 \end{table} 
 
 Unfortunately, even the SVM technique did not improve the classification performances in this case. 
-
-\begin{center}
-	
-	\labelText{
-		\texttt{svm\_cross <- tune (svm, y$\sim$., data=dataframe\_train, kernel="linear", ranges=list(cost=c(0.001, 0.01, 0.1, 1, 5, 10, 100)))}	
-	}{mod:svmcross}
-	
-	\labelText{
-		\texttt{svm\_rad\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="radial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), gamma=c(0.5, 1, 2, 3, 4)))}	
-	}{mod:svmrad}
-	
-	\labelText{	
-		\texttt{svm\_pol\_tune <- tune(svm, y$\sim$., data=dataframe\_train, kernel="polynomial", ranges=list(cost=c(0.01, 0.1, 1, 10, 100), degree=c(0.5, 1, 2, 3, 4)))}	
-	}{mod:svmpol}
-	
-\end{center}

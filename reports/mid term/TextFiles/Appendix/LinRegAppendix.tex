@@ -1,12 +1,21 @@
 \subsection*{Linear Regression}\label{appendix:lr}
 
-%Tables with threshold of 90% on regressors
+\begin{center}
+	\labelText{
+		\texttt{step\_forward\_models <- ols\_step\_forward\_p(f\_lm\_all)}
+	}{mod:lrf0}
+\end{center}
+
+\begin{center}
+	\labelText{
+		\texttt{step\_backward\_models <- ols\_step\_backward\_p(b\_lm\_all)}
+	}{mod:lrb0}
+\end{center}
+
 \begin{table}[H]
 	\begin{subtable}[h]{0.4\textwidth}
 		\centering
 		\begin{tabular}{|| l | r | r ||} 
-			\hline
-			\multicolumn{3}{|c|}{Equation} \\
 			\hline
 			Variable & Coefficient & p-value \\
 			\hline
@@ -34,8 +43,6 @@
 		\centering
 		\begin{tabular}{|| l | r | r ||} 
 			\hline
-			\multicolumn{3}{|c|}{Equation} \\
-			\hline
 			Variable & Coefficients & p-value \\
 			\hline
 			intercept & -3.6949 & $<$ 0.0001 \\
@@ -56,16 +63,25 @@
 		\caption{}
 		\label{table:BackwardModelSummary}
 	\end{subtable}
-	\caption{Subset selection model summary. (a)Forward stepwise selection output model. (b)Backward stepwise selection output model.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained applying subset selection to a linear regression model. (a) Results of the application of forward stepwise selection, given by \Mod~\ref{mod:lrf0}. (b) Results of the application of backward stepwise selection, given by \Mod~\ref{mod:lrb0}.}
 	\label{table:SubSelModSum}
 \end{table}
+
+\begin{center}
+		\labelText{\texttt{ridge\_model <- glmnet(x[train,], y[train], alpha=0, lambda=ridge\_cv\_model\$lambda.min, standardize=TRUE)}
+	}{mod:lrr0}
+\end{center}
+
+\begin{center}
+\labelText{
+		\texttt{lasso\_model <- glmnet(x[train,], y[train], alpha=1, lambda=lasso\_cv\_model\$lambda.min, standardize=TRUE)}
+	}{mod:lrl0}
+\end{center}
 
 \begin{table}[H]
 	\begin{subtable}[h]{0.4\textwidth}
 		\centering
 		\begin{tabular}{|| l | r ||} 
-			\hline
-			\multicolumn{2}{|c|}{Equation} \\
 			\hline
 			Variable & Coefficient \\
 			\hline
@@ -96,8 +112,6 @@
 		\centering
 		\begin{tabular}{|| l | r ||} 
 			\hline
-			\multicolumn{2}{|c|}{Equation} \\
-			\hline
 			Variable & Coefficient \\
 			\hline
 			intercept & -3.7222 \\
@@ -122,105 +136,6 @@
 		\caption{}
 		\label{table:FinalLassoCoef}
 	\end{subtable}
-	\caption{Shrinkage model summary. (a)Ridge regression coefficients with $\lambda_{opt}$. (b)Lasso regression coefficients with $\lambda_{opt}$.}
+	\caption{Estimated coefficients' value obtained applying shrinkage methods to a linear regression model. The value of $\lambda$ used is $\lambda_{opt}$, computed with cross-validation. (a) Results of the application ridge regression on \Mod~\ref{mod:lrr0}. (b) Results of the application of lasso regression on \Mod~\ref{mod:lrl0}.}
 	\label{table:RegModSum}
 \end{table}
-
-\textbf{Linear regression overview}
-
-\begin{center}
-\labelText{\texttt{lm\_fit <- lm(pts$\sim$min, data=NbaPlayers)}}{mod:lr1}
-
-\labelText{\texttt{lm\_fit <- lm(pts$\sim$fgm, data=NbaPlayers)}}{mod:lr2}
-
-\labelText{\texttt{lm\_fit\_imp <- lm(pts$\sim$fgm+x3p\_made+ftm, data=NbaPlayers)}}{mod:lr3}
-
-\labelText{\texttt{lm\_fit\_reb <- lm(reb$\sim$oreb+dreb, data=NbaPlayers)}}{mod:lr4}
-\end{center}
-	
-\noindent
-\textbf{Linear regression subset selection}
-
-\begin{center}
-\texttt{NbaPlayers <- subset(NbaPlayers, select=c(-reb))}
-
-\textbf{Forward model 90\%}
-
-\texttt{f\_lm\_all <- lm(pts$\sim$., data=SubNbaPlayers)}
-
-\texttt{sep\_forward\_models[[i]] <- ols\_step\_forward\_p(f\_lm\_all)}
-
-\textbf{Backward model 90\%}
-
-\labelText{\texttt{\texttt{b\_lm\_all <- lm(pts$\sim$.,data=SubNbaPlayers)}}}{mod:lrb1}
-
-\labelText{\texttt{step\_backward\_models[[i]] <- ols\_step\_backward\_p(b\_lm\_all)}}{mod:lrb2}
-\end{center}
-	
-\noindent
-\textbf{Linear regression subset selection final model forward stepwise (after bootstrap and removal of not significant variables)}
-
-\begin{center}
-\texttt{NbaPlayers <- subset(NbaPlayers, select=c(-fga,-fgm))}
-
-\texttt{thresholds = c(0.9,0.8) We stop at 0.8 otherwise we would ho down to 0.5 as R\^{}2}
-
-\texttt{step\_forward\_models <- vector(mode="list", length=2)}
-
-\texttt{step\_backward\_models <- vector(mode="list", length=2)}
-
-\texttt{colSelection <- c(all\_regressors[r\_squared\_array <= thresholds[i]], "pts")}
-
-\texttt{SubNbaPlayers <- NbaPlayers[colSelection]}
-
-\labelText{\texttt{f\_lm\_all <- lm(pts$\sim$., data=NbaPlayers)}}{mod:lrf1}
-
-\labelText{\texttt{final\_step\_forward <- ols\_step\_forward\_p(model = f\_lm\_all)}}{mod:lrf2}
-
-\texttt{final\_step\_forward\_model <- lm(final\_step\_forward\$model, data=NbaPlayers)}
-
-\texttt{forward\_lm\_fit <- lm(final\_step\_forward\_model\$model, data=NbaPlayers)}
-
-\texttt{forward\_lm\_fit <- update(final\_step\_forward, ~ . - x3p\_made -gp - blk)}
-
-\end{center}
-	
-\noindent
-\textbf{Linear regression subset selection final model backward stepwise (after bootstrap and removal of not significant variables) --- same as forward}
-
-\noindent
-\textbf{Linear regression shrinkage}
-
-\begin{center}
-\texttt{NbaPlayers <- subset(NbaPlayers, select=c(-fga,-fgm))}
-
-\texttt{x <- model.matrix(pts$\sim$., NbaPlayers)[, -1]}
-
-\texttt{y <- NbaPlayers\$pts}
-
-\texttt{lambda <- 10\^{}seq(-3,-1,length = 400)}
-
-\texttt{lambda <- c(0,lambda)}
-
-\texttt{train <- sample(dim(x)[1], floor(dim(x)[1]*0.75), replace = FALSE)}
-\end{center}
-	
-\textbf{RIDGE}
-
-\begin{center}
-\texttt{ridge\_cv\_model <- cv.glmnet(x[train,], y[train], lambda=lambda, alpha=0, nfolds=10)}
-
-\labelText{\texttt{ridge\_model <- glmnet(x[train,], y[train], alpha=0, lambda=ridge\_cv\_model\$lambda.min, standardize=TRUE)}}{mod:lrr1}
-
-\texttt{ridge\_fitt\_value <- predict(ridge\_model, newx=x[-train,])}
-\end{center}
-	
-\textbf{LASSO}
-
-\begin{center}
-\texttt{lasso\_cv\_model <- cv.glmnet(x[train,], y[train], lambda=lambda, alpha=1, nfolds=10)}
-
-\labelText{\texttt{lasso\_model <- glmnet(x[train,], y[train], alpha=1, lambda=lasso\_cv\_model\$lambda.min, standardize=TRUE)}}{mod:lrl1}
-
-\texttt{lasso\_fitt\_value <- predict(lasso\_model, newx=x[-train,])}
-\end{center}
