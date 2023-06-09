@@ -8,11 +8,7 @@ As expected, ``MIN'' and ``FTM'' are included, which resulted to be important fr
 \noindent
 \textbf{Bootstrap statistical inference}
 
-On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Tab~\ref{table:ForwardModelSummary} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. 
-
-\begin{center}
-	\labelText{\texttt{final\_step\_forward <- ols\_step\_forward\_p(model = f\_lm\_all)}}{mod:lrf2}
-\end{center}
+On the obtained model we used the Bootstrap technique in order to perform statistical inference on the model coefficients. In \Tab~\ref{table:BootForwardModel} it is possible to see the results, that are coherent with the previous ones. This also shows that the gaussian approximation for the error is valid in this case. 
 
 \begin{table}[h]
 	\centering
@@ -37,7 +33,7 @@ On the obtained model we used the Bootstrap technique in order to perform statis
 		GP & -0.0039 & 0.0930 \\
 		\hline
 	\end{tabular}
-	\caption{Estimated coefficients' value and corresponding p-value obtained applying forward stepwise selection to a linear regression model, given by \Mod~\ref{mod:lrf2}.}
+	\caption{Estimated coefficients' value and corresponding p-value obtained applying the bootstrap technique on the forward stepwise selection to the linear regression model, given by \Mod~\ref{mod:lrf0}.}
 	\label{table:BootForwardModel}
 \end{table}
 

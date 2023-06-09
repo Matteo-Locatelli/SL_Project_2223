@@ -2,7 +2,7 @@
 
 As first approach we tried to model our target using logistic regression.
 
-First of all we fitted a model using all the features, that we will name model A (\ref{mod:lrall}), and the result is displayed in \Tab~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Tab~\ref{table:LRImpSum}, that we will name model B (\ref{mod:lrimp}).
+First of all we fitted a model using all the features, that we will name model A (\Mod~\ref{mod:lrall}), and the result is displayed in \Tab~\ref{table:LRAllSum}. The model suggested that many variables are not significantly different from zero, with respect to an $\alpha = 0.01$. Therefore we removed those variables and fitted the model again getting the one in \Tab~\ref{table:LRImpSum}, that we will name model B (\Mod~\ref{mod:lrimp}).
 
 \begin{center}
 	\labelText{
@@ -69,7 +69,7 @@ We observed that there is no substantial difference in performance. When utilizi
 
 Another comparison made between the two models concerns the predicted probabilities, as values close to 0.5 suggest high uncertainty of the model.
 
-To explore this aspect further, we constructed two histograms for each model: one illustrating the distribution of predicted values for true \textit{yes} samples, and the other for true \textit{no} samples. The histograms corresponding to the two models are presented in \Fig~\ref{fig:ProbPredA} and \Fig~\ref{fig:ProbPredB}. 
+To visualize this, we constructed histograms for each model. \Fig~\ref{fig:ProbPredYesA} represents the distribution of predicted values for true \textit{yes} samples in model A, while \Fig~\ref{fig:ProbPredYesB} shows the corresponding distribution for model B. Additionally, \Fig~\ref{fig:ProbPredNoA} displays the histogram of predicted values for true \textit{no} samples in model A, and \Fig~\ref{fig:ProbPredNoB} shows the same for model B.
 
 From this perspective, it seems that model B demonstrates slightly higher confidence in its \textit{yes} predictions. However, overall, both models exhibit similar behavior.
 
@@ -107,7 +107,7 @@ From this perspective, it seems that model B demonstrates slightly higher confid
 	\label{fig:ProbPredB}
 \end{figure}
 
-The model fitted using only the important variables shows the same performance as the first one, but it uses variables, making it a better choice.
+The model fitted using only the important variables shows the same performance as the first one, but it uses less variables, making it a better choice.
 
 \vspace{0.2cm}
 \noindent
