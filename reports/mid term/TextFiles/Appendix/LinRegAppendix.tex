@@ -73,6 +73,8 @@
 	\label{table:SubSelModSum}
 \end{table}
 
+\clearpage
+
 \begin{center}
 		\labelText{\texttt{ridge\_model <- glmnet(x[train,], y[train], alpha=0, lambda=ridge\_cv\_model\$lambda.min, standardize=TRUE)}
 	}{mod:lrr0}
@@ -151,3 +153,5 @@
 	\caption{Estimated coefficients' value obtained applying shrinkage methods to a linear regression model. The value of $\lambda$ used is $\lambda_{opt}$, computed with cross-validation. (a) Results of the application ridge regression on \Mod~\ref{mod:lrr0}. (b) Results of the application of lasso regression on \Mod~\ref{mod:lrl0}.}
 	\label{table:RegModSum}
 \end{table}
+
+\clearpage
